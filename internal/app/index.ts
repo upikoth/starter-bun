@@ -1,8 +1,16 @@
 import environment from '@internal/environment';
 
 import { responseNotFound } from '@internal/controller/http.cont'
+import { migrateIfNeeded } from '@internal/repository/sqlite'
 
 export function startServer(): void {
+	try {
+		migrateIfNeeded()
+	} catch (err) {
+		console.error(err)
+		process.exit()
+	}
+
 	const router = new Bun.FileSystemRouter({
 		style: 'nextjs',
 		dir: 'internal/controller',
