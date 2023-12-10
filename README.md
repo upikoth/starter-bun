@@ -1,13 +1,11 @@
 # starter-bun
 
-To install dependencies:
-
-```bash
-bun install
-```
-
-To run:
+## Запуск приложения:
 
 ```bash
 bun run --hot index.ts
 ```
+
+## Логирование:
+
+Логи хранятся в файлах, в папке logs

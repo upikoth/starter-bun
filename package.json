@@ -16,6 +16,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "bun-sqlite-migrations": "^1.0.2"
+    "bun-sqlite-migrations": "^1.0.2",
+    "winston": "^3.11.0"
   }
 }
