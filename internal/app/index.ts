@@ -1,4 +1,4 @@
-import environment from '@internal/environment';
+import environment from '@internal/environment'
 
 import { responseNotFound } from '@internal/controller/http.cont'
 import { migrateIfNeeded } from '@internal/repository/sqlite'
@@ -13,8 +13,8 @@ export function startServer(): void {
 
 	const router = new Bun.FileSystemRouter({
 		style: 'nextjs',
-		dir: 'internal/controller',
-	});
+		dir: 'internal/controller'
+	})
 
 	Bun.serve({
 		port: environment.APP_PORT,
@@ -34,6 +34,6 @@ export function startServer(): void {
 			const handler = module.default
 
 			return handler(req)
-		},
-	});
+		}
+	})
 }

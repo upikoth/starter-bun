@@ -2,8 +2,14 @@
   "name": "starter-bun",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "devDependencies": {
-    "bun-types": "latest"
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "bun-types": "latest",
+    "eslint": "^8.55.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

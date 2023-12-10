@@ -4,8 +4,8 @@ import { responseNotFound } from '@internal/controller/http.cont'
 function getHealth(): Response {
 	return Response.json({
 		data: {},
-		success: true,
-	});
+		success: true
+	})
 }
 
 export default function(req: Request): Response {
