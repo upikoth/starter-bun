@@ -1,9 +1,11 @@
 import type { IUser } from '@internal/models/users'
 import { db } from '@internal/repository/sqlite'
 
-export function getAll(): IUser[] {
-	const res = db.query('select * from users').run()
+import { users } from '../sqlite/schema'
+import type { IDbUser } from '../sqlite/schema'
 
-	console.log(res)
-	return []
+export function getAll(): IUser[] {
+	const res: IDbUser[] = db.select().from(users).all()
+
+	return res
 }

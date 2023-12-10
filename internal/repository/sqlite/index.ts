@@ -1,8 +1,13 @@
 import { Database } from 'bun:sqlite'
-import { migrate, getMigrations } from 'bun-sqlite-migrations'
+import { drizzle } from 'drizzle-orm/bun-sqlite'
+import { migrate } from 'drizzle-orm/bun-sqlite/migrator'
 
-export const db = new Database('database.sqlite')
+import * as schema from './schema'
+
+
+const sqlite = new Database('database.sqlite')
+export const db = drizzle(sqlite, { schema })
 
 export function migrateIfNeeded(): void {
-	migrate(db, getMigrations(`${import.meta.dir}/migrations`))
+	migrate(db, { migrationsFolder: `${import.meta.dir}/migrations` })
 }

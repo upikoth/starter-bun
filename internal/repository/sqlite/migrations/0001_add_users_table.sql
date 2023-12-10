@@ -1,1 +1,0 @@
-create table users (id primary key, name string);
