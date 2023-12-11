@@ -1,21 +1,34 @@
 import { HttpMethod } from '@internal/controller/http.types'
-import { responseNotFound } from '@internal/controller/http.cont'
+import { responseNotFound } from '@internal/controller/http.const'
 
-import { getAll as getAllUsers } from '@internal/service/users'
+import { getUsers as getUsersFromService } from '@internal/service/users'
 
-function getUsers(): Response {
-	const users = getAllUsers()
+import type { IGetUsersRequest, IGetUsersResponse } from '@internal/models'
 
-	return Response.json({
-		data: { users },
-		success: true
-	})
+async function getUsers(req: Request): Promise<IGetUsersResponse> {
+	const  { searchParams } = new URL(req.url)
+
+	const limit = Number(searchParams.get('limit'))
+	const offset = Number(searchParams.get('offset'))
+
+	const getUsersRequestData: IGetUsersRequest = {
+		limit,
+		offset
+	}
+
+	const users = await getUsersFromService(getUsersRequestData)
+
+	return {
+		users,
+		limit,
+		offset
+	}
 }
 
-export default function(req: Request): Response {
+export default function(req: Request) {
 	switch (req.method) {
 		case HttpMethod.Get: {
-			return getUsers()
+			return getUsers(req)
 		}
 	}
 

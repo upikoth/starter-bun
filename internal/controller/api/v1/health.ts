@@ -1,5 +1,5 @@
 import { HttpMethod } from '@internal/controller/http.types'
-import { responseNotFound } from '@internal/controller/http.cont'
+import { responseNotFound } from '@internal/controller/http.const'
 
 function getHealth(): Response {
 	return Response.json({
