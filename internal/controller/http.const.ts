@@ -27,7 +27,7 @@ export const getErrorResponse = (error: IResposeError, status: ErorrStatusEnum) 
 
 export const responseNotFound = getErrorResponse(
 	{
-		code: ErrorCodeEnum.NotFound,
+		code: ErrorCodeEnum.UrlNotFound,
 		description: 'Метод не найден'
 	},
 	ErorrStatusEnum.NotFound

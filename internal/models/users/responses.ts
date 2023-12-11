@@ -5,3 +5,7 @@ export interface IGetUsersResponse {
 	limit: number;
 	offset: number;
 }
+
+export interface IGetUserResponse {
+	user: IUser;
+}

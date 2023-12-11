@@ -62,6 +62,13 @@
 			"error",
 			"always"
 		],
-		"brace-style": "error"
+		"brace-style": "error",
+		"comma-spacing": [
+			"error",
+			{
+				"before": false,
+				"after": true
+			}
+		]
 	}
 }

@@ -1,5 +1,6 @@
 export enum ErrorCodeEnum {
-	NotFound = 1,
+	UrlNotFound = 1,
 	Unknown = 2,
 	ValidationError = 3,
+	EntityNotFound = 4,
 }

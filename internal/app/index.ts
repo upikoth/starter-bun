@@ -35,6 +35,7 @@ export function startServer(): void {
 				})
 
 				const filePath = router.match(req)?.filePath
+				const params = router.match(req)?.params
 
 				if (typeof filePath !== 'string') {
 					return responseNotFound
@@ -49,7 +50,7 @@ export function startServer(): void {
 				const handler = module.default
 
 				try {
-					const responseData = await handler(req)
+					const responseData = await handler(req, params)
 					logger.info(`response: ${url.pathname}`, { responseData })
 
 					return getSuccessResponse(responseData)
