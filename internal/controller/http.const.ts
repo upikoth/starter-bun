@@ -1,7 +1,12 @@
-import type { IError } from './http.types'
-import { ErorrStatusEnum } from './http.types'
+import { ErorrStatusEnum } from '@internal/constants'
 
 import { ErrorCodeEnum } from '@internal/constants'
+
+interface IResposeError {
+	code: ErrorCodeEnum,
+	description: string
+}
+
 
 export const getSuccessResponse = (data: unknown) => Response.json(
 	{
@@ -11,7 +16,7 @@ export const getSuccessResponse = (data: unknown) => Response.json(
 	{ status: 200 }
 )
 
-export const getErrorResponse = (error: IError, status: ErorrStatusEnum) => Response.json(
+export const getErrorResponse = (error: IResposeError, status: ErorrStatusEnum) => Response.json(
 	{
 		error,
 		data: {},

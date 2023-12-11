@@ -3,10 +3,10 @@ import { logger } from '@internal/packages'
 import environment from '@internal/environment'
 
 import { responseNotFound, getSuccessResponse, getErrorResponse } from '@internal/controller/http.const'
-import { ErorrStatusEnum } from '@internal/controller/http.types'
 import { migrateIfNeeded } from '@internal/repository/sqlite'
 
-import { ErrorCodeEnum } from '@internal/constants'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
+import type { ICustomError } from '@internal/models'
 
 export function startServer(): void {
 	try {
@@ -50,26 +50,47 @@ export function startServer(): void {
 
 				try {
 					const responseData = await handler(req)
-
 					logger.info(`response: ${url.pathname}`, { responseData })
 
 					return getSuccessResponse(responseData)
 				} catch (err) {
 					logger.error(`response: ${url.pathname}`, err)
 
-					return getErrorResponse(
-						{
-							code: ErrorCodeEnum.Unknown,
-							description: 'Неизвестная ошибка'
-						}, 
-						ErorrStatusEnum.InternalServerError
-					)
+					return getErrorResponseFromError(err)
 				}
 			}
 		})
+
 		logger.info('Сервис успешно запущен')
 	} catch (err) {
 		logger.error('Ошибка старта сервера', err)
 		return
 	}
+}
+
+function getErrorResponseFromError(err: unknown): Response {
+	if (!checkIsCustomError(err)) {
+		return getErrorResponse(
+			{
+				code: ErrorCodeEnum.Unknown,
+				description: 'Неизвестная ошибка'
+			}, 
+			ErorrStatusEnum.InternalServerError
+		)
+	}
+
+	return getErrorResponse(
+		{
+			code: err.code,
+			description: err.description
+		}, 
+		err.status
+	)
+}
+
+function checkIsCustomError(error: unknown): error is ICustomError {
+	return typeof error === 'object' &&
+		typeof (error as ICustomError).description === 'string' &&
+		typeof (error as ICustomError).status === 'number' && 
+		typeof (error as ICustomError).code === 'number'
 }
