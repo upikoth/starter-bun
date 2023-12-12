@@ -1,5 +1,6 @@
-import { HttpMethod } from '@internal/controller/http.types'
-import { responseNotFound } from '@internal/controller/http.const'
+import { HttpMethod } from '@internal/constants'
+import type { ICustomError } from '@internal/models'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
 
 function getHealth(): Response {
 	return Response.json({
@@ -15,5 +16,9 @@ export default function(req: Request): Response {
 		}
 	}
 
-	return responseNotFound
+	throw {
+		code: ErrorCodeEnum.UrlNotFound,
+		status: ErorrStatusEnum.NotFound,
+		description: 'Метод не найден'
+	} satisfies ICustomError
 }

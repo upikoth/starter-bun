@@ -1,9 +1,10 @@
 import { HttpMethod } from '@internal/constants'
-import { responseNotFound } from '@internal/controller/http.const'
+import type { ICustomError } from '@internal/models'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
 
-import { getUsers as getUsersFromService } from '@internal/service/users'
+import { getUsers as getUsersFromService, createUser as createUserFromService } from '@internal/service/users'
 
-import type { IGetUsersRequest, IGetUsersResponse } from '@internal/models'
+import type { IGetUsersRequest, IGetUsersResponse, ICreateUserResponse, ICreateUserRequest } from '@internal/models'
 
 async function getUsers(req: Request): Promise<IGetUsersResponse> {
 	const  { searchParams } = new URL(req.url)
@@ -25,12 +26,30 @@ async function getUsers(req: Request): Promise<IGetUsersResponse> {
 	}
 }
 
+async function createUser(req: Request): Promise<ICreateUserResponse> {
+	const bodyJson = await req.clone().json()
+	const name = bodyJson.name || ''
+
+	const createuserRequestData: ICreateUserRequest = { name }
+
+	const user = await createUserFromService(createuserRequestData)
+
+	return { user }
+}
+
 export default function(req: Request) {
 	switch (req.method) {
 		case HttpMethod.Get: {
 			return getUsers(req)
 		}
+		case HttpMethod.Post: {
+			return createUser(req)
+		}
 	}
 
-	return responseNotFound
+	throw {
+		code: ErrorCodeEnum.UrlNotFound,
+		status: ErorrStatusEnum.NotFound,
+		description: 'Метод не найден'
+	} satisfies ICustomError
 }

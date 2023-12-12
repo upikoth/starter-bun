@@ -1,4 +1,4 @@
-import type { IUser, IGetUsersRequest, IGetUserRequest } from '@internal/models/users'
+import type { IUser, IGetUsersRequest, IGetUserRequest, ICreateUserRequest } from '@internal/models/users'
 import { db } from '@internal/repository/sqlite'
 import { eq } from 'drizzle-orm'
 
@@ -33,6 +33,17 @@ export async function getUser(data: IGetUserRequest): Promise<IUser> {
 			description: 'Пользователь не найден'
 		} satisfies ICustomError
 	}
+
+	return user
+}
+
+export async function createUser(data: ICreateUserRequest): Promise<IUser> {
+	const res: IDbUser[] | [] = await db
+		.insert(users)
+		.values(data)
+		.returning()
+
+	const user: IDbUser | undefined = res[0]
 
 	return user
 }

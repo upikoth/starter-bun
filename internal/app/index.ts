@@ -27,7 +27,7 @@ export function startServer(): void {
 			async fetch(req) {
 				const url = new URL(req.url)
 				const query = url.search
-				const body = await req.text()
+				const body = await req.clone().text()
 
 				logger.info(`request: ${url.pathname}`, {
 					query,

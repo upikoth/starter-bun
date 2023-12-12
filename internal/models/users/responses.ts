@@ -9,3 +9,7 @@ export interface IGetUsersResponse {
 export interface IGetUserResponse {
 	user: IUser;
 }
+
+export interface ICreateUserResponse {
+	user: IUser;
+}

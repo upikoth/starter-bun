@@ -6,3 +6,7 @@ export interface IGetUsersRequest {
 export interface IGetUserRequest {
 	id: number;
 }
+
+export interface ICreateUserRequest {
+	name: string;
+}

@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-import type { IGetUsersRequest, IGetUserRequest } from '@internal/models/users'
+import type { IGetUsersRequest, IGetUserRequest, ICreateUserRequest } from '@internal/models/users'
 
 const getUsersRequestDataSchema = Joi.object({
 	limit: Joi.number()
@@ -13,7 +13,7 @@ const getUsersRequestDataSchema = Joi.object({
 		.required()
 })
 
-export function validateUsersRequestData(data: IGetUsersRequest): string {
+export function validateGetUsersRequestData(data: IGetUsersRequest): string {
 	return getUsersRequestDataSchema.validate(data).error?.message || ''
 }
 
@@ -24,6 +24,16 @@ const getUserRequestDataSchema = Joi.object({
 		.required()
 })
 
-export function validateUserRequestData(data: IGetUserRequest): string {
+export function validateGetUserRequestData(data: IGetUserRequest): string {
 	return getUserRequestDataSchema.validate(data).error?.message || ''
+}
+
+const createUserRequestDataSchema = Joi.object({
+	name: Joi.string()
+		.min(1)
+		.required()
+})
+
+export function validateCreateUserRequestData(data: ICreateUserRequest): string {
+	return createUserRequestDataSchema.validate(data).error?.message || ''
 }
