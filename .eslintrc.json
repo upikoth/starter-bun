@@ -78,6 +78,10 @@
 			{
 				"max": 1
 			}
+		],
+		"@typescript-eslint/semi": [
+			"error",
+			"never"
 		]
 	}
 }
