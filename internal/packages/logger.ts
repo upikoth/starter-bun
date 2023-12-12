@@ -19,7 +19,7 @@ const logger = winston.createLogger({
 	transports: [
 		new winston.transports.File({
 			filename: LogFiles.Error,
-			level: 'error' 
+			level: 'error'
 		}),
 		new winston.transports.File({ filename: LogFiles.All })
 	]
@@ -31,7 +31,7 @@ if (environment.NODE_ENV !== 'production') {
 			winston.format.colorize(),
 			winston.format.timestamp(),
 			winston.format.simple()
-		) 
+		)
 	}))
 }
 

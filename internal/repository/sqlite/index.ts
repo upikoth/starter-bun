@@ -4,7 +4,6 @@ import { migrate } from 'drizzle-orm/bun-sqlite/migrator'
 
 import * as schema from './schema'
 
-
 const sqlite = new Database('database.sqlite')
 export const db = drizzle(sqlite, { schema })
 

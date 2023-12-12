@@ -13,3 +13,7 @@ export interface IGetUserResponse {
 export interface ICreateUserResponse {
 	user: IUser;
 }
+
+export interface IUpdateUserResponse {
+	user: IUser;
+}

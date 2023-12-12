@@ -1,4 +1,10 @@
-import type { IUser, IGetUsersRequest, IGetUserRequest, ICreateUserRequest } from '@internal/models/users'
+import type {
+	IUser,
+	IGetUsersRequest,
+	IGetUserRequest,
+	ICreateUserRequest,
+	IUpdateUserRequest
+} from '@internal/models/users'
 import { db } from '@internal/repository/sqlite'
 import { eq } from 'drizzle-orm'
 
@@ -44,6 +50,26 @@ export async function createUser(data: ICreateUserRequest): Promise<IUser> {
 		.returning()
 
 	const user: IDbUser | undefined = res[0]
+
+	return user
+}
+
+export async function updateUser(data: IUpdateUserRequest): Promise<IUser> {
+	const res: IDbUser[] | [] = await db
+		.update(users)
+		.set(data)
+		.where(eq(users.id, data.id))
+		.returning()
+
+	const user: IDbUser | undefined = res[0]
+
+	if (!user) {
+		throw {
+			code: ErrorCodeEnum.EntityNotFound,
+			status: ErorrStatusEnum.Success,
+			description: 'Пользователь не найден'
+		} satisfies ICustomError
+	}
 
 	return user
 }

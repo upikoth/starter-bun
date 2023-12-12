@@ -27,7 +27,7 @@ async function getUsers(req: Request): Promise<IGetUsersResponse> {
 }
 
 async function createUser(req: Request): Promise<ICreateUserResponse> {
-	const bodyJson = await req.clone().json()
+	const bodyJson = await req.json()
 	const name = bodyJson.name || ''
 
 	const createuserRequestData: ICreateUserRequest = { name }

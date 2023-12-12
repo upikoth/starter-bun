@@ -7,7 +7,6 @@ interface IResposeError {
 	description: string
 }
 
-
 export const getSuccessResponse = (data: unknown) => Response.json(
 	{
 		data,

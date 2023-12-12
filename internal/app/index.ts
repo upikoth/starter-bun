@@ -42,7 +42,7 @@ export function startServer(): void {
 				}
 
 				const module = await import(filePath)
-			
+
 				if (typeof module !== 'object' || typeof module.default !== 'function') {
 					return responseNotFound
 				}
@@ -75,7 +75,7 @@ function getErrorResponseFromError(err: unknown): Response {
 			{
 				code: ErrorCodeEnum.Unknown,
 				description: 'Неизвестная ошибка'
-			}, 
+			},
 			ErorrStatusEnum.InternalServerError
 		)
 	}
@@ -84,7 +84,7 @@ function getErrorResponseFromError(err: unknown): Response {
 		{
 			code: err.code,
 			description: err.description
-		}, 
+		},
 		err.status
 	)
 }
@@ -92,6 +92,6 @@ function getErrorResponseFromError(err: unknown): Response {
 function checkIsCustomError(error: unknown): error is ICustomError {
 	return typeof error === 'object' &&
 		typeof (error as ICustomError).description === 'string' &&
-		typeof (error as ICustomError).status === 'number' && 
+		typeof (error as ICustomError).status === 'number' &&
 		typeof (error as ICustomError).code === 'number'
 }

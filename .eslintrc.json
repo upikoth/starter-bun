@@ -51,7 +51,9 @@
 			}
 		],
 		// Настройки форматирования объектов json.
-		"object-property-newline": "error",
+		"object-property-newline": [
+			"error"
+		],
 		"object-curly-newline": [
 			"error",
 			{
@@ -68,6 +70,13 @@
 			{
 				"before": false,
 				"after": true
+			}
+		],
+		"no-trailing-spaces": "error",
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 1
 			}
 		]
 	}

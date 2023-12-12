@@ -10,3 +10,8 @@ export interface IGetUserRequest {
 export interface ICreateUserRequest {
 	name: string;
 }
+
+export interface IUpdateUserRequest {
+	id: number;
+	name?: string;
+}
