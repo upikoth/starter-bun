@@ -22,7 +22,7 @@ import {
 	validateUpdateUserRequestData
 } from './validators'
 
-export function getUsers(data: IGetUsersRequest): Promise<IUser[]> {
+export function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], total: number }> {
 	const validationError = validateGetUsersRequestData(data)
 
 	if (validationError) {

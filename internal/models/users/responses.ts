@@ -4,6 +4,7 @@ export interface IGetUsersResponse {
 	users: IUser[];
 	limit: number;
 	offset: number;
+	total: number;
 }
 
 export interface IGetUserResponse {

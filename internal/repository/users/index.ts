@@ -6,7 +6,7 @@ import type {
 	IUpdateUserRequest
 } from '@internal/models/users'
 import { db } from '@internal/repository/sqlite'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 
 import type { ICustomError } from '@internal/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
@@ -14,14 +14,21 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
 import { users } from '../sqlite/schema'
 import type { IDbUser } from '../sqlite/schema'
 
-export async function getUsers(data: IGetUsersRequest): Promise<IUser[]> {
-	const res: IDbUser[] = await db
+export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], total: number}> {
+	const dbUsers: IDbUser[] = await db
 		.select()
 		.from(users)
 		.limit(data.limit)
 		.offset(data.offset)
 
-	return res
+	const { total }: { total: number} = (await db
+		.select({ total: sql<number>`cast(count(${users.id}) as int)` })
+		.from(users))[0]
+
+	return {
+		users: dbUsers,
+		total
+	}
 }
 
 export async function getUser(data: IGetUserRequest): Promise<IUser> {

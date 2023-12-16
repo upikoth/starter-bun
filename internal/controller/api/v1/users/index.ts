@@ -17,12 +17,13 @@ async function getUsers(req: Request): Promise<IGetUsersResponse> {
 		offset
 	}
 
-	const users = await getUsersFromService(getUsersRequestData)
+	const { users, total } = await getUsersFromService(getUsersRequestData)
 
 	return {
 		users,
 		limit,
-		offset
+		offset,
+		total
 	}
 }
 
