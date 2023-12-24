@@ -1,10 +1,10 @@
-import type { UserStatus } from '@internal/models'
+import { UserStatusEnum } from '@internal/models'
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 
 export const users = sqliteTable('users', {
 	id: integer('id').primaryKey(),
 	name: text('name').notNull(),
-	status: text('status').notNull().default('active' satisfies UserStatus).$type<UserStatus>()
+	status: text('status').notNull().default(UserStatusEnum.Active).$type<UserStatusEnum>()
 })
 
 type DbUser = typeof users.$inferSelect

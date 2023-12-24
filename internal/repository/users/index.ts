@@ -21,8 +21,8 @@ export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[]
 		.limit(data.limit)
 		.offset(data.offset)
 
-	const { total }: { total: number} = (await db
-		.select({ total: sql<number>`cast(count(${users.id}) as int)` })
+	const { total }: { total: number } = (await db
+		.select({ total: sql<number>`count(${users.id})` })
 		.from(users))[0]
 
 	return {

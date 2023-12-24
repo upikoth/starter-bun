@@ -1,5 +1,7 @@
 import Joi from 'joi'
 
+import { UserStatusEnum } from '@internal/models'
+
 import type { IGetUsersRequest, IGetUserRequest, ICreateUserRequest, IUpdateUserRequest } from '@internal/models/users'
 
 const getUsersRequestDataSchema = Joi.object({
@@ -45,6 +47,9 @@ const updateUserRequestDataSchema = Joi.object({
 		.required(),
 	name: Joi.string()
 		.min(1)
+		.optional(),
+	status: Joi.string()
+		.valid(...Object.values(UserStatusEnum))
 		.optional()
 })
 

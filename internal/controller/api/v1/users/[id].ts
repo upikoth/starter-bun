@@ -19,7 +19,8 @@ async function updateUser(req: Request, params?: Record<string, string>): Promis
 
 	const updateUsersRequestData: IUpdateUserRequest = {
 		id: Number.parseInt(params?.id || '0'),
-		name: bodyJson.name
+		name: bodyJson.name,
+		status: bodyJson.status
 	}
 
 	const user = await updateUserFromService(updateUsersRequestData)

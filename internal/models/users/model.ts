@@ -1,7 +1,10 @@
-export type UserStatus = 'active' | 'blocked'
+export enum UserStatusEnum {
+	Active = 'active',
+	Blocked = 'blocked'
+}
 
 export interface IUser {
 	id: number;
 	name: string;
-	status: UserStatus;
+	status: UserStatusEnum;
 }
