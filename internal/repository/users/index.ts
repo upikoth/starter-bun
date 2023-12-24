@@ -57,6 +57,19 @@ export async function getUser(data: IGetUserRequest): Promise<IUser> {
 }
 
 export async function createUser(data: ICreateUserRequest): Promise<IUser> {
+	const isUserWithThisEmailAlreadyExist = (await db
+		.select()
+		.from(users)
+		.where(eq(users.email, data.email))).length > 0
+
+	if (isUserWithThisEmailAlreadyExist) {
+		throw {
+			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
+			status: ErorrStatusEnum.Success,
+			description: 'Пользователь с таким email уже существует'
+		} satisfies ICustomError
+	}
+
 	const res: IDbUser[] | [] = await db
 		.insert(users)
 		.values(data)
@@ -68,6 +81,19 @@ export async function createUser(data: ICreateUserRequest): Promise<IUser> {
 }
 
 export async function updateUser(data: IUpdateUserRequest): Promise<IUser> {
+	const isUserWithThisEmailAlreadyExist = !!data.email && (await db
+		.select()
+		.from(users)
+		.where(eq(users.email, data.email))).length > 0
+
+	if (isUserWithThisEmailAlreadyExist) {
+		throw {
+			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
+			status: ErorrStatusEnum.Success,
+			description: 'Пользователь с таким email уже существует'
+		} satisfies ICustomError
+	}
+
 	const res: IDbUser[] | [] = await db
 		.update(users)
 		.set(data)

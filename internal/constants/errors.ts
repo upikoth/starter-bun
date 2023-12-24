@@ -3,4 +3,5 @@ export enum ErrorCodeEnum {
 	Unknown = 2,
 	ValidationError = 3,
 	EntityNotFound = 4,
+	UserWithThisEmailAlreadyExist = 5,
 }

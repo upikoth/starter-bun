@@ -11,11 +11,11 @@ export interface IGetUserRequest {
 }
 
 export interface ICreateUserRequest {
-	name: string;
+	email: string;
 }
 
 export interface IUpdateUserRequest {
 	id: number;
-	name?: string;
+	email?: string;
 	status?: UserStatusEnum;
 }

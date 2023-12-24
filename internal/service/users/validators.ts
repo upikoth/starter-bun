@@ -34,8 +34,8 @@ export function validateGetUserRequestData(data: IGetUserRequest): string {
 }
 
 const createUserRequestDataSchema = Joi.object({
-	name: Joi.string()
-		.min(1)
+	email: Joi.string()
+		.email()
 		.required()
 })
 
@@ -48,8 +48,8 @@ const updateUserRequestDataSchema = Joi.object({
 		.integer()
 		.min(1)
 		.required(),
-	name: Joi.string()
-		.min(1)
+	email: Joi.string()
+		.email()
 		.optional(),
 	status: Joi.string()
 		.valid(...Object.values(UserStatusEnum))

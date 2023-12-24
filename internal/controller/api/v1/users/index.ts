@@ -37,9 +37,9 @@ async function getUsers(req: Request): Promise<IGetUsersResponse> {
 
 async function createUser(req: Request): Promise<ICreateUserResponse> {
 	const bodyJson = await req.json()
-	const name = bodyJson.name || ''
+	const email = bodyJson.email || ''
 
-	const createuserRequestData: ICreateUserRequest = { name }
+	const createuserRequestData: ICreateUserRequest = { email }
 
 	const user = await createUserFromService(createuserRequestData)
 

@@ -5,6 +5,6 @@ export enum UserStatusEnum {
 
 export interface IUser {
 	id: number;
-	name: string;
+	email: string;
 	status: UserStatusEnum;
 }
