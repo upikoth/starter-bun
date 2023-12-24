@@ -4,17 +4,25 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
 
 import { getUsers as getUsersFromService, createUser as createUserFromService } from '@internal/service/users'
 
-import type { IGetUsersRequest, IGetUsersResponse, ICreateUserResponse, ICreateUserRequest } from '@internal/models'
+import type {
+	IGetUsersRequest,
+	IGetUsersResponse,
+	ICreateUserResponse,
+	ICreateUserRequest,
+	UserStatusEnum
+} from '@internal/models'
 
 async function getUsers(req: Request): Promise<IGetUsersResponse> {
 	const  { searchParams } = new URL(req.url)
 
 	const limit = Number.parseInt(searchParams.get('limit') || '10')
 	const offset = Number.parseInt(searchParams.get('offset') || '0')
+	const status = searchParams.get('status') as UserStatusEnum || undefined
 
 	const getUsersRequestData: IGetUsersRequest = {
 		limit,
-		offset
+		offset,
+		status
 	}
 
 	const { users, total } = await getUsersFromService(getUsersRequestData)

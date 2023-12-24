@@ -3,6 +3,7 @@ import type { UserStatusEnum } from './model'
 export interface IGetUsersRequest {
 	limit: number;
 	offset: number;
+	status?: UserStatusEnum
 }
 
 export interface IGetUserRequest {

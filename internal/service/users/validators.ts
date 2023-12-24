@@ -12,7 +12,10 @@ const getUsersRequestDataSchema = Joi.object({
 	offset: Joi.number()
 		.integer()
 		.min(0)
-		.required()
+		.required(),
+	status: Joi.string()
+		.valid(...Object.values(UserStatusEnum))
+		.optional()
 })
 
 export function validateGetUsersRequestData(data: IGetUsersRequest): string {

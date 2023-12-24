@@ -18,12 +18,18 @@ export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[]
 	const dbUsers: IDbUser[] = await db
 		.select()
 		.from(users)
+		.where(
+			eq(users.status, data.status || users.status)
+		)
 		.limit(data.limit)
 		.offset(data.offset)
 
 	const { total }: { total: number } = (await db
 		.select({ total: sql<number>`count(${users.id})` })
-		.from(users))[0]
+		.from(users)
+		.where(
+			eq(users.status, data.status || users.status)
+		))[0]
 
 	return {
 		users: dbUsers,
