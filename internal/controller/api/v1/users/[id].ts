@@ -1,6 +1,5 @@
 import { HttpMethod } from '@internal/constants'
-import type { ICustomError } from '@internal/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
+import { errorNotFound } from '@internal/controller/http.const'
 
 import { getUser as getUserFromService, updateUser as updateUserFromService } from '@internal/service/users'
 
@@ -38,9 +37,5 @@ export default function(req: Request, params?: Record<string, string>) {
 		}
 	}
 
-	throw {
-		code: ErrorCodeEnum.UrlNotFound,
-		status: ErorrStatusEnum.NotFound,
-		description: 'Метод не найден'
-	} satisfies ICustomError
+	throw errorNotFound
 }

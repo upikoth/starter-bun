@@ -8,3 +8,8 @@ export interface ICustomError {
 	status: ErorrStatusEnum
 	description: string
 }
+
+export interface IResponseInfo {
+	data: unknown
+	error: unknown
+}

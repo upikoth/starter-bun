@@ -1,6 +1,5 @@
-import { ErorrStatusEnum } from '@internal/constants'
-
-import { ErrorCodeEnum } from '@internal/constants'
+import { ErorrStatusEnum, ErrorCodeEnum } from '@internal/constants'
+import { ICustomError } from '@internal/models'
 
 interface IResposeError {
 	code: ErrorCodeEnum,
@@ -24,10 +23,8 @@ export const getErrorResponse = (error: IResposeError, status: ErorrStatusEnum) 
 	{ status }
 )
 
-export const responseNotFound = getErrorResponse(
-	{
-		code: ErrorCodeEnum.UrlNotFound,
-		description: 'Метод не найден'
-	},
-	ErorrStatusEnum.NotFound
-)
+export const errorNotFound = {
+	code: ErrorCodeEnum.UrlNotFound,
+	status: ErorrStatusEnum.NotFound,
+	description: 'Метод не найден'
+} satisfies ICustomError

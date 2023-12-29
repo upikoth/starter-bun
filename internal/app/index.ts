@@ -2,11 +2,14 @@ import { logger } from '@internal/packages'
 
 import environment from '@internal/environment'
 
-import { responseNotFound, getSuccessResponse, getErrorResponse } from '@internal/controller/http.const'
+import { getSuccessResponse, getErrorResponse, errorNotFound } from '@internal/controller/http.const'
 import { migrateIfNeeded } from '@internal/repository/sqlite'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
-import type { ICustomError } from '@internal/models'
+import type { ICustomError, IResponseInfo } from '@internal/models'
+
+import middlewares from './middlewares'
+import { FileSystemRouter } from 'bun'
 
 export function startServer(): void {
 	try {
@@ -25,39 +28,18 @@ export function startServer(): void {
 		Bun.serve({
 			port: environment.APP_PORT,
 			async fetch(req) {
-				const url = new URL(req.url)
-				const query = url.search
-				const body = await req.clone().text()
+				const responseInfo = getResponseInfo(req, router)
 
-				logger.info(`request: ${url.pathname}`, {
-					query,
-					body
+				middlewares.forEach(middleware => {
+					middleware(req, responseInfo)
 				})
 
-				const filePath = router.match(req)?.filePath
-				const params = router.match(req)?.params
+				const response = await responseInfo
 
-				if (typeof filePath !== 'string') {
-					return responseNotFound
-				}
-
-				const module = await import(filePath)
-
-				if (typeof module !== 'object' || typeof module.default !== 'function') {
-					return responseNotFound
-				}
-
-				const handler = module.default
-
-				try {
-					const responseData = await handler(req, params)
-					logger.info(`response: ${url.pathname}`, { responseData })
-
-					return getSuccessResponse(responseData)
-				} catch (err) {
-					logger.error(`response: ${url.pathname}`, err)
-
-					return getErrorResponseFromError(err)
+				if (response.error) {
+					return getErrorResponseFromError(response.error)
+				} else {
+					return getSuccessResponse(response.data)
 				}
 			}
 		})
@@ -67,6 +49,40 @@ export function startServer(): void {
 		logger.error('Ошибка старта сервера', err)
 		return
 	}
+}
+
+async function getResponseInfo(req: Request, router: FileSystemRouter): Promise<IResponseInfo>  {
+	try {
+		const params = router.match(req)?.params
+
+		const requestHandler = await getRequestHandler(req, router)
+		const responseData = await requestHandler(req, params)
+		return {
+			data: responseData,
+			error: null
+		}
+	} catch (err) {
+		return {
+			data: null,
+			error: err
+		}
+	}
+}
+
+async function getRequestHandler(req: Request, router: FileSystemRouter) {
+	const filePath = router.match(req)?.filePath
+
+	if (typeof filePath !== 'string') {
+		throw errorNotFound
+	}
+
+	const module = await import(filePath)
+
+	if (typeof module !== 'object' || typeof module.default !== 'function') {
+		throw errorNotFound
+	}
+
+	return module.default
 }
 
 function getErrorResponseFromError(err: unknown): Response {
