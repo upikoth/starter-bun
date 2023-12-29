@@ -1,9 +1,6 @@
-
 import { logger } from '@internal/packages'
 
-import type { IResponseInfo } from '@internal/models'
-
-export default async function logging(req: Request, res: Promise<IResponseInfo>) {
+export default async function logging(req: Request, res: Promise<Response>) {
 	const url = new URL(req.url)
 	const query = url.search
 	const body = await req.clone().text()
@@ -13,11 +10,12 @@ export default async function logging(req: Request, res: Promise<IResponseInfo>)
 		body
 	})
 
-	const responseInfo = await res
+	const response = await res
+	const responseJson = await response.clone().json()
 
-	if (responseInfo.error) {
-		logger.error(`response: ${url.pathname}`, responseInfo.error)
+	if (responseJson.success) {
+		logger.info(`response: ${url.pathname}`, { responseData: responseJson.data })
 	} else {
-		logger.info(`response: ${url.pathname}`, { responseData: responseInfo.data })
+		logger.error(`response: ${url.pathname}`, responseJson.error)
 	}
 }

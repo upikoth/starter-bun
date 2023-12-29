@@ -12,3 +12,9 @@ export enum HttpMethod {
 	Patch = 'PATCH',
 	Delete = 'DELETE',
 }
+
+export enum HttpHeaderEnum {
+	SetCookie = 'Set-Cookie',
+}
+
+export const AUTHORIZATION_HEADER = 'Authorization'

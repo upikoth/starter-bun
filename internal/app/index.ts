@@ -2,11 +2,11 @@ import { logger } from '@internal/packages'
 
 import environment from '@internal/environment'
 
-import { getSuccessResponse, getErrorResponse, errorNotFound } from '@internal/controller/http.const'
+import { getErrorResponse, errorNotFound } from '@internal/controller/http.const'
 import { migrateIfNeeded } from '@internal/repository/sqlite'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
-import type { ICustomError, IResponseInfo } from '@internal/models'
+import type { ICustomError } from '@internal/models'
 
 import middlewares from './middlewares'
 import { FileSystemRouter } from 'bun'
@@ -28,19 +28,14 @@ export function startServer(): void {
 		Bun.serve({
 			port: environment.APP_PORT,
 			async fetch(req) {
-				const responseInfo = getResponseInfo(req, router)
+				const responsePromise = getResponse(req, router)
 
 				middlewares.forEach(middleware => {
-					middleware(req, responseInfo)
+					middleware(req, responsePromise)
 				})
 
-				const response = await responseInfo
-
-				if (response.error) {
-					return getErrorResponseFromError(response.error)
-				} else {
-					return getSuccessResponse(response.data)
-				}
+				const response = await responsePromise
+				return response
 			}
 		})
 
@@ -51,21 +46,16 @@ export function startServer(): void {
 	}
 }
 
-async function getResponseInfo(req: Request, router: FileSystemRouter): Promise<IResponseInfo>  {
+async function getResponse(req: Request, router: FileSystemRouter): Promise<Response>  {
 	try {
 		const params = router.match(req)?.params
 
 		const requestHandler = await getRequestHandler(req, router)
-		const responseData = await requestHandler(req, params)
-		return {
-			data: responseData,
-			error: null
-		}
+		const response = await requestHandler(req, params)
+
+		return response
 	} catch (err) {
-		return {
-			data: null,
-			error: err
-		}
+		return getErrorResponseFromError(err)
 	}
 }
 

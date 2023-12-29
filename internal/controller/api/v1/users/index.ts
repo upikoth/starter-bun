@@ -1,5 +1,5 @@
 import { HttpMethod } from '@internal/constants'
-import { errorNotFound } from '@internal/controller/http.const'
+import { errorNotFound, getSuccessResponse } from '@internal/controller/http.const'
 
 import { getUsers as getUsersFromService, createUser as createUserFromService } from '@internal/service/users'
 
@@ -11,7 +11,7 @@ import type {
 	UserStatusEnum
 } from '@internal/models'
 
-async function getUsers(req: Request): Promise<IGetUsersResponse> {
+async function getUsers(req: Request): Promise<Response> {
 	const  { searchParams } = new URL(req.url)
 
 	const limit = Number.parseInt(searchParams.get('limit') || '10')
@@ -26,30 +26,30 @@ async function getUsers(req: Request): Promise<IGetUsersResponse> {
 
 	const { users, total } = await getUsersFromService(getUsersRequestData)
 
-	return {
+	return getSuccessResponse({
 		users,
 		limit,
 		offset,
 		total
-	}
+	} satisfies IGetUsersResponse)
 }
 
-async function createUser(req: Request): Promise<ICreateUserResponse> {
+async function createUser(req: Request): Promise<Response> {
 	const bodyJson = await req.json()
 	const email = bodyJson.email || ''
 	const password = bodyJson.password || ''
 
-	const createuserRequestData: ICreateUserRequest = {
+	const createUserRequestData: ICreateUserRequest = {
 		email,
 		password
 	}
 
-	const user = await createUserFromService(createuserRequestData)
+	const user = await createUserFromService(createUserRequestData)
 
-	return { user }
+	return getSuccessResponse({ user } satisfies ICreateUserResponse)
 }
 
-export default function(req: Request) {
+export default function(req: Request): Promise<Response>  {
 	switch (req.method) {
 		case HttpMethod.Get: {
 			return getUsers(req)
