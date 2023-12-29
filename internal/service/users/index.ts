@@ -1,3 +1,5 @@
+import crypto from 'node:crypto'
+
 import {
 	getUsers as getUsersDb,
 	getUser as getUserDb,
@@ -22,7 +24,7 @@ import {
 	validateUpdateUserRequestData
 } from './validators'
 
-export function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], total: number }> {
+export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], total: number }> {
 	const validationError = validateGetUsersRequestData(data)
 
 	if (validationError) {
@@ -33,10 +35,19 @@ export function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], tota
 		} satisfies ICustomError
 	}
 
-	return getUsersDb(data)
+	const dbUsers = await getUsersDb(data)
+
+	return {
+		...dbUsers,
+		users: dbUsers.users.map(user => ({
+			id: user.id,
+			email: user.email,
+			status: user.status
+		}))
+	}
 }
 
-export function getUser(data: IGetUserRequest): Promise<IUser> {
+export async function getUser(data: IGetUserRequest): Promise<IUser> {
 	const validationError = validateGetUserRequestData(data)
 
 	if (validationError) {
@@ -47,10 +58,16 @@ export function getUser(data: IGetUserRequest): Promise<IUser> {
 		} satisfies ICustomError
 	}
 
-	return getUserDb(data)
+	const dbUser = await getUserDb(data)
+
+	return {
+		id: dbUser.id,
+		email: dbUser.email,
+		status: dbUser.status
+	}
 }
 
-export function createUser(data: ICreateUserRequest): Promise<IUser> {
+export async function createUser(data: ICreateUserRequest): Promise<IUser> {
 	const validationError = validateCreateUserRequestData(data)
 
 	if (validationError) {
@@ -61,10 +78,26 @@ export function createUser(data: ICreateUserRequest): Promise<IUser> {
 		} satisfies ICustomError
 	}
 
-	return createUserDb(data)
+	const passwordSalt = crypto.randomBytes(16).toString('hex')
+	const hash = crypto.createHmac('sha512', passwordSalt)
+	hash.update(data.password)
+
+	const passwordHash = hash.digest('hex')
+
+	const dbUser = await createUserDb({
+		...data,
+		passwordHash,
+		passwordSalt
+	})
+
+	return {
+		id: dbUser.id,
+		email: dbUser.email,
+		status: dbUser.status
+	}
 }
 
-export function updateUser(data: IUpdateUserRequest): Promise<IUser> {
+export async function updateUser(data: IUpdateUserRequest): Promise<IUser> {
 	const validationError = validateUpdateUserRequestData(data)
 
 	if (validationError) {
@@ -74,6 +107,11 @@ export function updateUser(data: IUpdateUserRequest): Promise<IUser> {
 			description: validationError
 		} satisfies ICustomError
 	}
+	const dbUser = await updateUserDb(data)
 
-	return updateUserDb(data)
+	return {
+		id: dbUser.id,
+		email: dbUser.email,
+		status: dbUser.status
+	}
 }

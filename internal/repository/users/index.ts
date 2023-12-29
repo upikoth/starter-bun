@@ -1,5 +1,4 @@
 import type {
-	IUser,
 	IGetUsersRequest,
 	IGetUserRequest,
 	ICreateUserRequest,
@@ -14,7 +13,7 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
 import { users } from '../sqlite/schema'
 import type { IDbUser } from '../sqlite/schema'
 
-export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], total: number}> {
+export async function getUsers(data: IGetUsersRequest): Promise<{ users: IDbUser[], total: number}> {
 	const dbUsers: IDbUser[] = await db
 		.select()
 		.from(users)
@@ -37,7 +36,7 @@ export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[]
 	}
 }
 
-export async function getUser(data: IGetUserRequest): Promise<IUser> {
+export async function getUser(data: IGetUserRequest): Promise<IDbUser> {
 	const res: IDbUser[] | [] = await db
 		.select()
 		.from(users)
@@ -56,7 +55,9 @@ export async function getUser(data: IGetUserRequest): Promise<IUser> {
 	return user
 }
 
-export async function createUser(data: ICreateUserRequest): Promise<IUser> {
+export async function createUser(
+	data: ICreateUserRequest & { passwordHash: string, passwordSalt: string }
+): Promise<IDbUser> {
 	const isUserWithThisEmailAlreadyExist = (await db
 		.select()
 		.from(users)
@@ -80,7 +81,7 @@ export async function createUser(data: ICreateUserRequest): Promise<IUser> {
 	return user
 }
 
-export async function updateUser(data: IUpdateUserRequest): Promise<IUser> {
+export async function updateUser(data: IUpdateUserRequest): Promise<IDbUser> {
 	const isUserWithThisEmailAlreadyExist = !!data.email && (await db
 		.select()
 		.from(users)

@@ -36,6 +36,8 @@ export function validateGetUserRequestData(data: IGetUserRequest): string {
 const createUserRequestDataSchema = Joi.object({
 	email: Joi.string()
 		.email()
+		.required(),
+	password: Joi.string()
 		.required()
 })
 

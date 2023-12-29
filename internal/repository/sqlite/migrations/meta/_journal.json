@@ -29,6 +29,20 @@
       "when": 1703448877978,
       "tag": "0003_premium_northstar",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1703792162540,
+      "tag": "0004_sleepy_doctor_octopus",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1703792651454,
+      "tag": "0005_chubby_christian_walker",
+      "breakpoints": true
     }
   ]
 }
