@@ -14,3 +14,15 @@ type DbUserInsert = typeof users.$inferInsert
 
 export interface IDbUser extends DbUser{}
 export interface IDbUserInsert extends DbUserInsert{}
+
+export const sessions = sqliteTable('sessions', {
+	id: integer('id').primaryKey(),
+	userId: integer('user_id').notNull(),
+	session: text('session').notNull()
+})
+
+type DbSession = typeof sessions.$inferSelect
+type DbSessionInsert = typeof sessions.$inferInsert
+
+export interface IDbSession extends DbSession {}
+export interface IDbSessionInsert extends DbSessionInsert {}

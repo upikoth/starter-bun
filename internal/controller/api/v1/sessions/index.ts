@@ -2,7 +2,6 @@ import { HttpMethod } from '@internal/constants'
 import { errorNotFound, getSuccessResponse } from '@internal/controller/http.const'
 
 import { createSession as createSessionFromService } from '@internal/service/sessions'
-import { getUser as getUserFromService } from '@internal/service/users'
 
 import { HttpHeaderEnum, AUTHORIZATION_HEADER, MILLISECONDS_IN_MONTH } from '@internal/constants'
 
@@ -21,8 +20,7 @@ async function createSession(req: Request): Promise<Response> {
 		password
 	}
 
-	const session = await createSessionFromService(createSessionRequestData)
-	const user = await getUserFromService({ id: session.userId })
+	const { session, user } = await createSessionFromService(createSessionRequestData)
 
 	const response = getSuccessResponse({ user } satisfies ICreateSessionResponse)
 	response.headers.set(

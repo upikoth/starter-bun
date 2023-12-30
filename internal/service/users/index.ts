@@ -79,10 +79,10 @@ export async function createUser(data: ICreateUserRequest): Promise<IUser> {
 	}
 
 	const passwordSalt = crypto.randomBytes(16).toString('hex')
-	const hash = crypto.createHmac('sha512', passwordSalt)
-	hash.update(data.password)
-
-	const passwordHash = hash.digest('hex')
+	const passwordHash = crypto
+		.createHmac('sha512', passwordSalt)
+		.update(data.password)
+		.digest('hex')
 
 	const dbUser = await createUserDb({
 		...data,

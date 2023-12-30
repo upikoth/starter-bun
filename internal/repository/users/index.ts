@@ -47,8 +47,27 @@ export async function getUser(data: IGetUserRequest): Promise<IDbUser> {
 	if (!user) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.Success,
+			status: ErorrStatusEnum.BadRequest,
 			description: 'Пользователь не найден'
+		} satisfies ICustomError
+	}
+
+	return user
+}
+
+export async function getUserByEmail(email: string): Promise<IDbUser> {
+	const res: IDbUser[] | [] = await db
+		.select()
+		.from(users)
+		.where(eq(users.email, email))
+
+	const user: IDbUser | undefined = res[0]
+
+	if (!user) {
+		throw {
+			code: ErrorCodeEnum.EmailOrPasswordInvalid,
+			status: ErorrStatusEnum.BadRequest,
+			description: 'Email или пароль указаны неверно'
 		} satisfies ICustomError
 	}
 
@@ -66,7 +85,7 @@ export async function createUser(
 	if (isUserWithThisEmailAlreadyExist) {
 		throw {
 			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
-			status: ErorrStatusEnum.Success,
+			status: ErorrStatusEnum.BadRequest,
 			description: 'Пользователь с таким email уже существует'
 		} satisfies ICustomError
 	}
@@ -82,19 +101,6 @@ export async function createUser(
 }
 
 export async function updateUser(data: IUpdateUserRequest): Promise<IDbUser> {
-	const isUserWithThisEmailAlreadyExist = !!data.email && (await db
-		.select()
-		.from(users)
-		.where(eq(users.email, data.email))).length > 0
-
-	if (isUserWithThisEmailAlreadyExist) {
-		throw {
-			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
-			status: ErorrStatusEnum.Success,
-			description: 'Пользователь с таким email уже существует'
-		} satisfies ICustomError
-	}
-
 	const res: IDbUser[] | [] = await db
 		.update(users)
 		.set(data)
@@ -106,7 +112,7 @@ export async function updateUser(data: IUpdateUserRequest): Promise<IDbUser> {
 	if (!user) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.Success,
+			status: ErorrStatusEnum.BadRequest,
 			description: 'Пользователь не найден'
 		} satisfies ICustomError
 	}

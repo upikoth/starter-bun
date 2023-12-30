@@ -4,4 +4,7 @@ export enum ErrorCodeEnum {
 	ValidationError = 3,
 	EntityNotFound = 4,
 	UserWithThisEmailAlreadyExist = 5,
+	EmailOrPasswordInvalid = 6,
+	SessionAlreadyExist = 7,
+	UserBlocked = 8,
 }

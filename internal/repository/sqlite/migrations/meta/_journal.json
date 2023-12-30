@@ -43,6 +43,13 @@
       "when": 1703792651454,
       "tag": "0005_chubby_christian_walker",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1703889051855,
+      "tag": "0006_nice_firedrake",
+      "breakpoints": true
     }
   ]
 }
