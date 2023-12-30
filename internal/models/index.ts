@@ -9,3 +9,8 @@ export interface ICustomError {
 	status: ErorrStatusEnum
 	description: string
 }
+
+export interface IResposeError {
+	code: ErrorCodeEnum,
+	description: string
+}

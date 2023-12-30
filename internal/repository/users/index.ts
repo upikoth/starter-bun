@@ -101,6 +101,19 @@ export async function createUser(
 }
 
 export async function updateUser(data: IUpdateUserRequest): Promise<IDbUser> {
+	const isUserWithThisEmailAlreadyExist = !!data.email && (await db
+		.select()
+		.from(users)
+		.where(eq(users.email, data.email))).length > 0
+
+	if (isUserWithThisEmailAlreadyExist) {
+		throw {
+			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
+			status: ErorrStatusEnum.BadRequest,
+			description: 'Пользователь с таким email уже существует'
+		} satisfies ICustomError
+	}
+
 	const res: IDbUser[] | [] = await db
 		.update(users)
 		.set(data)
