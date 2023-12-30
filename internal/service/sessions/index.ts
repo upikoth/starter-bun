@@ -1,19 +1,50 @@
 import crypto from 'node:crypto'
 
 import { getUserByEmail as getUserByEmailDb } from '@/repository/users'
-import { createSession as createSessionDb } from '@/repository/sessions'
+import {
+	createSession as createSessionDb,
+	getSessions as getSessionsDb
+} from '@/repository/sessions'
 
 import type {
+	IGetSessionsRequest,
 	ICreateSessionRequest,
 	ISession,
 	IUser,
 	ICustomError
 } from '@/models'
-import { UserStatusEnum } from '@/models'
+import { IGetSessionsResponseSession, UserStatusEnum } from '@/models'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import { validateCreateSessionRequestData } from './validators'
+import {
+	validateGetSessionsRequestData,
+	validateCreateSessionRequestData
+} from './validators'
+
+export async function getSessions(
+	data: IGetSessionsRequest
+): Promise<{ sessions: IGetSessionsResponseSession[], total: number }> {
+	const validationError = validateGetSessionsRequestData(data)
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	const dbSessions = await getSessionsDb(data)
+
+	return {
+		...dbSessions,
+		sessions: dbSessions.sessions.map(s => ({
+			id: s.id,
+			userId: s.userId
+		}))
+	}
+}
 
 export async function createSession(data: ICreateSessionRequest): Promise<{ session: ISession, user: IUser }> {
 	const validationError = validateCreateSessionRequestData(data)

@@ -27,19 +27,19 @@ const routes: IRoute[] = [
 
 			return api.v1.users.get(req, params)
 		},
-		authRequired: false
+		authRequired: true
 	},
 	{
 		pathname: '/api/v1/users',
 		method: HttpMethod.Get,
 		handler: api.v1.users.getAll,
-		authRequired: false
+		authRequired: true
 	},
 	{
 		pathname: '/api/v1/users',
 		method: HttpMethod.Post,
 		handler: api.v1.users.create,
-		authRequired: false
+		authRequired: true
 	},
 	{
 		pathname: '/api/v1/users/:id',
@@ -50,7 +50,13 @@ const routes: IRoute[] = [
 
 			return api.v1.users.update(req, params)
 		},
-		authRequired: false
+		authRequired: true
+	},
+	{
+		pathname: '/api/v1/sessions',
+		method: HttpMethod.Get,
+		handler: api.v1.sessions.getAll,
+		authRequired: true
 	},
 	{
 		pathname: '/api/v1/sessions',

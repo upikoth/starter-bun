@@ -1,3 +1,7 @@
+import getAll from './get-all'
 import create from './create'
 
-export default { create }
+export default {
+	getAll,
+	create
+}

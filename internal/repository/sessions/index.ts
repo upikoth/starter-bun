@@ -1,11 +1,29 @@
 import { db } from '@/repository/sqlite'
-import { eq } from 'drizzle-orm'
+import { sql, eq } from 'drizzle-orm'
 
-import type { ICustomError } from '@/models'
+import type { ICustomError, IGetSessionsRequest } from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { sessions } from '../sqlite/schema'
 import type { IDbSession } from '../sqlite/schema'
+
+export async function getSessions(data: IGetSessionsRequest): Promise<{ sessions: IDbSession[], total: number}> {
+	const dbSessions: IDbSession[] = await db
+		.select()
+		.from(sessions)
+		.limit(data.limit)
+		.offset(data.offset)
+
+	const { total }: { total: number } = (await db
+		.select({ total: sql<number>`count(${sessions.id})` })
+		.from(sessions)
+	)[0]
+
+	return {
+		sessions: dbSessions,
+		total
+	}
+}
 
 export async function createSession(
 	data: { userId: number, session: string }
