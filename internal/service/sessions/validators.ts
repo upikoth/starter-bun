@@ -2,7 +2,8 @@ import Joi from 'joi'
 
 import type {
 	IGetSessionsRequest,
-	ICreateSessionRequest
+	ICreateSessionRequest,
+	IDeleteSessionRequest
 } from '@/models'
 
 const getSessionsRequestDataSchema = Joi.object({
@@ -30,4 +31,15 @@ const createSessionRequestDataSchema = Joi.object({
 
 export function validateCreateSessionRequestData(data: ICreateSessionRequest): string {
 	return createSessionRequestDataSchema.validate(data).error?.message || ''
+}
+
+const deleteSessionRequestDataSchema = Joi.object({
+	id: Joi.number()
+		.integer()
+		.min(1)
+		.required()
+})
+
+export function validateDeleteSessionRequestData(data: IDeleteSessionRequest): string {
+	return deleteSessionRequestDataSchema.validate(data).error?.message || ''
 }

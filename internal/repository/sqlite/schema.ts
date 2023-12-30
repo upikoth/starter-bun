@@ -17,7 +17,7 @@ export interface IDbUserInsert extends DbUserInsert{}
 
 export const sessions = sqliteTable('sessions', {
 	id: integer('id').primaryKey(),
-	userId: integer('user_id').notNull(),
+	userId: integer('user_id').notNull().references(() => users.id),
 	session: text('session').notNull()
 })
 

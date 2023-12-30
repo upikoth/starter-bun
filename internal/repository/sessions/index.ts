@@ -1,7 +1,11 @@
 import { db } from '@/repository/sqlite'
 import { sql, eq } from 'drizzle-orm'
 
-import type { ICustomError, IGetSessionsRequest } from '@/models'
+import type {
+	ICustomError,
+	IGetSessionsRequest,
+	IDeleteSessionRequest
+} from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { sessions } from '../sqlite/schema'
@@ -49,4 +53,25 @@ export async function createSession(
 	const user: IDbSession | undefined = res[0]
 
 	return user
+}
+
+export async function deleteSession(data: IDeleteSessionRequest): Promise<void> {
+	const res: IDbSession[] | [] = await db
+		.select()
+		.from(sessions)
+		.where(eq(sessions.id, data.id))
+
+	const session: IDbSession | undefined = res[0]
+
+	if (!session) {
+		throw {
+			code: ErrorCodeEnum.EntityNotFound,
+			status: ErorrStatusEnum.BadRequest,
+			description: 'Сессия не найдена'
+		} satisfies ICustomError
+	}
+
+	return db
+		.delete(sessions)
+		.where(eq(sessions.id, data.id))
 }

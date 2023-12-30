@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "8ee7690e-b823-47ac-8e0f-03bbd0f55860",
+  "id": "0ef934d4-9279-4f3c-9796-80b0957e98b0",
   "prevId": "39b17cda-b0f0-41c7-b9c5-cc7ad4c0893f",
   "tables": {
     "sessions": {
@@ -30,7 +30,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "sessions_user_id_users_id_fk": {
+          "name": "sessions_user_id_users_id_fk",
+          "tableFrom": "sessions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },

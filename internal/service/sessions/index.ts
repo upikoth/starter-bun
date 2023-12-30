@@ -2,13 +2,15 @@ import crypto from 'node:crypto'
 
 import { getUserByEmail as getUserByEmailDb } from '@/repository/users'
 import {
+	getSessions as getSessionsDb,
 	createSession as createSessionDb,
-	getSessions as getSessionsDb
+	deleteSession as deleteSessionDb
 } from '@/repository/sessions'
 
 import type {
 	IGetSessionsRequest,
 	ICreateSessionRequest,
+	IDeleteSessionRequest,
 	ISession,
 	IUser,
 	ICustomError
@@ -19,7 +21,8 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import {
 	validateGetSessionsRequestData,
-	validateCreateSessionRequestData
+	validateCreateSessionRequestData,
+	validateDeleteSessionRequestData
 } from './validators'
 
 export async function getSessions(
@@ -96,4 +99,18 @@ export async function createSession(data: ICreateSessionRequest): Promise<{ sess
 		user,
 		session: dbSession
 	}
+}
+
+export async function deleteSession(data: IDeleteSessionRequest): Promise<void> {
+	const validationError = validateDeleteSessionRequestData(data)
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	return deleteSessionDb(data)
 }

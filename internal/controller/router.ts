@@ -63,6 +63,17 @@ const routes: IRoute[] = [
 		method: HttpMethod.Post,
 		handler: api.v1.sessions.create,
 		authRequired: false
+	},
+	{
+		pathname: '/api/v1/sessions/:id',
+		method: HttpMethod.Delete,
+		handler: function(req: Request) {
+			const url = new URL(req.url)
+			const { params } = match('/api/v1/sessions/:id')(url.pathname) as { params: Record<string, string> }
+
+			return api.v1.sessions.delete(req, params)
+		},
+		authRequired: false
 	}
 ]
 
