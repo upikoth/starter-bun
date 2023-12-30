@@ -1,4 +1,4 @@
-import type { IUser } from '@internal/models'
+import type { IUser } from '@/models'
 
 export interface ICreateSessionResponse {
 	user: IUser;

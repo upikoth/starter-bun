@@ -1,8 +1,8 @@
-import { db } from '@internal/repository/sqlite'
+import { db } from '@/repository/sqlite'
 import { eq } from 'drizzle-orm'
 
-import type { ICustomError } from '@internal/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
+import type { ICustomError } from '@/models'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { sessions } from '../sqlite/schema'
 import type { IDbSession } from '../sqlite/schema'

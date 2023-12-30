@@ -1,5 +1,5 @@
-import { ErrorCodeEnum } from '@internal/constants'
-import { ErorrStatusEnum } from '@internal/constants'
+import { ErrorCodeEnum } from '@/constants'
+import { ErorrStatusEnum } from '@/constants'
 
 export * from './users'
 export * from './sessions'

@@ -3,12 +3,12 @@ import type {
 	IGetUserRequest,
 	ICreateUserRequest,
 	IUpdateUserRequest
-} from '@internal/models/users'
-import { db } from '@internal/repository/sqlite'
+} from '@/models/users'
+import { db } from '@/repository/sqlite'
 import { eq, sql } from 'drizzle-orm'
 
-import type { ICustomError } from '@internal/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
+import type { ICustomError } from '@/models'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { users } from '../sqlite/schema'
 import type { IDbUser } from '../sqlite/schema'

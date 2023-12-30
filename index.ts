@@ -1,3 +1,3 @@
-import { startServer } from '@internal/app'
+import { startServer } from '@/app'
 
 startServer()

@@ -1,6 +1,6 @@
 import winston from 'winston'
 
-import environment from '@internal/environment'
+import environment from '@/environment'
 
 enum LogFiles {
 	Error = 'logs/error-logs.log',

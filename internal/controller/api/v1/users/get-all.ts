@@ -1,11 +1,11 @@
-import { getSuccessResponse } from '@internal/controller/http.utils'
-import { getUsers as getUsersFromService } from '@internal/service/users'
+import { getSuccessResponse } from '@/controller/http.utils'
+import { getUsers as getUsersFromService } from '@/service/users'
 
 import type {
 	IGetUsersRequest,
 	IGetUsersResponse,
 	UserStatusEnum
-} from '@internal/models'
+} from '@/models'
 
 export default async function getUsers(req: Request): Promise<Response> {
 	const  { searchParams } = new URL(req.url)

@@ -1,8 +1,8 @@
-import { getSuccessResponse } from '@internal/controller/http.utils'
+import { getSuccessResponse } from '@/controller/http.utils'
 
-import { updateUser as updateUserFromService } from '@internal/service/users'
+import { updateUser as updateUserFromService } from '@/service/users'
 
-import type { IUpdateUserRequest, IUpdateUserResponse } from '@internal/models'
+import type { IUpdateUserRequest, IUpdateUserResponse } from '@/models'
 
 export default async function updateUser(req: Request, params: Record<string, string>): Promise<Response> {
 	const bodyJson = await req.json()

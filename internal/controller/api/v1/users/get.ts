@@ -1,8 +1,8 @@
-import { getSuccessResponse } from '@internal/controller/http.utils'
+import { getSuccessResponse } from '@/controller/http.utils'
 
-import { getUser as getUserFromService } from '@internal/service/users'
+import { getUser as getUserFromService } from '@/service/users'
 
-import type { IGetUserRequest, IGetUserResponse } from '@internal/models'
+import type { IGetUserRequest, IGetUserResponse } from '@/models'
 
 export default async function getUser(_: Request, params: Record<string, string>): Promise<Response> {
 	const getUsersRequestData: IGetUserRequest = { id: Number.parseInt(params.id || '0' ) }

@@ -1,17 +1,17 @@
 import crypto from 'node:crypto'
 
-import { getUserByEmail as getUserByEmailDb } from '@internal/repository/users'
-import { createSession as createSessionDb } from '@internal/repository/sessions'
+import { getUserByEmail as getUserByEmailDb } from '@/repository/users'
+import { createSession as createSessionDb } from '@/repository/sessions'
 
 import type {
 	ICreateSessionRequest,
 	ISession,
 	IUser,
 	ICustomError
-} from '@internal/models'
-import { UserStatusEnum } from '@internal/models'
+} from '@/models'
+import { UserStatusEnum } from '@/models'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { validateCreateSessionRequestData } from './validators'
 

@@ -1,10 +1,10 @@
-import { getSuccessResponse } from '@internal/controller/http.utils'
-import { createUser as createUserFromService } from '@internal/service/users'
+import { getSuccessResponse } from '@/controller/http.utils'
+import { createUser as createUserFromService } from '@/service/users'
 
 import type {
 	ICreateUserResponse,
 	ICreateUserRequest
-} from '@internal/models'
+} from '@/models'
 
 export default async function createUser(req: Request): Promise<Response> {
 	const bodyJson = await req.json()

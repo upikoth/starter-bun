@@ -5,7 +5,7 @@ import {
 	getUser as getUserDb,
 	createUser as createUserDb,
 	updateUser as updateUserDb
-} from '@internal/repository/users'
+} from '@/repository/users'
 
 import type {
 	IUser,
@@ -14,8 +14,8 @@ import type {
 	IGetUserRequest,
 	ICreateUserRequest,
 	IUpdateUserRequest
-} from '@internal/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
+} from '@/models'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import {
 	validateGetUsersRequestData,

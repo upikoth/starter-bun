@@ -1,8 +1,8 @@
 import Joi from 'joi'
 
-import { UserStatusEnum } from '@internal/models'
+import { UserStatusEnum } from '@/models'
 
-import type { IGetUsersRequest, IGetUserRequest, ICreateUserRequest, IUpdateUserRequest } from '@internal/models/users'
+import type { IGetUsersRequest, IGetUserRequest, ICreateUserRequest, IUpdateUserRequest } from '@/models/users'
 
 const getUsersRequestDataSchema = Joi.object({
 	limit: Joi.number()

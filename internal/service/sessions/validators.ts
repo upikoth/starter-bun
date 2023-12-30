@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-import type { ICreateSessionRequest } from '@internal/models'
+import type { ICreateSessionRequest } from '@/models'
 
 const createSessionRequestDataSchema = Joi.object({
 	email: Joi.string()

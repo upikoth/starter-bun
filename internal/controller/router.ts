@@ -1,6 +1,6 @@
 import { match } from 'path-to-regexp'
 
-import { HttpMethod } from '@internal/constants'
+import { HttpMethod } from '@/constants'
 
 import api from './api'
 

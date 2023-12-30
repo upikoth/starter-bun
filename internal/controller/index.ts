@@ -1,7 +1,7 @@
 import { match } from 'path-to-regexp'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@internal/constants'
-import type { ICustomError } from '@internal/models'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import type { ICustomError } from '@/models'
 
 import routes from './router'
 import { getErrorResponse } from './http.utils'

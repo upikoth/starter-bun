@@ -1,13 +1,13 @@
-import { getSuccessResponse } from '@internal/controller/http.utils'
+import { getSuccessResponse } from '@/controller/http.utils'
 
-import { createSession as createSessionFromService } from '@internal/service/sessions'
+import { createSession as createSessionFromService } from '@/service/sessions'
 
-import { HttpHeaderEnum, AUTHORIZATION_HEADER, MILLISECONDS_IN_MONTH } from '@internal/constants'
+import { HttpHeaderEnum, AUTHORIZATION_HEADER, MILLISECONDS_IN_MONTH } from '@/constants'
 
 import type {
 	ICreateSessionResponse,
 	ICreateSessionRequest
-} from '@internal/models'
+} from '@/models'
 
 export default async function createSession(req: Request): Promise<Response> {
 	const bodyJson = await req.json()

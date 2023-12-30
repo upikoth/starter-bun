@@ -1,9 +1,9 @@
-import { logger } from '@internal/packages'
+import { logger } from '@/packages'
 
-import environment from '@internal/environment'
+import environment from '@/environment'
 
-import { getHttpResponse } from '@internal/controller'
-import { migrateIfNeeded } from '@internal/repository/sqlite'
+import { getHttpResponse } from '@/controller'
+import { migrateIfNeeded } from '@/repository/sqlite'
 
 import middlewares from './middlewares'
 
