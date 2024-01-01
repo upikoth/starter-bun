@@ -123,7 +123,7 @@ export async function deleteSession(data: IDeleteSessionRequest): Promise<void> 
 	return deleteSessionDb(data)
 }
 
-export async function checkSession(sessionValue: string): Promise<IUser> {
+export async function checkSession(sessionValue: string): Promise<{ user: IUser, session: ISession }> {
 	const validationError = validateCheckSessionRequestData({ session: sessionValue })
 
 	if (validationError) {
@@ -150,5 +150,10 @@ export async function checkSession(sessionValue: string): Promise<IUser> {
 		}
 	}
 
-	return getUserFromService({ id: session.userId })
+	const user = await getUserFromService({ id: session.userId })
+
+	return {
+		user,
+		session
+	}
 }

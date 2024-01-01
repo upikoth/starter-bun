@@ -53,6 +53,12 @@ const routes: IRoute[] = [
 		authRequired: true
 	},
 	{
+		pathname: '/api/v1/session',
+		method: HttpMethod.Get,
+		handler: api.v1.sessions.getCurrentSession,
+		authRequired: true
+	},
+	{
 		pathname: '/api/v1/sessions',
 		method: HttpMethod.Get,
 		handler: api.v1.sessions.getAll,

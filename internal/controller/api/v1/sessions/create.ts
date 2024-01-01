@@ -23,7 +23,10 @@ export default async function createSession(req: Request): Promise<Response> {
 
 	const { session, user } = await createSessionFromService(createSessionRequestData)
 
-	const response = getSuccessResponse({ user } satisfies ICreateSessionResponse)
+	const response = getSuccessResponse({
+		user,
+		session: { id: session.id }
+	} satisfies ICreateSessionResponse)
 
 	const cookieHeader = cookie.serialize(AUTHORIZATION_HEADER, session.session, {
 		httpOnly: true,
