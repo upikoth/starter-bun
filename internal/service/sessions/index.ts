@@ -1,11 +1,15 @@
 import crypto from 'node:crypto'
 
 import { getUserByEmail as getUserByEmailDb } from '@/repository/users'
+
 import {
 	getSessions as getSessionsDb,
 	createSession as createSessionDb,
-	deleteSession as deleteSessionDb
+	deleteSession as deleteSessionDb,
+	getSessionBySession as getSessionBySessionDb
 } from '@/repository/sessions'
+
+import { getUser as getUserFromService } from '@/service/users'
 
 import type {
 	IGetSessionsRequest,
@@ -18,12 +22,16 @@ import type {
 import { IGetSessionsResponseSession, UserStatusEnum } from '@/models'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { checkIsCustomError } from '@/utils'
 
 import {
 	validateGetSessionsRequestData,
 	validateCreateSessionRequestData,
-	validateDeleteSessionRequestData
+	validateDeleteSessionRequestData,
+	validateCheckSessionRequestData
 } from './validators'
+
+import type { IDbSession } from '@/repository/sqlite/schema'
 
 export async function getSessions(
 	data: IGetSessionsRequest
@@ -113,4 +121,34 @@ export async function deleteSession(data: IDeleteSessionRequest): Promise<void> 
 	}
 
 	return deleteSessionDb(data)
+}
+
+export async function checkSession(sessionValue: string): Promise<IUser> {
+	const validationError = validateCheckSessionRequestData({ session: sessionValue })
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	let session: IDbSession | null = null
+
+	try {
+		session = await getSessionBySessionDb(sessionValue)
+	} catch (error) {
+		if (checkIsCustomError(error) && error.code === ErrorCodeEnum.EntityNotFound) {
+			throw {
+				code: ErrorCodeEnum.Unauthorized,
+				status: ErorrStatusEnum.Unauthorized,
+				description: 'Пользователь не авторизован'
+			} satisfies ICustomError
+		} else {
+			throw error
+		}
+	}
+
+	return getUserFromService({ id: session.userId })
 }

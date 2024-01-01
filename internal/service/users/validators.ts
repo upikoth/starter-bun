@@ -61,3 +61,13 @@ const updateUserRequestDataSchema = Joi.object({
 export function validateUpdateUserRequestData(data: IUpdateUserRequest): string {
 	return updateUserRequestDataSchema.validate(data).error?.message || ''
 }
+
+const getUserByEmailRequestDataSchema = Joi.object({
+	email: Joi.string()
+		.email()
+		.required()
+})
+
+export function validateGetUserByEmailRequestData(data: { email: string }): string {
+	return getUserByEmailRequestDataSchema.validate(data).error?.message || ''
+}

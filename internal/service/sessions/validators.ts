@@ -43,3 +43,13 @@ const deleteSessionRequestDataSchema = Joi.object({
 export function validateDeleteSessionRequestData(data: IDeleteSessionRequest): string {
 	return deleteSessionRequestDataSchema.validate(data).error?.message || ''
 }
+
+const checkSessionRequestDataSchema = Joi.object({
+	session: Joi.string()
+		.min(1)
+		.required()
+})
+
+export function validateCheckSessionRequestData(data: { session: string }): string {
+	return checkSessionRequestDataSchema.validate(data).error?.message || ''
+}

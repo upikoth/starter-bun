@@ -75,3 +75,22 @@ export async function deleteSession(data: IDeleteSessionRequest): Promise<void> 
 		.delete(sessions)
 		.where(eq(sessions.id, data.id))
 }
+
+export async function getSessionBySession(sessionValue: string): Promise<IDbSession> {
+	const res: IDbSession[] | [] = await db
+		.select()
+		.from(sessions)
+		.where(eq(sessions.session, sessionValue))
+
+	const session: IDbSession | undefined = res[0]
+
+	if (!session) {
+		throw {
+			code: ErrorCodeEnum.EntityNotFound,
+			status: ErorrStatusEnum.BadRequest,
+			description: 'Сессия не найдена'
+		} satisfies ICustomError
+	}
+
+	return session
+}

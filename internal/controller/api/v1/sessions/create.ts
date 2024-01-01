@@ -1,3 +1,5 @@
+import cookie from 'cookie'
+
 import { getSuccessResponse } from '@/controller/http.utils'
 
 import { createSession as createSessionFromService } from '@/service/sessions'
@@ -22,10 +24,14 @@ export default async function createSession(req: Request): Promise<Response> {
 	const { session, user } = await createSessionFromService(createSessionRequestData)
 
 	const response = getSuccessResponse({ user } satisfies ICreateSessionResponse)
-	response.headers.set(
-		HttpHeaderEnum.SetCookie,
-		`${AUTHORIZATION_HEADER}=${session.session}; HttpOnly; Secure; Path=/; Max-Age=${6 * MILLISECONDS_IN_MONTH};`
-	)
+
+	const cookieHeader = cookie.serialize(AUTHORIZATION_HEADER, session.session, {
+		httpOnly: true,
+		secure: true,
+		path: '/',
+		maxAge: 6 * MILLISECONDS_IN_MONTH
+	})
+	response.headers.set(HttpHeaderEnum.SetCookie, cookieHeader)
 
 	return response
 }

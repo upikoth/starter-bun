@@ -73,7 +73,7 @@ const routes: IRoute[] = [
 
 			return api.v1.sessions.delete(req, params)
 		},
-		authRequired: false
+		authRequired: true
 	}
 ]
 

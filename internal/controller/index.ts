@@ -1,7 +1,11 @@
 import { match } from 'path-to-regexp'
+import cookie from 'cookie'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErorrStatusEnum, AUTHORIZATION_HEADER } from '@/constants'
+import { checkIsCustomError } from '@/utils'
 import type { ICustomError } from '@/models'
+
+import { checkSession as checkSessionFromService } from '@/service/sessions'
 
 import routes from './router'
 import { getErrorResponse } from './http.utils'
@@ -20,6 +24,9 @@ export async function getHttpResponse(req: Request): Promise<Response>  {
 async function getRequestHandler(req: Request) {
 	const url = new URL(req.url)
 
+	const parsedCookie = cookie.parse(req.headers.get('Cookie') || '')
+	const session = parsedCookie[AUTHORIZATION_HEADER] || ''
+
 	const route = routes.find(r => match(r.pathname)(url.pathname) && r.method === req.method)
 
 	if (!route) {
@@ -28,6 +35,18 @@ async function getRequestHandler(req: Request) {
 			status: ErorrStatusEnum.NotFound,
 			description: 'Метод не найден'
 		} satisfies ICustomError
+	}
+
+	if (route.authRequired) {
+		if (!session) {
+			throw {
+				code: ErrorCodeEnum.Unauthorized,
+				status: ErorrStatusEnum.Unauthorized,
+				description: 'Пользователь не авторизован'
+			} satisfies ICustomError
+		}
+
+		await checkSessionFromService(session)
 	}
 
 	return route.handler
@@ -52,11 +71,3 @@ function getErrorResponseFromError(err: unknown): Response {
 		err.status
 	)
 }
-
-function checkIsCustomError(error: unknown): error is ICustomError {
-	return typeof error === 'object' &&
-		typeof (error as ICustomError).description === 'string' &&
-		typeof (error as ICustomError).status === 'number' &&
-		typeof (error as ICustomError).code === 'number'
-}
-

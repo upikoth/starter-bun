@@ -4,7 +4,8 @@ import {
 	getUsers as getUsersDb,
 	getUser as getUserDb,
 	createUser as createUserDb,
-	updateUser as updateUserDb
+	updateUser as updateUserDb,
+	getUserByEmail as getUserByEmailDb
 } from '@/repository/users'
 
 import type {
@@ -21,7 +22,8 @@ import {
 	validateGetUsersRequestData,
 	validateGetUserRequestData,
 	validateCreateUserRequestData,
-	validateUpdateUserRequestData
+	validateUpdateUserRequestData,
+	validateGetUserByEmailRequestData
 } from './validators'
 
 export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], total: number }> {
@@ -108,6 +110,26 @@ export async function updateUser(data: IUpdateUserRequest): Promise<IUser> {
 		} satisfies ICustomError
 	}
 	const dbUser = await updateUserDb(data)
+
+	return {
+		id: dbUser.id,
+		email: dbUser.email,
+		status: dbUser.status
+	}
+}
+
+export async function getUserByEmail(email: string): Promise<IUser> {
+	const validationError = validateGetUserByEmailRequestData({ email })
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	const dbUser = await getUserByEmailDb(email)
 
 	return {
 		id: dbUser.id,

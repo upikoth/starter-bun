@@ -7,4 +7,5 @@ export enum ErrorCodeEnum {
 	EmailOrPasswordInvalid = 6,
 	SessionAlreadyExist = 7,
 	UserBlocked = 8,
+	Unauthorized = 9,
 }
