@@ -12,7 +12,7 @@ import type {
 } from '@/models'
 
 export default async function createSession(req: Request): Promise<Response> {
-	const bodyJson = await req.json()
+	const bodyJson = ((await req.json()) || {}) as Record<string, string>
 	const email = bodyJson.email || ''
 	const password = bodyJson.password || ''
 

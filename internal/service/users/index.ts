@@ -1,5 +1,7 @@
 import crypto from 'node:crypto'
 
+import { deleteAllSessionsOfUser } from '@/service/sessions'
+
 import {
 	getUsers as getUsersDb,
 	getUser as getUserDb,
@@ -16,6 +18,7 @@ import type {
 	ICreateUserRequest,
 	IUpdateUserRequest
 } from '@/models'
+import { UserStatusEnum } from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import {
@@ -109,6 +112,11 @@ export async function updateUser(data: IUpdateUserRequest): Promise<IUser> {
 			description: validationError
 		} satisfies ICustomError
 	}
+
+	if (data.status === UserStatusEnum.Blocked) {
+		deleteAllSessionsOfUser(data.id)
+	}
+
 	const dbUser = await updateUserDb(data)
 
 	return {

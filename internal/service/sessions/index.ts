@@ -6,7 +6,8 @@ import {
 	getSessions as getSessionsDb,
 	createSession as createSessionDb,
 	deleteSession as deleteSessionDb,
-	getSessionBySession as getSessionBySessionDb
+	getSessionBySession as getSessionBySessionDb,
+	deleteAllSessionsOfUser as deleteAllSessionsOfUserDb
 } from '@/repository/sessions'
 
 import { getUser as getUserFromService } from '@/service/users'
@@ -28,7 +29,8 @@ import {
 	validateGetSessionsRequestData,
 	validateCreateSessionRequestData,
 	validateDeleteSessionRequestData,
-	validateCheckSessionRequestData
+	validateCheckSessionRequestData,
+	validateDeleteAllSessionsOfUserRequestData
 } from './validators'
 
 import type { IDbSession } from '@/repository/sqlite/schema'
@@ -156,4 +158,18 @@ export async function checkSession(sessionValue: string): Promise<{ user: IUser,
 		user,
 		session
 	}
+}
+
+export async function deleteAllSessionsOfUser(userId: number): Promise<void> {
+	const validationError = validateDeleteAllSessionsOfUserRequestData({ userId })
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	return deleteAllSessionsOfUserDb(userId)
 }

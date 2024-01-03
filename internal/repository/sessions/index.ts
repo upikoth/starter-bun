@@ -94,3 +94,9 @@ export async function getSessionBySession(sessionValue: string): Promise<IDbSess
 
 	return session
 }
+
+export async function deleteAllSessionsOfUser(userId: number): Promise<void> {
+	return db
+		.delete(sessions)
+		.where(eq(sessions.userId, userId))
+}
