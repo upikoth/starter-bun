@@ -26,3 +26,17 @@ type DbSessionInsert = typeof sessions.$inferInsert
 
 export interface IDbSession extends DbSession {}
 export interface IDbSessionInsert extends DbSessionInsert {}
+
+export const registrations = sqliteTable('registrations', {
+	id: integer('id').primaryKey(),
+	email: text('email').unique().notNull(),
+	passwordHash: text('password_hash').notNull(),
+	passwordSalt: text('password_salt').notNull(),
+	activationToken: text('activation_token').notNull().unique()
+})
+
+type DbRegistration = typeof registrations.$inferSelect
+type DbRegistrationInsert = typeof registrations.$inferInsert
+
+export interface IDbRegistration extends DbRegistration{}
+export interface IDbRegistrationInsert extends DbRegistrationInsert{}

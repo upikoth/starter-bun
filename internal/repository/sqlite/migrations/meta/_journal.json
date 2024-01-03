@@ -50,6 +50,20 @@
       "when": 1703971942009,
       "tag": "0006_first_yellowjacket",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1704289016394,
+      "tag": "0007_dashing_bill_hollister",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1704307348656,
+      "tag": "0008_wakeful_kree",
+      "breakpoints": true
     }
   ]
 }

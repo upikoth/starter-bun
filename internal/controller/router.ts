@@ -80,6 +80,12 @@ const routes: IRoute[] = [
 			return api.v1.sessions.delete(req, params)
 		},
 		authRequired: true
+	},
+	{
+		pathname: '/api/v1/registrations',
+		method: HttpMethod.Post,
+		handler: api.v1.registrations.create,
+		authRequired: false
 	}
 ]
 

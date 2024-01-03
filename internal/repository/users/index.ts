@@ -3,7 +3,7 @@ import type {
 	IGetUserRequest,
 	ICreateUserRequest,
 	IUpdateUserRequest
-} from '@/models/users'
+} from '@/models'
 import { db } from '@/repository/sqlite'
 import { eq, sql } from 'drizzle-orm'
 
