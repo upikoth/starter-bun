@@ -1,3 +1,7 @@
 import create from './create'
+import confirm from './confirm'
 
-export default { create }
+export default {
+	create,
+	confirm
+}

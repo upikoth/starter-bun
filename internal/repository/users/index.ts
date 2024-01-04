@@ -1,7 +1,6 @@
 import type {
 	IGetUsersRequest,
 	IGetUserRequest,
-	ICreateUserRequest,
 	IUpdateUserRequest
 } from '@/models'
 import { db } from '@/repository/sqlite'
@@ -75,7 +74,7 @@ export async function getUserByEmail(email: string): Promise<IDbUser> {
 }
 
 export async function createUser(
-	data: ICreateUserRequest & { passwordHash: string, passwordSalt: string }
+	data: { email: string, passwordHash: string, passwordSalt: string }
 ): Promise<IDbUser> {
 	const isUserWithThisEmailAlreadyExist = (await db
 		.select()

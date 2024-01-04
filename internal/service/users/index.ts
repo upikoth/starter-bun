@@ -90,9 +90,9 @@ export async function createUser(data: ICreateUserRequest): Promise<IUser> {
 		.digest('hex')
 
 	const dbUser = await createUserDb({
-		...data,
 		passwordHash,
-		passwordSalt
+		passwordSalt,
+		email: data.email
 	})
 
 	return {

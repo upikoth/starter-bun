@@ -1,6 +1,10 @@
 import { eq } from 'drizzle-orm'
 
-import type { ICreateSessionRequest, ICustomError } from '@/models'
+import type {
+	ICreateSessionRequest,
+	ICustomError,
+	IDeleteRegistrationRequest
+} from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { db } from '@/repository/sqlite'
@@ -38,4 +42,34 @@ export async function createRegistration(
 		.returning()
 
 	return res[0]
+}
+
+export async function getRegistrationByToken(token: string): Promise<IDbRegistration | undefined> {
+	const res: (IDbRegistration | undefined)[] = await db
+		.select()
+		.from(registrations)
+		.where(eq(registrations.activationToken, token))
+
+	return res[0]
+}
+
+export async function deleteRegistration(data: IDeleteRegistrationRequest): Promise<void> {
+	const res: IDbRegistration[] | [] = await db
+		.select()
+		.from(registrations)
+		.where(eq(registrations.id, data.id))
+
+	const registration: IDbRegistration | undefined = res[0]
+
+	if (!registration) {
+		throw {
+			code: ErrorCodeEnum.EntityNotFound,
+			status: ErorrStatusEnum.BadRequest,
+			description: 'Регистрация не найдена'
+		} satisfies ICustomError
+	}
+
+	return db
+		.delete(registrations)
+		.where(eq(registrations.id, data.id))
 }

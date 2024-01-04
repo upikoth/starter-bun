@@ -1,6 +1,12 @@
 import crypto from 'node:crypto'
 
-import { createRegistration as createRegistrationDb } from '@/repository/registrations'
+import {
+	createRegistration as createRegistrationDb,
+	getRegistrationByToken as getRegistrationByTokenDb,
+	deleteRegistration as deleteRegistrationDb
+} from '@/repository/registrations'
+
+import { createUser as createUserDb } from '@/repository/users'
 
 import environment from '@/environment'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
@@ -8,10 +14,15 @@ import { sendMail } from '@/utils'
 import type {
 	ICreateRegistrationRequest,
 	IRegistration,
-	ICustomError
+	ICustomError,
+	IConfirmRegistrationRequest,
+	IUser
 } from '@/models'
 
-import { validateCreateRegistrationRequestData } from './validators'
+import {
+	validateCreateRegistrationRequestData,
+	validateConfirmRegistrationRequestData
+} from './validators'
 
 export async function createRegistration(data: ICreateRegistrationRequest): Promise<IRegistration> {
 	const validationError = validateCreateRegistrationRequestData(data)
@@ -49,5 +60,41 @@ export async function createRegistration(data: ICreateRegistrationRequest): Prom
 	return {
 		id: dbUser.id,
 		email: dbUser.email
+	}
+}
+
+export async function confirmRegistration(data: IConfirmRegistrationRequest): Promise<IUser> {
+	const validationError = validateConfirmRegistrationRequestData(data)
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	const registration = await getRegistrationByTokenDb(data.token)
+
+	if (!registration) {
+		throw {
+			code: ErrorCodeEnum.EntityNotFound,
+			status: ErorrStatusEnum.BadRequest,
+			description: 'Регистрация не найдена'
+		} satisfies ICustomError
+	}
+
+	const dbUser = await createUserDb({
+		email: registration.email,
+		passwordHash: registration.passwordHash,
+		passwordSalt: registration.passwordSalt
+	})
+
+	await deleteRegistrationDb({ id: registration.id })
+
+	return {
+		id: dbUser.id,
+		email: dbUser.email,
+		status: dbUser.status
 	}
 }
