@@ -2,8 +2,24 @@ import Joi from 'joi'
 
 import type {
 	ICreateRegistrationRequest,
-	IConfirmRegistrationRequest
+	IConfirmRegistrationRequest,
+	IGetRegistrationsRequest
 } from '@/models'
+
+const getRegistrationsRequestDataSchema = Joi.object({
+	limit: Joi.number()
+		.integer()
+		.min(0)
+		.required(),
+	offset: Joi.number()
+		.integer()
+		.min(0)
+		.required()
+})
+
+export function validateGetRegistrationsRequestData(data: IGetRegistrationsRequest): string {
+	return getRegistrationsRequestDataSchema.validate(data).error?.message || ''
+}
 
 const createRegistrationRequestDataSchema = Joi.object({
 	email: Joi.string()

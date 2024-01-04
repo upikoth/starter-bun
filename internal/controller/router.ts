@@ -83,6 +83,12 @@ const routes: IRoute[] = [
 	},
 	{
 		pathname: '/api/v1/registrations',
+		method: HttpMethod.Get,
+		handler: api.v1.registrations.getAll,
+		authRequired: true
+	},
+	{
+		pathname: '/api/v1/registrations',
 		method: HttpMethod.Post,
 		handler: api.v1.registrations.create,
 		authRequired: false

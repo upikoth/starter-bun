@@ -1,9 +1,10 @@
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 
 import type {
 	ICreateSessionRequest,
 	ICustomError,
-	IDeleteRegistrationRequest
+	IDeleteRegistrationRequest,
+	IGetRegistrationsRequest
 } from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
@@ -11,6 +12,26 @@ import { db } from '@/repository/sqlite'
 
 import { registrations, users } from '../sqlite/schema'
 import type { IDbRegistration } from '../sqlite/schema'
+
+export async function getRegistrations(
+	data: IGetRegistrationsRequest
+): Promise<{ registrations: IDbRegistration[], total: number}> {
+	const dbRegistrations: IDbRegistration[] = await db
+		.select()
+		.from(registrations)
+		.limit(data.limit)
+		.offset(data.offset)
+
+	const { total }: { total: number } = (await db
+		.select({ total: sql<number>`count(${registrations.id})` })
+		.from(registrations)
+	)[0]
+
+	return {
+		registrations: dbRegistrations,
+		total
+	}
+}
 
 export async function createRegistration(
 	data: ICreateSessionRequest & {

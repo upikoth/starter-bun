@@ -1,6 +1,7 @@
 import crypto from 'node:crypto'
 
 import {
+	getRegistrations as getRegistrationsDb,
 	createRegistration as createRegistrationDb,
 	getRegistrationByToken as getRegistrationByTokenDb,
 	deleteRegistration as deleteRegistrationDb
@@ -16,13 +17,39 @@ import type {
 	IRegistration,
 	ICustomError,
 	IConfirmRegistrationRequest,
-	IUser
+	IUser,
+	IGetRegistrationsRequest
 } from '@/models'
 
 import {
 	validateCreateRegistrationRequestData,
-	validateConfirmRegistrationRequestData
+	validateConfirmRegistrationRequestData,
+	validateGetRegistrationsRequestData
 } from './validators'
+
+export async function getRegistrations(
+	data: IGetRegistrationsRequest
+): Promise<{ registrations: IRegistration[], total: number }> {
+	const validationError = validateGetRegistrationsRequestData(data)
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	const dbRegistrationsResult = await getRegistrationsDb(data)
+
+	return {
+		...dbRegistrationsResult,
+		registrations: dbRegistrationsResult.registrations.map(r => ({
+			id: r.id,
+			email: r.email
+		}))
+	}
+}
 
 export async function createRegistration(data: ICreateRegistrationRequest): Promise<IRegistration> {
 	const validationError = validateCreateRegistrationRequestData(data)
