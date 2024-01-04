@@ -98,6 +98,17 @@ const routes: IRoute[] = [
 		method: HttpMethod.Patch,
 		handler: api.v1.registrations.confirm,
 		authRequired: false
+	},
+	{
+		pathname: '/api/v1/registrations/:id',
+		method: HttpMethod.Delete,
+		handler: function(req: Request) {
+			const url = new URL(req.url)
+			const { params } = match('/api/v1/registrations/:id')(url.pathname) as { params: Record<string, string> }
+
+			return api.v1.registrations.delete(req, params)
+		},
+		authRequired: true
 	}
 ]
 

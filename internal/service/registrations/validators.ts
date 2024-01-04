@@ -3,7 +3,8 @@ import Joi from 'joi'
 import type {
 	ICreateRegistrationRequest,
 	IConfirmRegistrationRequest,
-	IGetRegistrationsRequest
+	IGetRegistrationsRequest,
+	IDeleteRegistrationRequest
 } from '@/models'
 
 const getRegistrationsRequestDataSchema = Joi.object({
@@ -41,4 +42,15 @@ const confirmRegistrationRequestDataSchema = Joi.object({
 
 export function validateConfirmRegistrationRequestData(data: IConfirmRegistrationRequest): string {
 	return confirmRegistrationRequestDataSchema.validate(data).error?.message || ''
+}
+
+const deleteRegistrationRequestDataSchema = Joi.object({
+	id: Joi.number()
+		.integer()
+		.min(1)
+		.required()
+})
+
+export function validateDeleteRegistrationRequestData(data: IDeleteRegistrationRequest): string {
+	return deleteRegistrationRequestDataSchema.validate(data).error?.message || ''
 }

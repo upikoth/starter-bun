@@ -18,13 +18,15 @@ import type {
 	ICustomError,
 	IConfirmRegistrationRequest,
 	IUser,
-	IGetRegistrationsRequest
+	IGetRegistrationsRequest,
+	IDeleteRegistrationRequest
 } from '@/models'
 
 import {
 	validateCreateRegistrationRequestData,
 	validateConfirmRegistrationRequestData,
-	validateGetRegistrationsRequestData
+	validateGetRegistrationsRequestData,
+	validateDeleteRegistrationRequestData
 } from './validators'
 
 export async function getRegistrations(
@@ -124,4 +126,18 @@ export async function confirmRegistration(data: IConfirmRegistrationRequest): Pr
 		email: dbUser.email,
 		status: dbUser.status
 	}
+}
+
+export async function deleteRegistration(data: IDeleteRegistrationRequest): Promise<void> {
+	const validationError = validateDeleteRegistrationRequestData(data)
+
+	if (validationError) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: validationError
+		} satisfies ICustomError
+	}
+
+	return deleteRegistrationDb(data)
 }
