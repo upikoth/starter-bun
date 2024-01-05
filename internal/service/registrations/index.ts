@@ -4,14 +4,14 @@ import {
 	getRegistrations as getRegistrationsDb,
 	createRegistration as createRegistrationDb,
 	getRegistrationByToken as getRegistrationByTokenDb,
-	deleteRegistration as deleteRegistrationDb
-} from '@/repository/registrations'
-
-import { createUser as createUserDb } from '@/repository/users'
+	deleteRegistration as deleteRegistrationDb,
+	createUser as createUserDb
+} from '@/repository'
 
 import environment from '@/environment'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import { sendMail } from '@/utils'
+
 import type {
 	ICreateRegistrationRequest,
 	IRegistration,

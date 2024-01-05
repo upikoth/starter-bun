@@ -1,14 +1,14 @@
+import { eq, sql } from 'drizzle-orm'
+
 import type {
+	ICustomError,
 	IGetUsersRequest,
 	IGetUserRequest,
 	IUpdateUserRequest
 } from '@/models'
-import { db } from '@/repository/sqlite'
-import { eq, sql } from 'drizzle-orm'
-
-import type { ICustomError } from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
+import { db } from '../sqlite'
 import { users } from '../sqlite/schema'
 import type { IDbUser } from '../sqlite/schema'
 

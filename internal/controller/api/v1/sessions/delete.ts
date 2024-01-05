@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { deleteSession as deleteSessionFromService } from '@/service/sessions'
+import { deleteSession as deleteSessionFromService } from '@/service'
 
 import type { IDeleteSessionRequest } from '@/models'
 

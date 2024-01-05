@@ -1,5 +1,5 @@
 import { getSuccessResponse } from '@/controller/http.utils'
-import { getSessions as getSessionsFromService } from '@/service/sessions'
+import { getSessions as getSessionsFromService } from '@/service'
 
 import type {
 	IGetSessionsRequest,

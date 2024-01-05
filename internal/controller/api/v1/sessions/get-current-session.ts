@@ -3,7 +3,7 @@ import cookie from 'cookie'
 import { AUTHORIZATION_HEADER } from '@/constants'
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { checkSession as checkSessionFromService } from '@/service/sessions'
+import { checkSession as checkSessionFromService } from '@/service'
 
 import type { IGetCurrentSessionResponse } from '@/models'
 

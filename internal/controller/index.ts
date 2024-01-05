@@ -5,7 +5,7 @@ import { ErrorCodeEnum, ErorrStatusEnum, AUTHORIZATION_HEADER } from '@/constant
 import { checkIsCustomError } from '@/utils'
 import type { ICustomError } from '@/models'
 
-import { checkSession as checkSessionFromService } from '@/service/sessions'
+import { checkSession as checkSessionFromService } from '@/service'
 
 import routes from './router'
 import { getErrorResponse } from './http.utils'

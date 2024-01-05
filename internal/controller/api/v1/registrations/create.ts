@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { createRegistration as createRegistrationFromService } from '@/service/registrations'
+import { createRegistration as createRegistrationFromService } from '@/service'
 
 import type {
 	ICreateRegistrationResponse,

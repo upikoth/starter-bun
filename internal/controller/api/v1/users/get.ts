@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { getUser as getUserFromService } from '@/service/users'
+import { getUser as getUserFromService } from '@/service'
 
 import type { IGetUserRequest, IGetUserResponse } from '@/models'
 

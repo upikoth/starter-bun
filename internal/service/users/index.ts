@@ -1,14 +1,13 @@
 import crypto from 'node:crypto'
 
-import { deleteAllSessionsOfUser } from '@/service/sessions'
-
 import {
 	getUsers as getUsersDb,
 	getUser as getUserDb,
 	createUser as createUserDb,
 	updateUser as updateUserDb,
 	getUserByEmail as getUserByEmailDb
-} from '@/repository/users'
+} from '@/repository'
+import { deleteAllSessionsOfUser } from '@/service'
 
 import type {
 	IUser,

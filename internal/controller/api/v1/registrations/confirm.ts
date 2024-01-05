@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { confirmRegistration as confirmRegistrationFromService } from '@/service/registrations'
+import { confirmRegistration as confirmRegistrationFromService } from '@/service'
 
 import type {
 	IConfirmRegistrationResponse,

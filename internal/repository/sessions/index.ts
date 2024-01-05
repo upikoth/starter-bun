@@ -1,4 +1,3 @@
-import { db } from '@/repository/sqlite'
 import { sql, eq } from 'drizzle-orm'
 
 import type {
@@ -8,6 +7,7 @@ import type {
 } from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
+import { db } from '../sqlite'
 import { sessions } from '../sqlite/schema'
 import type { IDbSession } from '../sqlite/schema'
 

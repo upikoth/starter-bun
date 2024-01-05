@@ -1,5 +1,5 @@
 import { getSuccessResponse } from '@/controller/http.utils'
-import { createUser as createUserFromService } from '@/service/users'
+import { createUser as createUserFromService } from '@/service'
 
 import type {
 	ICreateUserResponse,

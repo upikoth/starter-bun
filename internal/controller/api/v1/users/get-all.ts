@@ -1,5 +1,5 @@
 import { getSuccessResponse } from '@/controller/http.utils'
-import { getUsers as getUsersFromService } from '@/service/users'
+import { getUsers as getUsersFromService } from '@/service'
 
 import type {
 	IGetUsersRequest,

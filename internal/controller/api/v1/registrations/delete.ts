@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { deleteRegistration as deleteRegistrationFromService } from '@/service/registrations'
+import { deleteRegistration as deleteRegistrationFromService } from '@/service'
 
 import type { IDeleteRegistrationRequest } from '@/models'
 

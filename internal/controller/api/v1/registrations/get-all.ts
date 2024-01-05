@@ -1,5 +1,5 @@
 import { getSuccessResponse } from '@/controller/http.utils'
-import { getRegistrations as getRegistrationsFromService } from '@/service/registrations'
+import { getRegistrations as getRegistrationsFromService } from '@/service'
 
 import type {
 	IGetRegistrationsRequest,

@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { updateUser as updateUserFromService } from '@/service/users'
+import { updateUser as updateUserFromService } from '@/service'
 
 import type { IUpdateUserRequest, IUpdateUserResponse, UserStatusEnum } from '@/models'
 

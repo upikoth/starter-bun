@@ -1,16 +1,14 @@
 import crypto from 'node:crypto'
 
-import { getUserByEmail as getUserByEmailDb } from '@/repository/users'
-
 import {
 	getSessions as getSessionsDb,
 	createSession as createSessionDb,
 	deleteSession as deleteSessionDb,
 	getSessionBySession as getSessionBySessionDb,
-	deleteAllSessionsOfUser as deleteAllSessionsOfUserDb
-} from '@/repository/sessions'
-
-import { getUser as getUserFromService } from '@/service/users'
+	deleteAllSessionsOfUser as deleteAllSessionsOfUserDb,
+	getUserByEmail as getUserByEmailDb
+} from '@/repository'
+import { getUser as getUserFromService } from '@/service'
 
 import type {
 	IGetSessionsRequest,
@@ -18,9 +16,10 @@ import type {
 	IDeleteSessionRequest,
 	ISession,
 	IUser,
-	ICustomError
+	ICustomError,
+	IGetSessionsResponseSession
 } from '@/models'
-import { IGetSessionsResponseSession, UserStatusEnum } from '@/models'
+import { UserStatusEnum } from '@/models'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import { checkIsCustomError } from '@/utils'

@@ -2,8 +2,7 @@ import cookie from 'cookie'
 
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { createSession as createSessionFromService } from '@/service/sessions'
-
+import { createSession as createSessionFromService } from '@/service'
 import { HttpHeaderEnum, AUTHORIZATION_HEADER, MILLISECONDS_IN_MONTH } from '@/constants'
 
 import type {

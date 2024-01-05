@@ -8,8 +8,7 @@ import type {
 } from '@/models'
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import { db } from '@/repository/sqlite'
-
+import { db } from '../sqlite'
 import { registrations, users } from '../sqlite/schema'
 import type { IDbRegistration } from '../sqlite/schema'
 
