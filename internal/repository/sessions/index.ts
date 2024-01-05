@@ -1,9 +1,6 @@
 import { sql, eq } from 'drizzle-orm'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
-
 import type {
-	ICustomError,
 	IGetSessionsRequest,
 	IDeleteSessionRequest
 } from '@/models'
@@ -33,67 +30,36 @@ export async function getSessions(data: IGetSessionsRequest): Promise<{ sessions
 export async function createSession(
 	data: { userId: number, session: string }
 ): Promise<IDbSession> {
-	const isSessionAlreadyExist = (await db
-		.select()
-		.from(sessions)
-		.where(eq(sessions.session, data.session))).length > 0
-
-	if (isSessionAlreadyExist) {
-		throw {
-			code: ErrorCodeEnum.SessionAlreadyExist,
-			status: ErorrStatusEnum.BadRequest,
-			description: 'Такая сессия уже существует'
-		} satisfies ICustomError
-	}
-
-	const res: IDbSession[] | [] = await db
+	const res: IDbSession[] = await db
 		.insert(sessions)
 		.values(data)
 		.returning()
 
-	const user: IDbSession | undefined = res[0]
-
-	return user
+	return res[0]
 }
 
 export async function deleteSession(data: IDeleteSessionRequest): Promise<void> {
-	const res: IDbSession[] | [] = await db
-		.select()
-		.from(sessions)
-		.where(eq(sessions.id, data.id))
-
-	const session: IDbSession | undefined = res[0]
-
-	if (!session) {
-		throw {
-			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
-			description: 'Сессия не найдена'
-		} satisfies ICustomError
-	}
-
 	return db
 		.delete(sessions)
 		.where(eq(sessions.id, data.id))
 }
 
-export async function getSessionBySession(sessionValue: string): Promise<IDbSession> {
-	const res: IDbSession[] | [] = await db
+export async function getSessionById(id: number): Promise<IDbSession | undefined> {
+	const res: (IDbSession | undefined)[] = await db
+		.select()
+		.from(sessions)
+		.where(eq(sessions.id, id))
+
+	return res[0]
+}
+
+export async function getSessionBySession(sessionValue: string): Promise<IDbSession | undefined> {
+	const res: (IDbSession | undefined)[] = await db
 		.select()
 		.from(sessions)
 		.where(eq(sessions.session, sessionValue))
 
-	const session: IDbSession | undefined = res[0]
-
-	if (!session) {
-		throw {
-			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
-			description: 'Сессия не найдена'
-		} satisfies ICustomError
-	}
-
-	return session
+	return res[0]
 }
 
 export async function deleteAllSessionsOfUser(userId: number): Promise<void> {

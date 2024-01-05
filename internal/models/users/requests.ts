@@ -17,6 +17,5 @@ export interface ICreateUserRequest {
 
 export interface IUpdateUserRequest {
 	id: number;
-	email?: string;
 	status?: UserStatusEnum;
 }

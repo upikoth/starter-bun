@@ -9,7 +9,6 @@ export default async function updateUser(req: Request, params: Record<string, st
 
 	const updateUsersRequestData: IUpdateUserRequest = {
 		id: Number.parseInt(params.id || '0'),
-		email: bodyJson.email || undefined,
 		status: bodyJson.status as UserStatusEnum || undefined
 	}
 
