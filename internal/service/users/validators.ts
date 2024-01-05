@@ -1,7 +1,6 @@
 import Joi from 'joi'
 
 import { UserStatusEnum } from '@/models'
-
 import type {
 	IGetUsersRequest,
 	IGetUserRequest,

@@ -1,12 +1,13 @@
 import { eq, sql } from 'drizzle-orm'
 
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+
 import type {
 	ICreateSessionRequest,
 	ICustomError,
 	IDeleteRegistrationRequest,
 	IGetRegistrationsRequest
 } from '@/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { db } from '../sqlite'
 import { registrations, users } from '../sqlite/schema'
@@ -14,7 +15,7 @@ import type { IDbRegistration } from '../sqlite/schema'
 
 export async function getRegistrations(
 	data: IGetRegistrationsRequest
-): Promise<{ registrations: IDbRegistration[], total: number}> {
+): Promise<{ registrations: IDbRegistration[], total: number }> {
 	const dbRegistrations: IDbRegistration[] = await db
 		.select()
 		.from(registrations)

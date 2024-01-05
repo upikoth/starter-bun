@@ -2,10 +2,12 @@ import { match } from 'path-to-regexp'
 import cookie from 'cookie'
 
 import { ErrorCodeEnum, ErorrStatusEnum, AUTHORIZATION_HEADER } from '@/constants'
+
 import { checkIsCustomError } from '@/utils'
-import type { ICustomError } from '@/models'
 
 import { checkSession as checkSessionFromService } from '@/service'
+
+import type { ICustomError } from '@/models'
 
 import routes from './router'
 import { getErrorResponse } from './http.utils'

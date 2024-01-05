@@ -1,5 +1,6 @@
-import type { IResposeError } from '@/models'
 import { ErorrStatusEnum } from '@/constants'
+
+import type { IResposeError } from '@/models'
 
 export const getSuccessResponse = (data: unknown) => Response.json(
 	{

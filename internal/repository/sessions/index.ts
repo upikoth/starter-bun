@@ -1,17 +1,18 @@
 import { sql, eq } from 'drizzle-orm'
 
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+
 import type {
 	ICustomError,
 	IGetSessionsRequest,
 	IDeleteSessionRequest
 } from '@/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { db } from '../sqlite'
 import { sessions } from '../sqlite/schema'
 import type { IDbSession } from '../sqlite/schema'
 
-export async function getSessions(data: IGetSessionsRequest): Promise<{ sessions: IDbSession[], total: number}> {
+export async function getSessions(data: IGetSessionsRequest): Promise<{ sessions: IDbSession[], total: number }> {
 	const dbSessions: IDbSession[] = await db
 		.select()
 		.from(sessions)

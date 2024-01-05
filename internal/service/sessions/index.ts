@@ -1,5 +1,11 @@
 import crypto from 'node:crypto'
 
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+
+import { checkIsCustomError } from '@/utils'
+
+import { getUser as getUserFromService } from '@/service'
+
 import {
 	getSessions as getSessionsDb,
 	createSession as createSessionDb,
@@ -8,7 +14,7 @@ import {
 	deleteAllSessionsOfUser as deleteAllSessionsOfUserDb,
 	getUserByEmail as getUserByEmailDb
 } from '@/repository'
-import { getUser as getUserFromService } from '@/service'
+import type { IDbSession } from '@/repository/sqlite/schema'
 
 import type {
 	IGetSessionsRequest,
@@ -21,9 +27,6 @@ import type {
 } from '@/models'
 import { UserStatusEnum } from '@/models'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
-import { checkIsCustomError } from '@/utils'
-
 import {
 	validateGetSessionsRequestData,
 	validateCreateSessionRequestData,
@@ -31,8 +34,6 @@ import {
 	validateCheckSessionRequestData,
 	validateDeleteAllSessionsOfUserRequestData
 } from './validators'
-
-import type { IDbSession } from '@/repository/sqlite/schema'
 
 export async function getSessions(
 	data: IGetSessionsRequest

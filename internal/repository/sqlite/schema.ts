@@ -1,4 +1,5 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+
 import { UserStatusEnum } from '@/models'
 
 export const users = sqliteTable('users', {
@@ -12,8 +13,8 @@ export const users = sqliteTable('users', {
 type DbUser = typeof users.$inferSelect
 type DbUserInsert = typeof users.$inferInsert
 
-export interface IDbUser extends DbUser{}
-export interface IDbUserInsert extends DbUserInsert{}
+export interface IDbUser extends DbUser { }
+export interface IDbUserInsert extends DbUserInsert { }
 
 export const sessions = sqliteTable('sessions', {
 	id: integer('id').primaryKey(),
@@ -24,8 +25,8 @@ export const sessions = sqliteTable('sessions', {
 type DbSession = typeof sessions.$inferSelect
 type DbSessionInsert = typeof sessions.$inferInsert
 
-export interface IDbSession extends DbSession {}
-export interface IDbSessionInsert extends DbSessionInsert {}
+export interface IDbSession extends DbSession { }
+export interface IDbSessionInsert extends DbSessionInsert { }
 
 export const registrations = sqliteTable('registrations', {
 	id: integer('id').primaryKey(),
@@ -38,5 +39,5 @@ export const registrations = sqliteTable('registrations', {
 type DbRegistration = typeof registrations.$inferSelect
 type DbRegistrationInsert = typeof registrations.$inferInsert
 
-export interface IDbRegistration extends DbRegistration{}
-export interface IDbRegistrationInsert extends DbRegistrationInsert{}
+export interface IDbRegistration extends DbRegistration { }
+export interface IDbRegistrationInsert extends DbRegistrationInsert { }

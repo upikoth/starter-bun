@@ -1,8 +1,9 @@
-import { logger } from '@/packages'
-
 import environment from '@/environment'
 
+import { logger } from '@/packages'
+
 import { getHttpResponse } from '@/controller'
+
 import { migrateIfNeeded } from '@/repository/sqlite'
 
 import middlewares from './middlewares'

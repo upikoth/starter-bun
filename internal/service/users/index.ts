@@ -1,5 +1,9 @@
 import crypto from 'node:crypto'
 
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+
+import { deleteAllSessionsOfUser } from '@/service'
+
 import {
 	getUsers as getUsersDb,
 	getUser as getUserDb,
@@ -7,7 +11,6 @@ import {
 	updateUser as updateUserDb,
 	getUserByEmail as getUserByEmailDb
 } from '@/repository'
-import { deleteAllSessionsOfUser } from '@/service'
 
 import type {
 	IUser,
@@ -18,7 +21,6 @@ import type {
 	IUpdateUserRequest
 } from '@/models'
 import { UserStatusEnum } from '@/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import {
 	validateGetUsersRequestData,

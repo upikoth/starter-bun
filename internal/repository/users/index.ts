@@ -1,18 +1,19 @@
 import { eq, sql } from 'drizzle-orm'
 
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+
 import type {
 	ICustomError,
 	IGetUsersRequest,
 	IGetUserRequest,
 	IUpdateUserRequest
 } from '@/models'
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { db } from '../sqlite'
 import { users } from '../sqlite/schema'
 import type { IDbUser } from '../sqlite/schema'
 
-export async function getUsers(data: IGetUsersRequest): Promise<{ users: IDbUser[], total: number}> {
+export async function getUsers(data: IGetUsersRequest): Promise<{ users: IDbUser[], total: number }> {
 	const dbUsers: IDbUser[] = await db
 		.select()
 		.from(users)
