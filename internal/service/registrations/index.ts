@@ -46,7 +46,7 @@ export async function getRegistrations(
 
 	return {
 		...dbRegistrationsResult,
-		registrations: dbRegistrationsResult.registrations.map(r => ({
+		registrations: dbRegistrationsResult.registrations.map((r) => ({
 			id: r.id,
 			email: r.email
 		}))

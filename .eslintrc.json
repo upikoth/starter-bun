@@ -2,11 +2,12 @@
 	"env": {
 		"es2021": true
 	},
+	"parser": "@typescript-eslint/parser",
 	"extends": [
+		"airbnb-base",
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended"
 	],
-	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": "latest",
 		"sourceType": "module"
@@ -15,30 +16,24 @@
 		"@typescript-eslint"
 	],
 	"rules": {
-		"indent": [
-			"error",
-			"tab",
-			{
-				"SwitchCase": 1
-			}
-		],
-		"linebreak-style": [
-			"error",
-			"unix"
-		],
 		"quotes": [
 			"error",
 			"single"
 		],
-		"semi": [
+		"indent": [
 			"error",
-			"never"
+			"tab"
 		],
+		"no-tabs": "off",
+		"no-trailing-spaces": "error",
 		"no-console": "warn",
-		// В конце файла всегда должна быть пустая строка.
 		"eol-last": [
 			"error",
 			"always"
+		],
+		"semi": [
+			"error",
+			"never"
 		],
 		"comma-dangle": [
 			"error",
@@ -50,38 +45,22 @@
 				"code": 120
 			}
 		],
-		// Настройки форматирования объектов json.
-		"object-property-newline": [
-			"error"
-		],
-		"object-curly-newline": [
+		"import/no-unresolved": "off",
+		"import/no-extraneous-dependencies": "off",
+		"import/extensions": "off",
+		"no-use-before-define": "off",
+		"import/prefer-default-export": "off",
+		"radix": "off",
+		"implicit-arrow-linebreak": "off",
+		"no-shadow": "off",
+		"@typescript-eslint/no-shadow": "error",
+		"prefer-destructuring": [
 			"error",
 			{
-				"multiline": true
+				"object": true,
+				"array": false
 			}
 		],
-		"object-curly-spacing": [
-			"error",
-			"always"
-		],
-		"brace-style": "error",
-		"comma-spacing": [
-			"error",
-			{
-				"before": false,
-				"after": true
-			}
-		],
-		"no-trailing-spaces": "error",
-		"no-multiple-empty-lines": [
-			"error",
-			{
-				"max": 1
-			}
-		],
-		"@typescript-eslint/semi": [
-			"error",
-			"never"
-		]
+		"no-throw-literal": "off"
 	}
 }

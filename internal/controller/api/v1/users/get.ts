@@ -5,7 +5,7 @@ import { getUser as getUserFromService } from '@/service'
 import type { IGetUserRequest, IGetUserResponse } from '@/models'
 
 export default async function getUser(_: Request, params: Record<string, string>): Promise<Response> {
-	const getUsersRequestData: IGetUserRequest = { id: Number.parseInt(params.id || '0' ) }
+	const getUsersRequestData: IGetUserRequest = { id: Number.parseInt(params.id || '0') }
 
 	const user = await getUserFromService(getUsersRequestData)
 

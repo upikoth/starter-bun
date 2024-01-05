@@ -21,7 +21,7 @@ const routes: IRoute[] = [
 	{
 		pathname: '/api/v1/users/:id',
 		method: HttpMethod.Get,
-		handler: function(req: Request) {
+		handler(req: Request) {
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/users/:id')(url.pathname) as { params: Record<string, string> }
 
@@ -44,7 +44,7 @@ const routes: IRoute[] = [
 	{
 		pathname: '/api/v1/users/:id',
 		method: HttpMethod.Patch,
-		handler: function(req: Request) {
+		handler(req: Request) {
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/users/:id')(url.pathname) as { params: Record<string, string> }
 
@@ -73,7 +73,7 @@ const routes: IRoute[] = [
 	{
 		pathname: '/api/v1/sessions/:id',
 		method: HttpMethod.Delete,
-		handler: function(req: Request) {
+		handler(req: Request) {
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/sessions/:id')(url.pathname) as { params: Record<string, string> }
 
@@ -102,7 +102,7 @@ const routes: IRoute[] = [
 	{
 		pathname: '/api/v1/registrations/:id',
 		method: HttpMethod.Delete,
-		handler: function(req: Request) {
+		handler(req: Request) {
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/registrations/:id')(url.pathname) as { params: Record<string, string> }
 

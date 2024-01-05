@@ -1,5 +1,5 @@
-import { UserStatusEnum } from '@/models'
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+import { UserStatusEnum } from '@/models'
 
 export const users = sqliteTable('users', {
 	id: integer('id').primaryKey(),

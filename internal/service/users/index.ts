@@ -43,7 +43,7 @@ export async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[]
 
 	return {
 		...dbUsers,
-		users: dbUsers.users.map(user => ({
+		users: dbUsers.users.map((user) => ({
 			id: user.id,
 			email: user.email,
 			status: user.status

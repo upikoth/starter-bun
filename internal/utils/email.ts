@@ -16,6 +16,4 @@ interface ISendMailData {
 	html: string;
 }
 
-export const sendMail = (data: ISendMailData) => {
-	return transporter.sendMail(data)
-}
+export const sendMail = (data: ISendMailData) => transporter.sendMail(data)

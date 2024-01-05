@@ -51,7 +51,7 @@ export async function getSessions(
 
 	return {
 		...dbSessions,
-		sessions: dbSessions.sessions.map(s => ({
+		sessions: dbSessions.sessions.map((s) => ({
 			id: s.id,
 			userId: s.userId
 		}))

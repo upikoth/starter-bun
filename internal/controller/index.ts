@@ -10,7 +10,7 @@ import { checkSession as checkSessionFromService } from '@/service'
 import routes from './router'
 import { getErrorResponse } from './http.utils'
 
-export async function getHttpResponse(req: Request): Promise<Response>  {
+export async function getHttpResponse(req: Request): Promise<Response> {
 	try {
 		const requestHandler = await getRequestHandler(req)
 		const response = await requestHandler(req)
@@ -27,7 +27,7 @@ async function getRequestHandler(req: Request) {
 	const parsedCookie = cookie.parse(req.headers.get('Cookie') || '')
 	const session = parsedCookie[AUTHORIZATION_HEADER] || ''
 
-	const route = routes.find(r => match(r.pathname)(url.pathname) && r.method === req.method)
+	const route = routes.find((r) => match(r.pathname)(url.pathname) && r.method === req.method)
 
 	if (!route) {
 		throw {
@@ -57,7 +57,7 @@ function getErrorResponseFromError(err: unknown): Response {
 		return getErrorResponse(
 			{
 				code: ErrorCodeEnum.Unknown,
-				description: 'Неизвестная ошибка'
+				description: String(err)
 			},
 			ErorrStatusEnum.InternalServerError
 		)

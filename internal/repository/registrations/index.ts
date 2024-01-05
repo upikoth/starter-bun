@@ -56,8 +56,8 @@ export async function createRegistration(
 		.delete(registrations)
 		.where(eq(registrations.email, data.email))
 
-	const res: IDbRegistration[] = await db.
-		insert(registrations)
+	const res: IDbRegistration[] = await db
+		.insert(registrations)
 		.values(data)
 		.returning()
 

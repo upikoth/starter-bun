@@ -21,7 +21,7 @@ export function startServer(): void {
 			async fetch(req) {
 				const responsePromise = getHttpResponse(req)
 
-				middlewares.forEach(middleware => {
+				middlewares.forEach((middleware) => {
 					middleware(req, responsePromise)
 				})
 
@@ -33,6 +33,5 @@ export function startServer(): void {
 		logger.info('Сервис успешно запущен')
 	} catch (err) {
 		logger.error('Ошибка старта сервера', err)
-		return
 	}
 }
