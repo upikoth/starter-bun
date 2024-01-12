@@ -44,7 +44,8 @@ export default async function createSession(data: ICreateSessionRequest): Promis
 	const user: IUser = {
 		id: dbUser.id,
 		email: dbUser.email,
-		status: dbUser.status
+		status: dbUser.status,
+		role: dbUser.role
 	}
 
 	const passwordHash = crypto

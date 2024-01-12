@@ -12,6 +12,7 @@ import type {
 	ICustomError,
 	ICreateUserRequest
 } from '@/models'
+import { UserRoleEnum } from '@/models'
 
 import {
 	validateCreateUserRequestData
@@ -47,12 +48,14 @@ export default async function createUser(data: ICreateUserRequest): Promise<IUse
 	const dbUser = await createUserDb({
 		passwordHash,
 		passwordSalt,
-		email: data.email
+		email: data.email,
+		role: UserRoleEnum.User
 	})
 
 	return {
 		id: dbUser.id,
 		email: dbUser.email,
+		role: dbUser.role,
 		status: dbUser.status
 	}
 }

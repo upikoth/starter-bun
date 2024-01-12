@@ -8,7 +8,8 @@ import {
 import type {
 	ICustomError,
 	IGetUsersRequest,
-	IUpdateUserRequest
+	IUpdateUserRequest,
+	UserRoleEnum
 } from '@/models'
 
 import { db } from '../sqlite'
@@ -57,7 +58,12 @@ export async function getUserByEmail(email: string): Promise<IDbUser | undefined
 }
 
 export async function createUser(
-	data: { email: string, passwordHash: string, passwordSalt: string }
+	data: {
+		email: string;
+		role: UserRoleEnum;
+		passwordHash: string;
+		passwordSalt: string;
+	}
 ): Promise<IDbUser> {
 	const res: IDbUser[] = await db
 		.insert(users)

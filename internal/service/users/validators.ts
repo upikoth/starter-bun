@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-import { UserStatusEnum } from '@/models'
+import { UserStatusEnum, UserRoleEnum } from '@/models'
 import type {
 	IGetUsersRequest,
 	IGetUserRequest,
@@ -56,6 +56,9 @@ const updateUserRequestDataSchema = Joi.object({
 		.required(),
 	email: Joi.string()
 		.email()
+		.optional(),
+	role: Joi.string()
+		.valid(...Object.values(UserRoleEnum))
 		.optional(),
 	status: Joi.string()
 		.valid(...Object.values(UserStatusEnum))

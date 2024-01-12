@@ -1,4 +1,7 @@
-import type { UserStatusEnum } from './model'
+import type {
+	UserStatusEnum,
+	UserRoleEnum
+} from './model'
 
 export interface IGetUsersRequest {
 	limit: number;
@@ -17,5 +20,6 @@ export interface ICreateUserRequest {
 
 export interface IUpdateUserRequest {
 	id: number;
+	role?: UserRoleEnum;
 	status?: UserStatusEnum;
 }

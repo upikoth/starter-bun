@@ -32,7 +32,8 @@ export default async function getUsers(data: IGetUsersRequest): Promise<{ users:
 		users: dbUsers.users.map((user) => ({
 			id: user.id,
 			email: user.email,
-			status: user.status
+			status: user.status,
+			role: user.role
 		}))
 	}
 }

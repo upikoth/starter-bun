@@ -29,6 +29,7 @@ export default async function getUserByEmail(email: string): Promise<IUser | und
 	return dbUser ? {
 		id: dbUser.id,
 		email: dbUser.email,
-		status: dbUser.status
+		status: dbUser.status,
+		role: dbUser.role
 	} : undefined
 }

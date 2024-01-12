@@ -64,3 +64,14 @@ const deleteAllSessionsOfUserRequestDataSchema = Joi.object({
 export function validateDeleteAllSessionsOfUserRequestData(data: { userId: number }): string {
 	return deleteAllSessionsOfUserRequestDataSchema.validate(data).error?.message || ''
 }
+
+const getSessionByIdRequestDataSchema = Joi.object({
+	id: Joi.number()
+		.integer()
+		.min(1)
+		.required()
+})
+
+export function validateGetSessionByIdRequestData(data: { id: number }): string {
+	return getSessionByIdRequestDataSchema.validate(data).error?.message || ''
+}

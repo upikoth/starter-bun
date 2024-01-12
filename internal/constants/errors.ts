@@ -8,4 +8,5 @@ export enum ErrorCodeEnum {
 	SessionAlreadyExist = 7,
 	UserBlocked = 8,
 	Unauthorized = 9,
+	Forbidden = 10,
 }

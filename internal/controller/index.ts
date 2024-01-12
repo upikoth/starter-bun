@@ -48,7 +48,16 @@ async function getRequestHandler(req: Request) {
 			} satisfies ICustomError
 		}
 
-		await checkSessionFromService(session)
+		const { user } = await checkSessionFromService(session)
+		const isRightsValid = await route.validateRights(req, user)
+
+		if (!isRightsValid) {
+			throw {
+				code: ErrorCodeEnum.Forbidden,
+				status: ErorrStatusEnum.Forbidden,
+				description: 'Недостаточно прав'
+			} satisfies ICustomError
+		}
 	}
 
 	return route.handler

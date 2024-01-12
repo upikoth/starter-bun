@@ -37,6 +37,7 @@ export default async function updateUser(data: IUpdateUserRequest): Promise<IUse
 	return {
 		id: dbUser.id,
 		email: dbUser.email,
+		role: dbUser.role,
 		status: dbUser.status
 	}
 }

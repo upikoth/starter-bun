@@ -38,6 +38,7 @@ export default async function getUser(data: IGetUserRequest): Promise<IUser> {
 	return {
 		id: dbUser.id,
 		email: dbUser.email,
-		status: dbUser.status
+		status: dbUser.status,
+		role: dbUser.role
 	}
 }

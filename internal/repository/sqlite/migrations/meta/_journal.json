@@ -64,6 +64,13 @@
       "when": 1704307348656,
       "tag": "0008_wakeful_kree",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1704541045625,
+      "tag": "0009_light_marvel_boy",
+      "breakpoints": true
     }
   ]
 }
