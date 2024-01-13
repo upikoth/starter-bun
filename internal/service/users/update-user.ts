@@ -11,7 +11,7 @@ import type {
 	ICustomError,
 	IUpdateUserRequest
 } from '@/models'
-import { UserStatusEnum } from '@/models'
+import { UserRoleEnum, UserStatusEnum } from '@/models'
 
 import {
 	validateUpdateUserRequestData
@@ -25,6 +25,14 @@ export default async function updateUser(data: IUpdateUserRequest): Promise<IUse
 			code: ErrorCodeEnum.ValidationError,
 			status: ErorrStatusEnum.BadRequest,
 			description: validationError
+		} satisfies ICustomError
+	}
+
+	if (data.role === UserRoleEnum.SuperAdmin) {
+		throw {
+			code: ErrorCodeEnum.Forbidden,
+			status: ErorrStatusEnum.Forbidden,
+			description: 'Недостаточно прав'
 		} satisfies ICustomError
 	}
 
