@@ -17,9 +17,9 @@ jobs:
       name: prod
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: 20
+          bun-version: 1.0.23
 
       - name: Cache npm dependencies
         id: cache-npm
