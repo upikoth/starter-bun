@@ -1,0 +1,12 @@
+services:
+  backend:
+    image: ghcr.io/upikoth/starter-bun
+    container_name: backend
+    ports:
+      - 127.0.0.1:${APP_PORT}:${APP_PORT}
+    environment:
+      APP_PORT: ${APP_PORT}
+      APP_NAME: ${APP_NAME}
+      FRONT_URL: ${FRONT_URL}
+      EMAIL_FROM: ${EMAIL_FROM}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}

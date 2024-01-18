@@ -1,4 +1,4 @@
-import environment from '@/environment'
+import environment, { loadEnvironmentVariables } from '@/environment'
 
 import { logger } from '@/packages'
 
@@ -13,6 +13,13 @@ export function startServer(): void {
 		migrateIfNeeded()
 	} catch (err) {
 		logger.error('Ошибка миграций БД', err)
+		return
+	}
+
+	try {
+		loadEnvironmentVariables()
+	} catch (err) {
+		logger.error('Ошибка загрузки env переменных', err)
 		return
 	}
 

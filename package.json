@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "build": "bun build --target=bun ./index.ts --outdir dist",
+    "build": "bun build --target=bun ./index.ts --outdir dist && cp -r ./internal/repository/sqlite/migrations dist",
     "create-migrations": "drizzle-kit generate:sqlite --config ./internal/repository/sqlite/drizzle.config.ts"
   },
   "devDependencies": {
