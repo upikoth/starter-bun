@@ -10,3 +10,10 @@ services:
       FRONT_URL: ${FRONT_URL}
       EMAIL_FROM: ${EMAIL_FROM}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+    volumes:
+      - type: bind
+        source: /var/www/databases/starter-bun-database.sqlite
+        target: /home/bun/app/database.sqlite
+      - type: bind
+        source: /var/www/logs
+        target: /home/bun/app/logs

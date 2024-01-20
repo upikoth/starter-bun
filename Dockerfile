@@ -20,4 +20,4 @@ COPY --from=build /starter-bun/dist/ ./
 
 ENTRYPOINT [ "bun", "run", "index.js" ]
 
-EXPOSE 4000
+EXPOSE 8000
