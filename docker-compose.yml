@@ -15,5 +15,5 @@ services:
         source: /var/www/databases/starter-bun-database.sqlite
         target: /home/bun/app/database.sqlite
       - type: bind
-        source: /var/www/logs
+        source: /var/www/logs/starter-bun
         target: /home/bun/app/logs
