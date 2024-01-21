@@ -15,7 +15,6 @@ const logger = winston.createLogger({
 		winston.format.prettyPrint()
 	),
 	exitOnError: false,
-	defaultMeta: { service: environment.APP_NAME },
 	transports: [
 		new winston.transports.File({
 			filename: LogFiles.Error,
@@ -25,14 +24,18 @@ const logger = winston.createLogger({
 	]
 })
 
-if (environment.NODE_ENV !== 'production') {
-	logger.add(new winston.transports.Console({
-		format: winston.format.combine(
-			winston.format.colorize(),
-			winston.format.timestamp(),
-			winston.format.simple()
-		)
-	}))
+export function initLogger() {
+	logger.defaultMeta = { service: environment.APP_NAME }
+
+	if (environment.NODE_ENV !== 'production') {
+		logger.add(new winston.transports.Console({
+			format: winston.format.combine(
+				winston.format.colorize(),
+				winston.format.timestamp(),
+				winston.format.simple()
+			)
+		}))
+	}
 }
 
 export { logger }

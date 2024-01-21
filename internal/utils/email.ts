@@ -2,18 +2,20 @@ import nodemailer from 'nodemailer'
 
 import environment from '@/environment'
 
-const transporter = nodemailer.createTransport({
-	service: 'gmail',
-	auth: {
-		user: environment.EMAIL_FROM,
-		pass: environment.EMAIL_PASSWORD
-	}
-})
-
 interface ISendMailData {
 	to: string;
 	subject: string;
 	html: string;
 }
 
-export const sendMail = (data: ISendMailData) => transporter.sendMail(data)
+export function sendMail(data: ISendMailData) {
+	const transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: environment.EMAIL_FROM,
+			pass: environment.EMAIL_PASSWORD
+		}
+	})
+
+	transporter.sendMail(data)
+}

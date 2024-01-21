@@ -1,6 +1,6 @@
 import environment, { loadEnvironmentVariables } from '@/environment'
 
-import { logger } from '@/packages'
+import { logger, initLogger } from '@/packages'
 
 import { getHttpResponse } from '@/controller'
 
@@ -9,17 +9,13 @@ import { migrateIfNeeded } from '@/repository/sqlite'
 import middlewares from './middlewares'
 
 export function startServer(): void {
+	loadEnvironmentVariables()
+	initLogger()
+
 	try {
 		migrateIfNeeded()
 	} catch (err) {
 		logger.error('Ошибка миграций БД', err)
-		return
-	}
-
-	try {
-		loadEnvironmentVariables()
-	} catch (err) {
-		logger.error('Ошибка загрузки env переменных', err)
 		return
 	}
 
