@@ -4,6 +4,10 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { uploadFileToS3 } from '@/utils'
 
+import {
+	createFile as createFileDb
+} from '@/repository'
+
 import type {
 	IFile,
 	ICustomError,
@@ -39,12 +43,13 @@ export default async function uploadFile(
 		} satisfies ICustomError
 	}
 
+	const dbFile = await createFileDb({
+		s3Id,
+		name: data.file.name,
+		uploadedByUserId: data.uploadedByUserId
+	})
+
 	return {
-		file: {
-			id: 1,
-			s3Id,
-			name: data.file.name,
-			uploadedByUserId: data.uploadedByUserId
-		}
+		file: dbFile
 	}
 }

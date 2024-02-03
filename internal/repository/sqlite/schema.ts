@@ -42,3 +42,16 @@ type DbRegistrationInsert = typeof registrations.$inferInsert
 
 export interface IDbRegistration extends DbRegistration { }
 export interface IDbRegistrationInsert extends DbRegistrationInsert { }
+
+export const files = sqliteTable('files', {
+	id: integer('id').primaryKey(),
+	name: text('name').notNull(),
+	s3Id: text('s3_id').notNull(),
+	uploadedByUserId: integer('uploaded_by_user_id').notNull().references(() => users.id)
+})
+
+type DbFile = typeof files.$inferSelect
+type DbFileInsert = typeof files.$inferInsert
+
+export interface IDbFile extends DbFile { }
+export interface IDbFileInsert extends DbFileInsert { }

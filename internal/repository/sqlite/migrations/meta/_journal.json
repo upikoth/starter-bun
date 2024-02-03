@@ -71,6 +71,13 @@
       "when": 1704541045625,
       "tag": "0009_light_marvel_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1706992846888,
+      "tag": "0010_brave_talkback",
+      "breakpoints": true
     }
   ]
 }
