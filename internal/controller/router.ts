@@ -102,6 +102,14 @@ const routes: IRoute[] = [
 		}
 	},
 	{
+		pathname: '/api/v1/files',
+		method: HttpMethod.Post,
+		handler: api.v1.files.upload,
+		authRequired: true,
+		validateRights: (_: Request, user: IUser) =>
+			checkIsUserHasAccessToAction(user, UserActionEnum.UploadFiles)
+	},
+	{
 		pathname: '/api/v1/session',
 		method: HttpMethod.Get,
 		handler: api.v1.sessions.getCurrentSession,

@@ -17,5 +17,5 @@ export function sendMail(data: ISendMailData) {
 		}
 	})
 
-	transporter.sendMail(data)
+	return transporter.sendMail(data)
 }

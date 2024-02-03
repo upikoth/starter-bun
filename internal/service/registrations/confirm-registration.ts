@@ -12,6 +12,7 @@ import type {
 	IConfirmRegistrationRequest,
 	IUser
 } from '@/models'
+import { UserRoleEnum } from '@/models'
 
 import {
 	validateConfirmRegistrationRequestData
@@ -50,6 +51,7 @@ export default async function confirmRegistration(data: IConfirmRegistrationRequ
 
 	const dbUser = await createUserDb({
 		email: registration.email,
+		role:	UserRoleEnum.User,
 		passwordHash: registration.passwordHash,
 		passwordSalt: registration.passwordSalt
 	})
@@ -59,6 +61,7 @@ export default async function confirmRegistration(data: IConfirmRegistrationRequ
 	return {
 		id: dbUser.id,
 		email: dbUser.email,
+		role: dbUser.role,
 		status: dbUser.status
 	}
 }

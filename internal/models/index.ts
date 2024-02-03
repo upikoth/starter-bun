@@ -1,6 +1,7 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 export * from './users'
+export * from './files'
 export * from './sessions'
 export * from './registrations'
 
