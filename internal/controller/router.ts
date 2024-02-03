@@ -110,6 +110,22 @@ const routes: IRoute[] = [
 			checkIsUserHasAccessToAction(user, UserActionEnum.UploadFiles)
 	},
 	{
+		pathname: '/api/v1/files',
+		method: HttpMethod.Get,
+		handler: api.v1.files.getAll,
+		authRequired: true,
+		validateRights: (req: Request, user: IUser) => {
+			if (checkIsUserHasAccessToAction(user, UserActionEnum.GetAnyFileInfo)) {
+				return true
+			}
+
+			const { searchParams } = new URL(req.url)
+			const uploadedByUserId = Number.parseInt(searchParams.get('uploadedByUserId') || '0')
+
+			return user.id === uploadedByUserId && checkIsUserHasAccessToAction(user, UserActionEnum.GetMyFileInfo)
+		}
+	},
+	{
 		pathname: '/api/v1/session',
 		method: HttpMethod.Get,
 		handler: api.v1.sessions.getCurrentSession,

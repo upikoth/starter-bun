@@ -22,7 +22,9 @@ export enum UserActionEnum {
 	DeleteMySession = 'delete-my-session',
 	GetAnyRegistration = 'get-any-registration',
 	DeleteAnyRegistration = 'delete-any-registration',
-	UploadFiles = 'upload-files'
+	UploadFiles = 'upload-files',
+	GetAnyFileInfo = 'get-any-file-info',
+	GetMyFileInfo = 'get-my-file-info'
 }
 
 export interface IUser {
