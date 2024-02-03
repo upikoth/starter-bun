@@ -1,3 +1,4 @@
-export interface IUploadFilesRequest {
-	files: Blob[];
+export interface IUploadFileRequest {
+	uploadedByUserId: number;
+	file: File;
 }

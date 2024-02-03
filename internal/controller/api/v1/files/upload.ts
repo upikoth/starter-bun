@@ -1,24 +1,27 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
+import { getSessionFromRequest } from '@/utils'
+
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { uploadFiles as uploadFilesFromService } from '@/service'
+import {
+	uploadFile as uploadFileFromService,
+	checkSession as checkSessionFromService
+} from '@/service'
 
 import type {
-	IUploadFilesRequest,
-	IUploadFilesResponse,
+	IUploadFileRequest,
+	IUploadFileResponse,
 	ICustomError
 } from '@/models'
 
 export default async function uploadFile(req: Request): Promise<Response> {
-	let files: Blob[] = []
+	let file = null
 
 	try {
 		const formData = await req.formData()
 
-		files = formData
-			.getAll('files')
-			.filter((file) => file instanceof Blob) as Blob[]
+		file = formData.get('file')
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
@@ -27,15 +30,27 @@ export default async function uploadFile(req: Request): Promise<Response> {
 		} satisfies ICustomError
 	}
 
-	const uploadFileRequestData: IUploadFilesRequest = {
-		files
+	if (!(file instanceof File)) {
+		throw {
+			code: ErrorCodeEnum.ValidationError,
+			status: ErorrStatusEnum.BadRequest,
+			description: 'Файл не передан в запросе'
+		} satisfies ICustomError
 	}
 
-	const { files: filesResponseFromService } = await uploadFilesFromService(uploadFileRequestData)
+	const sessionId = getSessionFromRequest(req)
+	const { session } = await checkSessionFromService(sessionId)
+
+	const uploadFileRequestData: IUploadFileRequest = {
+		file,
+		uploadedByUserId: session.userId
+	}
+
+	const { file: filesResponseFromService } = await uploadFileFromService(uploadFileRequestData)
 
 	const response = getSuccessResponse({
-		files: filesResponseFromService
-	} satisfies IUploadFilesResponse)
+		file: filesResponseFromService
+	} satisfies IUploadFileResponse)
 
 	return response
 }

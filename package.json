@@ -21,6 +21,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.504.0",
     "cookie": "^0.6.0",
     "drizzle-orm": "^0.29.1",
     "joi": "^17.11.0",

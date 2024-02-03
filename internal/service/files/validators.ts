@@ -1,15 +1,17 @@
 import Joi from 'joi'
 
 import type {
-	IUploadFilesRequest
+	IUploadFileRequest
 } from '@/models'
 
-const uploadFilesRequestDataSchema = Joi.object({
-	files: Joi.array()
-		.min(1)
+const uploadFileRequestDataSchema = Joi.object({
+	file: Joi.object()
+		.required(),
+	uploadedByUserId: Joi.number()
 		.required()
+		.min(1)
 })
 
-export function validateUploadFilesRequestData(data: IUploadFilesRequest): string {
-	return uploadFilesRequestDataSchema.validate(data).error?.message || ''
+export function validateuploadFileRequestData(data: IUploadFileRequest): string {
+	return uploadFileRequestDataSchema.validate(data).error?.message || ''
 }

@@ -9,4 +9,5 @@ export enum ErrorCodeEnum {
 	UserBlocked = 8,
 	Unauthorized = 9,
 	Forbidden = 10,
+	s3Error = 11,
 }

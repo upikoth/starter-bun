@@ -75,12 +75,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            APP_PORT=${{ vars.APP_PORT }}
-            APP_NAME=${{ vars.APP_NAME }}
-            FRONT_URL=${{ vars.FRONT_URL }}
-            EMAIL_FROM=${{ secrets.EMAIL_FROM }}
-            EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
 
   deploy:
     needs:
@@ -93,8 +87,13 @@ jobs:
       APP_PORT: ${{ vars.APP_PORT }}
       APP_NAME: ${{ vars.APP_NAME }}
       FRONT_URL: ${{ vars.FRONT_URL }}
+      S3_REGION: ${{ vars.S3_REGION }}
+      S3_ENDPOINT: ${{ vars.S3_ENDPOINT }}
+      S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
       EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
       EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+      S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout repository

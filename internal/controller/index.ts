@@ -1,9 +1,8 @@
 import { match } from 'path-to-regexp'
-import cookie from 'cookie'
 
-import { ErrorCodeEnum, ErorrStatusEnum, AUTHORIZATION_HEADER } from '@/constants'
+import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import { checkIsCustomError } from '@/utils'
+import { checkIsCustomError, getSessionFromRequest } from '@/utils'
 
 import { checkSession as checkSessionFromService } from '@/service'
 
@@ -26,8 +25,7 @@ export async function getHttpResponse(req: Request): Promise<Response> {
 async function getRequestHandler(req: Request) {
 	const url = new URL(req.url)
 
-	const parsedCookie = cookie.parse(req.headers.get('Cookie') || '')
-	const session = parsedCookie[AUTHORIZATION_HEADER] || ''
+	const session = getSessionFromRequest(req)
 
 	const route = routes.find((r) => match(r.pathname)(url.pathname) && r.method === req.method)
 

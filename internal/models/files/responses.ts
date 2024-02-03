@@ -1,5 +1,5 @@
 import type { IFile } from './model'
 
-export interface IUploadFilesResponse {
-	files: IFile[];
+export interface IUploadFileResponse {
+	file: IFile;
 }
