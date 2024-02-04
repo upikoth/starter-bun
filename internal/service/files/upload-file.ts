@@ -15,13 +15,13 @@ import type {
 } from '@/models'
 
 import {
-	validateuploadFileRequestData
+	validateUploadFileRequestData
 } from './validators'
 
 export default async function uploadFile(
 	data: IUploadFileRequest
 ): Promise<{ file: IFile }> {
-	const validationError = validateuploadFileRequestData(data)
+	const validationError = validateUploadFileRequestData(data)
 
 	if (validationError) {
 		throw {

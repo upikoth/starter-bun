@@ -24,7 +24,9 @@ export enum UserActionEnum {
 	DeleteAnyRegistration = 'delete-any-registration',
 	UploadFiles = 'upload-files',
 	GetAnyFileInfo = 'get-any-file-info',
-	GetMyFileInfo = 'get-my-file-info'
+	GetMyFileInfo = 'get-my-file-info',
+	DeleteAnyFileInfo = 'delete-any-file-info',
+	DeleteMyFileInfo = 'delete-my-file-info'
 }
 
 export interface IUser {

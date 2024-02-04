@@ -6,7 +6,8 @@ import { checkIsUserHasAccessToAction } from '@/utils'
 
 import {
 	getUser as getUserFromFromService,
-	getSessionById as getSessionByIdFromService
+	getSessionById as getSessionByIdFromService,
+	getFile as getFileFromService
 } from '@/service'
 
 import { IUser, UserActionEnum, UserRoleEnum } from '@/models'
@@ -123,6 +124,56 @@ const routes: IRoute[] = [
 			const uploadedByUserId = Number.parseInt(searchParams.get('uploadedByUserId') || '0')
 
 			return user.id === uploadedByUserId && checkIsUserHasAccessToAction(user, UserActionEnum.GetMyFileInfo)
+		}
+	},
+	{
+		pathname: '/api/v1/files/:id',
+		method: HttpMethod.Get,
+		handler(req: Request) {
+			const url = new URL(req.url)
+			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
+
+			return api.v1.files.get(req, params)
+		},
+		authRequired: true,
+		validateRights: async (req: Request, user: IUser) => {
+			if (checkIsUserHasAccessToAction(user, UserActionEnum.GetAnyFileInfo)) {
+				return true
+			}
+
+			const url = new URL(req.url)
+			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
+			const fileGetId = Number.parseInt(params.id)
+
+			const fileToDelete = await getFileFromService({ id: fileGetId })
+
+			return user.id === fileToDelete.uploadedByUserId
+			&& checkIsUserHasAccessToAction(user, UserActionEnum.GetMyFileInfo)
+		}
+	},
+	{
+		pathname: '/api/v1/files/:id',
+		method: HttpMethod.Delete,
+		handler(req: Request) {
+			const url = new URL(req.url)
+			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
+
+			return api.v1.files.deleteFile(req, params)
+		},
+		authRequired: true,
+		validateRights: async (req: Request, user: IUser) => {
+			if (checkIsUserHasAccessToAction(user, UserActionEnum.DeleteAnyFileInfo)) {
+				return true
+			}
+
+			const url = new URL(req.url)
+			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
+			const fileToDeleteId = Number.parseInt(params.id)
+
+			const fileToDelete = await getFileFromService({ id: fileToDeleteId })
+
+			return user.id === fileToDelete.uploadedByUserId
+			&& checkIsUserHasAccessToAction(user, UserActionEnum.DeleteMyFileInfo)
 		}
 	},
 	{

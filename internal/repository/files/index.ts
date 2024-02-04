@@ -1,6 +1,10 @@
 import { eq, sql } from 'drizzle-orm'
 
-import type { IFile, IGetFilesRequest } from '@/models'
+import type {
+	IFile,
+	IGetFilesRequest,
+	IDeleteFileRequest
+} from '@/models'
 
 import { db } from '../sqlite'
 import { files } from '../sqlite/schema'
@@ -28,6 +32,15 @@ export async function getFiles(
 	}
 }
 
+export async function getFileById(id: number): Promise<IDbFile | undefined> {
+	const res: (IDbFile | undefined)[] = await db
+		.select()
+		.from(files)
+		.where(eq(files.id, id))
+
+	return res[0]
+}
+
 export async function createFile(
 	data: Omit<IFile, 'id'>
 ): Promise<IFile> {
@@ -37,4 +50,10 @@ export async function createFile(
 		.returning()
 
 	return res[0]
+}
+
+export async function deleteFile(data: IDeleteFileRequest): Promise<void> {
+	return db
+		.delete(files)
+		.where(eq(files.id, data.id))
 }

@@ -8,3 +8,11 @@ export interface IGetFilesRequest {
 	offset: number;
 	uploadedByUserId?: number;
 }
+
+export interface IDeleteFileRequest {
+	id: number;
+}
+
+export interface IGetFileRequest {
+	id: number;
+}

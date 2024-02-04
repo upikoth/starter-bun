@@ -10,3 +10,7 @@ export interface IGetFilesResponse {
 	offset: number;
 	total: number;
 }
+
+export interface IGetFileResponse {
+	file: IFile;
+}

@@ -7,7 +7,8 @@ const userRoleActionMapping: Record<UserRoleEnum, Set<UserActionEnum>> = {
 		UserActionEnum.UpdateMyUserInfo,
 		UserActionEnum.DeleteMySession,
 		UserActionEnum.UploadFiles,
-		UserActionEnum.GetMyFileInfo
+		UserActionEnum.GetMyFileInfo,
+		UserActionEnum.DeleteMyFileInfo
 	]),
 	[UserRoleEnum.Admin]: new Set([
 		UserActionEnum.GetAnyUserInfo,
@@ -37,7 +38,9 @@ const userRoleActionMapping: Record<UserRoleEnum, Set<UserActionEnum>> = {
 		UserActionEnum.GetAnyRegistration,
 		UserActionEnum.DeleteAnyRegistration,
 		UserActionEnum.GetAnyFileInfo,
-		UserActionEnum.GetMyFileInfo
+		UserActionEnum.GetMyFileInfo,
+		UserActionEnum.DeleteAnyFileInfo,
+		UserActionEnum.DeleteMyFileInfo
 	])
 }
 

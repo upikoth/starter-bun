@@ -2,7 +2,9 @@ import Joi from 'joi'
 
 import type {
 	IUploadFileRequest,
-	IGetFilesRequest
+	IGetFilesRequest,
+	IDeleteFileRequest,
+	IGetFileRequest
 } from '@/models'
 
 const getFilesRequestDataSchema = Joi.object({
@@ -32,6 +34,28 @@ const uploadFileRequestDataSchema = Joi.object({
 		.min(1)
 })
 
-export function validateuploadFileRequestData(data: IUploadFileRequest): string {
+export function validateUploadFileRequestData(data: IUploadFileRequest): string {
 	return uploadFileRequestDataSchema.validate(data).error?.message || ''
+}
+
+const deleteFileRequestDataSchema = Joi.object({
+	id: Joi.number()
+		.integer()
+		.min(1)
+		.required()
+})
+
+export function validateDeleteFileRequestData(data: IDeleteFileRequest): string {
+	return deleteFileRequestDataSchema.validate(data).error?.message || ''
+}
+
+const getFileRequestDataSchema = Joi.object({
+	id: Joi.number()
+		.integer()
+		.min(1)
+		.required()
+})
+
+export function validateGetFileRequestData(data: IGetFileRequest): string {
+	return getFileRequestDataSchema.validate(data).error?.message || ''
 }
