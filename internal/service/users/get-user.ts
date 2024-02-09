@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getUserById as getUserByIdDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IUser,
@@ -25,7 +23,7 @@ export default async function getUser(data: IGetUserRequest): Promise<IUser> {
 		} satisfies ICustomError
 	}
 
-	const dbUser = await getUserByIdDb(data.id)
+	const dbUser = await repository.main.users.getById(data.id)
 
 	if (!dbUser) {
 		throw {

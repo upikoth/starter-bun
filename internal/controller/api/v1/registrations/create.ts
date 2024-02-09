@@ -7,7 +7,7 @@ import type {
 	ICreateRegistrationRequest
 } from '@/models'
 
-export default async function createRegistration(req: Request): Promise<Response> {
+export default async function create(req: Request): Promise<Response> {
 	const bodyJson = ((await req.json()) || {}) as Record<string, string>
 
 	const email = bodyJson.email || ''

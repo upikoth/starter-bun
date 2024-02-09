@@ -9,7 +9,7 @@ import type {
 	UserRoleEnum
 } from '@/models'
 
-export default async function updateUser(req: Request, params: Record<string, string>): Promise<Response> {
+export default async function update(req: Request, params: Record<string, string>): Promise<Response> {
 	const bodyJson = ((await req.json()) || {}) as Record<string, string>
 
 	const updateUsersRequestData: IUpdateUserRequest = {

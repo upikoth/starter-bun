@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getRegistrations as getRegistrationsDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IRegistration,
@@ -27,7 +25,7 @@ export default async function getRegistrations(
 		} satisfies ICustomError
 	}
 
-	const dbRegistrationsResult = await getRegistrationsDb(data)
+	const dbRegistrationsResult = await repository.main.registrations.getAll(data)
 
 	return {
 		...dbRegistrationsResult,

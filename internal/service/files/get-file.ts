@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getFileById as getFileByIdb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IFile,
@@ -25,7 +23,7 @@ export default async function getFile(data: IGetFileRequest): Promise<IFile> {
 		} satisfies ICustomError
 	}
 
-	const dbFile = await getFileByIdb(data.id)
+	const dbFile = await repository.main.files.getById(data.id)
 
 	if (!dbFile) {
 		throw {

@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	deleteAllSessionsOfUser as deleteAllSessionsOfUserDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ICustomError
@@ -23,5 +21,5 @@ export default async function deleteAllSessionsOfUser(userId: number): Promise<v
 		} satisfies ICustomError
 	}
 
-	return deleteAllSessionsOfUserDb(userId)
+	return repository.main.sessions.deleteByUserId(userId)
 }

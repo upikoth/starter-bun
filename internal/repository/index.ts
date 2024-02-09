@@ -1,4 +1,5 @@
-export * from './users'
-export * from './sessions'
-export * from './registrations'
-export * from './files'
+import main from './main'
+
+export default {
+	main
+}

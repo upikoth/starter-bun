@@ -15,7 +15,7 @@ import type {
 	ICustomError
 } from '@/models'
 
-export default async function uploadFile(req: Request): Promise<Response> {
+export default async function upload(req: Request): Promise<Response> {
 	let file = null
 
 	try {

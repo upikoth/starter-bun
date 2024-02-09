@@ -1,11 +1,11 @@
 import upload from './upload'
+import getById from './get-by-id'
 import getAll from './get-all'
-import deleteFile from './delete-file'
-import get from './get'
+import deleteById from './delete-by-id'
 
 export default {
 	upload,
+	getById,
 	getAll,
-	deleteFile,
-	get
+	deleteById
 }

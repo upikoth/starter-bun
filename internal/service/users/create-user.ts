@@ -2,10 +2,7 @@ import crypto from 'node:crypto'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	createUser as createUserDb,
-	getUserByEmail as getUserByEmailDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IUser,
@@ -29,7 +26,7 @@ export default async function createUser(data: ICreateUserRequest): Promise<IUse
 		} satisfies ICustomError
 	}
 
-	const userWithThisEmail = await getUserByEmailDb(data.email)
+	const userWithThisEmail = await repository.main.users.getByEmail(data.email)
 
 	if (userWithThisEmail) {
 		throw {
@@ -45,7 +42,7 @@ export default async function createUser(data: ICreateUserRequest): Promise<IUse
 		.update(data.password)
 		.digest('hex')
 
-	const dbUser = await createUserDb({
+	const dbUser = await repository.main.users.create({
 		passwordHash,
 		passwordSalt,
 		email: data.email,

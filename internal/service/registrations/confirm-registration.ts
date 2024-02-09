@@ -1,11 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getRegistrationByToken as getRegistrationByTokenDb,
-	deleteRegistration as deleteRegistrationDb,
-	createUser as createUserDb,
-	getUserByEmail as getUserByEmailDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ICustomError,
@@ -29,7 +24,7 @@ export default async function confirmRegistration(data: IConfirmRegistrationRequ
 		} satisfies ICustomError
 	}
 
-	const registration = await getRegistrationByTokenDb(data.token)
+	const registration = await repository.main.registrations.getByToken(data.token)
 
 	if (!registration) {
 		throw {
@@ -39,7 +34,7 @@ export default async function confirmRegistration(data: IConfirmRegistrationRequ
 		} satisfies ICustomError
 	}
 
-	const userWithThisEmail = await getUserByEmailDb(registration.email)
+	const userWithThisEmail = await repository.main.users.getByEmail(registration.email)
 
 	if (userWithThisEmail) {
 		throw {
@@ -49,14 +44,14 @@ export default async function confirmRegistration(data: IConfirmRegistrationRequ
 		} satisfies ICustomError
 	}
 
-	const dbUser = await createUserDb({
+	const dbUser = await repository.main.users.create({
 		email: registration.email,
 		role:	UserRoleEnum.User,
 		passwordHash: registration.passwordHash,
 		passwordSalt: registration.passwordSalt
 	})
 
-	await deleteRegistrationDb({ id: registration.id })
+	await repository.main.registrations.deleteById({ id: registration.id })
 
 	return {
 		id: dbUser.id,

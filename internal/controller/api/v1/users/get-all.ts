@@ -8,7 +8,7 @@ import type {
 	UserStatusEnum
 } from '@/models'
 
-export default async function getUsers(req: Request): Promise<Response> {
+export default async function getAll(req: Request): Promise<Response> {
 	const { searchParams } = new URL(req.url)
 
 	const limit = Number.parseInt(searchParams.get('limit') || '10')

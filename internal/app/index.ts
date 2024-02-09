@@ -4,13 +4,16 @@ import { logger, initLogger } from '@/packages'
 
 import { getHttpResponse } from '@/controller'
 
-import { migrateIfNeeded } from '@/repository/sqlite'
+import { migrateIfNeeded } from '@/repository/main/sqlite'
 
 import middlewares from './middlewares'
 
 export function startServer(): void {
 	loadEnvironmentVariables()
-	initLogger()
+	initLogger({
+		appName: environment.APP_NAME,
+		environment: environment.NODE_ENV
+	})
 
 	try {
 		migrateIfNeeded()

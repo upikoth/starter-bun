@@ -4,9 +4,7 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { uploadFileToS3 } from '@/utils'
 
-import {
-	createFile as createFileDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IFile,
@@ -43,7 +41,7 @@ export default async function uploadFile(
 		} satisfies ICustomError
 	}
 
-	const dbFile = await createFileDb({
+	const dbFile = await repository.main.files.create({
 		s3Id,
 		name: data.file.name,
 		uploadedByUserId: data.uploadedByUserId

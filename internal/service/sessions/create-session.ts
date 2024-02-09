@@ -2,11 +2,7 @@ import crypto from 'node:crypto'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	createSession as createSessionDb,
-	getSessionBySession as getSessionBySessionDb,
-	getUserByEmail as getUserByEmailDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ICreateSessionRequest,
@@ -31,7 +27,7 @@ export default async function createSession(data: ICreateSessionRequest): Promis
 		} satisfies ICustomError
 	}
 
-	const dbUser = await getUserByEmailDb(data.email)
+	const dbUser = await repository.main.users.getByEmail(data.email)
 
 	if (!dbUser) {
 		throw {
@@ -71,7 +67,7 @@ export default async function createSession(data: ICreateSessionRequest): Promis
 
 	const sessionValue = crypto.randomBytes(32).toString('hex')
 
-	const session = await getSessionBySessionDb(sessionValue)
+	const session = await repository.main.sessions.getBySession(sessionValue)
 
 	if (session) {
 		throw {
@@ -81,7 +77,7 @@ export default async function createSession(data: ICreateSessionRequest): Promis
 		} satisfies ICustomError
 	}
 
-	const dbSession = await createSessionDb({
+	const dbSession = await repository.main.sessions.create({
 		userId: user.id,
 		session: sessionValue
 	})

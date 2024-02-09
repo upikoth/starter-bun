@@ -4,9 +4,7 @@ import {
 	getUser as getUserFromService
 } from '@/service'
 
-import {
-	getSessionBySession as getSessionBySessionDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ISession,
@@ -29,7 +27,7 @@ export default async function checkSession(sessionValue: string): Promise<{ user
 		} satisfies ICustomError
 	}
 
-	const session = await getSessionBySessionDb(sessionValue)
+	const session = await repository.main.sessions.getBySession(sessionValue)
 
 	if (!session) {
 		throw {

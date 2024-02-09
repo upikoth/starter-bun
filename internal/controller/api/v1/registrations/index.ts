@@ -1,11 +1,11 @@
-import getAll from './get-all'
 import create from './create'
+import getAll from './get-all'
 import confirm from './confirm'
-import deleteRegistration from './delete'
+import deleteById from './delete-by-id'
 
 export default {
-	getAll,
 	create,
+	getAll,
 	confirm,
-	delete: deleteRegistration
+	deleteById
 }

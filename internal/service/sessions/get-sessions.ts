@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getSessions as getSessionsDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IGetSessionsRequest,
@@ -27,7 +25,7 @@ export default async function getSessions(
 		} satisfies ICustomError
 	}
 
-	const dbSessions = await getSessionsDb(data)
+	const dbSessions = await repository.main.sessions.getAll(data)
 
 	return {
 		...dbSessions,

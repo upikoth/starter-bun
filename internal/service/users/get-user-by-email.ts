@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getUserByEmail as getUserByEmailDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IUser,
@@ -24,7 +22,7 @@ export default async function getUserByEmail(email: string): Promise<IUser | und
 		} satisfies ICustomError
 	}
 
-	const dbUser = await getUserByEmailDb(email)
+	const dbUser = await repository.main.users.getByEmail(email)
 
 	return dbUser ? {
 		id: dbUser.id,

@@ -1,9 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	deleteSession as deleteSessionDb,
-	getSessionById as getSessionByIdDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IDeleteSessionRequest,
@@ -25,7 +22,7 @@ export default async function deleteSession(data: IDeleteSessionRequest): Promis
 		} satisfies ICustomError
 	}
 
-	const session = await getSessionByIdDb(data.id)
+	const session = await repository.main.sessions.getById(data.id)
 
 	if (!session) {
 		throw {
@@ -35,5 +32,5 @@ export default async function deleteSession(data: IDeleteSessionRequest): Promis
 		} satisfies ICustomError
 	}
 
-	return deleteSessionDb(data)
+	return repository.main.sessions.deleteById(data)
 }

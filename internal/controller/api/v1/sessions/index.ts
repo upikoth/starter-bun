@@ -1,11 +1,11 @@
-import getAll from './get-all'
 import create from './create'
-import deleteSession from './delete'
 import getCurrentSession from './get-current-session'
+import getAll from './get-all'
+import deleteById from './delete-by-id'
 
 export default {
-	getAll,
 	create,
 	getCurrentSession,
-	delete: deleteSession
+	getAll,
+	deleteById
 }

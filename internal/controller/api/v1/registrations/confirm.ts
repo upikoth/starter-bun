@@ -7,7 +7,7 @@ import type {
 	IConfirmRegistrationRequest
 } from '@/models'
 
-export default async function createRegistration(req: Request): Promise<Response> {
+export default async function confirm(req: Request): Promise<Response> {
 	const bodyJson = ((await req.json()) || {}) as Record<string, string>
 
 	const token = bodyJson.token || ''

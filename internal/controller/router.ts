@@ -37,7 +37,7 @@ const routes: IRoute[] = [
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/users/:id')(url.pathname) as { params: Record<string, string> }
 
-			return api.v1.users.get(req, params)
+			return api.v1.users.getById(req, params)
 		},
 		authRequired: true,
 		validateRights: (req: Request, user: IUser) => {
@@ -133,7 +133,7 @@ const routes: IRoute[] = [
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
 
-			return api.v1.files.get(req, params)
+			return api.v1.files.getById(req, params)
 		},
 		authRequired: true,
 		validateRights: async (req: Request, user: IUser) => {
@@ -158,7 +158,7 @@ const routes: IRoute[] = [
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
 
-			return api.v1.files.deleteFile(req, params)
+			return api.v1.files.deleteById(req, params)
 		},
 		authRequired: true,
 		validateRights: async (req: Request, user: IUser) => {
@@ -205,7 +205,7 @@ const routes: IRoute[] = [
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/sessions/:id')(url.pathname) as { params: Record<string, string> }
 
-			return api.v1.sessions.delete(req, params)
+			return api.v1.sessions.deleteById(req, params)
 		},
 		authRequired: true,
 		validateRights: async (req: Request, user: IUser) => {
@@ -250,7 +250,7 @@ const routes: IRoute[] = [
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/registrations/:id')(url.pathname) as { params: Record<string, string> }
 
-			return api.v1.registrations.delete(req, params)
+			return api.v1.registrations.deleteById(req, params)
 		},
 		authRequired: true,
 		validateRights: (_: Request, user: IUser) =>

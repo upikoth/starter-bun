@@ -10,9 +10,7 @@ import {
 	getUserByEmail as getUserByEmailFromService
 } from '@/service'
 
-import {
-	createRegistration as createRegistrationDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ICreateRegistrationRequest,
@@ -52,7 +50,7 @@ export default async function createRegistration(data: ICreateRegistrationReques
 		.update(data.password)
 		.digest('hex')
 
-	const dbUser = await createRegistrationDb({
+	const dbUser = await repository.main.registrations.create({
 		...data,
 		passwordHash,
 		passwordSalt,

@@ -4,7 +4,7 @@ import { deleteRegistration as deleteRegistrationFromService } from '@/service'
 
 import type { IDeleteRegistrationRequest } from '@/models'
 
-export default async function deleteRegistration(_: Request, params: Record<string, string>): Promise<Response> {
+export default async function deleteById(_: Request, params: Record<string, string>): Promise<Response> {
 	const deleteRegistrationRequestData: IDeleteRegistrationRequest = { id: Number.parseInt(params.id || '0') }
 
 	await deleteRegistrationFromService(deleteRegistrationRequestData)

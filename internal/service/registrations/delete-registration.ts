@@ -1,9 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	deleteRegistration as deleteRegistrationDb,
-	getRegistrationById as getRegistrationByIdDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ICustomError,
@@ -25,7 +22,7 @@ export default async function deleteRegistration(data: IDeleteRegistrationReques
 		} satisfies ICustomError
 	}
 
-	const registration = await getRegistrationByIdDb(data.id)
+	const registration = await repository.main.registrations.getById(data.id)
 
 	if (!registration) {
 		throw {
@@ -35,5 +32,5 @@ export default async function deleteRegistration(data: IDeleteRegistrationReques
 		} satisfies ICustomError
 	}
 
-	return deleteRegistrationDb(data)
+	return repository.main.registrations.deleteById(data)
 }

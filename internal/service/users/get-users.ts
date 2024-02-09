@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getUsers as getUsersDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IUser,
@@ -25,7 +23,7 @@ export default async function getUsers(data: IGetUsersRequest): Promise<{ users:
 		} satisfies ICustomError
 	}
 
-	const dbUsers = await getUsersDb(data)
+	const dbUsers = await repository.main.users.getAll(data)
 
 	return {
 		...dbUsers,

@@ -2,9 +2,7 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { deleteAllSessionsOfUser } from '@/service'
 
-import {
-	updateUser as updateUserDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IUser,
@@ -40,7 +38,7 @@ export default async function updateUser(data: IUpdateUserRequest): Promise<IUse
 		deleteAllSessionsOfUser(data.id)
 	}
 
-	const dbUser = await updateUserDb(data)
+	const dbUser = await repository.main.users.update(data)
 
 	return {
 		id: dbUser.id,

@@ -7,7 +7,7 @@ import type {
 	IGetFilesResponse
 } from '@/models'
 
-export default async function getFiles(req: Request): Promise<Response> {
+export default async function getAll(req: Request): Promise<Response> {
 	const { searchParams } = new URL(req.url)
 
 	const limit = Number.parseInt(searchParams.get('limit') || '10')

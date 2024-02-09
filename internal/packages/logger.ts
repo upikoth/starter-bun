@@ -1,7 +1,5 @@
 import winston from 'winston'
 
-import environment from '@/environment'
-
 enum LogFiles {
 	Error = 'logs/error-logs.log',
 	All = 'logs/all-logs.log'
@@ -24,10 +22,15 @@ const logger = winston.createLogger({
 	]
 })
 
-export function initLogger() {
-	logger.defaultMeta = { service: environment.APP_NAME }
+interface ILoggerOptions {
+	appName: string;
+	environment: 'production' | 'development';
+}
 
-	if (environment.NODE_ENV !== 'production') {
+export function initLogger(options: ILoggerOptions) {
+	logger.defaultMeta = { service: options.appName }
+
+	if (options.environment !== 'production') {
 		logger.add(new winston.transports.Console({
 			format: winston.format.combine(
 				winston.format.colorize(),

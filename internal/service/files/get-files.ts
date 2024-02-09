@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getFiles as getFilesDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	IFile,
@@ -27,7 +25,7 @@ export default async function getFiles(
 		} satisfies ICustomError
 	}
 
-	const dbFilesResult = await getFilesDb(data)
+	const dbFilesResult = await repository.main.files.getAll(data)
 
 	return {
 		...dbFilesResult,

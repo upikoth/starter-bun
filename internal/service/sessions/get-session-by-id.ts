@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getSessionById as getSessionByIdDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ISession,
@@ -24,7 +22,7 @@ export default async function getSessionById(id: number): Promise<ISession> {
 		} satisfies ICustomError
 	}
 
-	const session = await getSessionByIdDb(id)
+	const session = await repository.main.sessions.getById(id)
 
 	if (!session) {
 		throw {

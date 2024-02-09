@@ -2,10 +2,7 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { deleteFileFromS3 } from '@/utils'
 
-import {
-	deleteFile as deleteFileDb,
-	getFileById as getFileByIdDb
-} from '@/repository'
+import repository from '@/repository'
 
 import type {
 	ICustomError,
@@ -29,7 +26,7 @@ export default async function deleteFile(
 		} satisfies ICustomError
 	}
 
-	const file = await getFileByIdDb(data.id)
+	const file = await repository.main.files.getById(data.id)
 
 	if (!file) {
 		throw {
@@ -49,5 +46,5 @@ export default async function deleteFile(
 		} satisfies ICustomError
 	}
 
-	await deleteFileDb(data)
+	await repository.main.files.deleteById(data)
 }
