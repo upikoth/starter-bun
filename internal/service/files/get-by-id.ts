@@ -4,16 +4,15 @@ import repository from '@/repository'
 
 import type {
 	IFile,
-	ICustomError,
-	IGetFileRequest
+	ICustomError
 } from '@/models'
 
 import {
 	validateGetFileRequestData
 } from './validators'
 
-export default async function getById(data: IGetFileRequest): Promise<IFile> {
-	const validationError = validateGetFileRequestData(data)
+export default async function getById(id: number): Promise<IFile> {
+	const validationError = validateGetFileRequestData({ id })
 
 	if (validationError) {
 		throw {
@@ -23,7 +22,7 @@ export default async function getById(data: IGetFileRequest): Promise<IFile> {
 		} satisfies ICustomError
 	}
 
-	const dbFile = await repository.main.files.getById(data.id)
+	const dbFile = await repository.main.files.getById(id)
 
 	if (!dbFile) {
 		throw {

@@ -3,7 +3,6 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import repository from '@/repository'
 
 import type {
-	IDeleteSessionRequest,
 	ICustomError
 } from '@/models'
 
@@ -11,8 +10,8 @@ import {
 	validateDeleteSessionRequestData
 } from './validators'
 
-export default async function deleteById(data: IDeleteSessionRequest): Promise<void> {
-	const validationError = validateDeleteSessionRequestData(data)
+export default async function deleteById(id: number): Promise<void> {
+	const validationError = validateDeleteSessionRequestData({ id })
 
 	if (validationError) {
 		throw {
@@ -22,7 +21,7 @@ export default async function deleteById(data: IDeleteSessionRequest): Promise<v
 		} satisfies ICustomError
 	}
 
-	const session = await repository.main.sessions.getById(data.id)
+	const session = await repository.main.sessions.getById(id)
 
 	if (!session) {
 		throw {
@@ -32,5 +31,5 @@ export default async function deleteById(data: IDeleteSessionRequest): Promise<v
 		} satisfies ICustomError
 	}
 
-	return repository.main.sessions.deleteById(data.id)
+	return repository.main.sessions.deleteById(id)
 }

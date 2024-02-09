@@ -5,8 +5,7 @@ import { deleteFileFromS3 } from '@/utils'
 import repository from '@/repository'
 
 import type {
-	ICustomError,
-	IDeleteFileRequest
+	ICustomError
 } from '@/models'
 
 import {
@@ -14,9 +13,9 @@ import {
 } from './validators'
 
 export default async function deleteById(
-	data: IDeleteFileRequest
+	id: number
 ): Promise<void> {
-	const validationError = validateDeleteFileRequestData(data)
+	const validationError = validateDeleteFileRequestData({ id })
 
 	if (validationError) {
 		throw {
@@ -26,7 +25,7 @@ export default async function deleteById(
 		} satisfies ICustomError
 	}
 
-	const file = await repository.main.files.getById(data.id)
+	const file = await repository.main.files.getById(id)
 
 	if (!file) {
 		throw {
@@ -46,5 +45,5 @@ export default async function deleteById(
 		} satisfies ICustomError
 	}
 
-	await repository.main.files.deleteById(data.id)
+	await repository.main.files.deleteById(id)
 }

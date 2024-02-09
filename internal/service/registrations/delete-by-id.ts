@@ -3,16 +3,15 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import repository from '@/repository'
 
 import type {
-	ICustomError,
-	IDeleteRegistrationRequest
+	ICustomError
 } from '@/models'
 
 import {
 	validateDeleteRegistrationRequestData
 } from './validators'
 
-export default async function deleteById(data: IDeleteRegistrationRequest): Promise<void> {
-	const validationError = validateDeleteRegistrationRequestData(data)
+export default async function deleteById(id: number): Promise<void> {
+	const validationError = validateDeleteRegistrationRequestData({ id })
 
 	if (validationError) {
 		throw {
@@ -22,7 +21,7 @@ export default async function deleteById(data: IDeleteRegistrationRequest): Prom
 		} satisfies ICustomError
 	}
 
-	const registration = await repository.main.registrations.getById(data.id)
+	const registration = await repository.main.registrations.getById(id)
 
 	if (!registration) {
 		throw {
@@ -32,5 +31,5 @@ export default async function deleteById(data: IDeleteRegistrationRequest): Prom
 		} satisfies ICustomError
 	}
 
-	return repository.main.registrations.deleteById(data.id)
+	return repository.main.registrations.deleteById(id)
 }

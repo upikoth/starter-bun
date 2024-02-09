@@ -4,16 +4,15 @@ import repository from '@/repository'
 
 import type {
 	IUser,
-	ICustomError,
-	IGetUserRequest
+	ICustomError
 } from '@/models'
 
 import {
 	validateGetUserRequestData
 } from './validators'
 
-export default async function getById(data: IGetUserRequest): Promise<IUser> {
-	const validationError = validateGetUserRequestData(data)
+export default async function getById(id: number): Promise<IUser> {
+	const validationError = validateGetUserRequestData({ id })
 
 	if (validationError) {
 		throw {
@@ -23,7 +22,7 @@ export default async function getById(data: IGetUserRequest): Promise<IUser> {
 		} satisfies ICustomError
 	}
 
-	const dbUser = await repository.main.users.getById(data.id)
+	const dbUser = await repository.main.users.getById(id)
 
 	if (!dbUser) {
 		throw {

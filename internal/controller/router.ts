@@ -82,7 +82,7 @@ const routes: IRoute[] = [
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/users/:id')(url.pathname) as { params: Record<string, string> }
 			const userToChangeId = Number.parseInt(params.id)
-			const userToChange = await service.users.getById({ id: userToChangeId })
+			const userToChange = await service.users.getById(userToChangeId)
 
 			if (userToChange.role === UserRoleEnum.User
 				&& checkIsUserHasAccessToAction(user, UserActionEnum.UpdateAnyUserWuthRoleUserInfo)) {
@@ -141,7 +141,7 @@ const routes: IRoute[] = [
 			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
 			const fileGetId = Number.parseInt(params.id)
 
-			const fileToDelete = await service.files.getById({ id: fileGetId })
+			const fileToDelete = await service.files.getById(fileGetId)
 
 			return user.id === fileToDelete.uploadedByUserId
 			&& checkIsUserHasAccessToAction(user, UserActionEnum.GetMyFileInfo)
@@ -166,7 +166,7 @@ const routes: IRoute[] = [
 			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
 			const fileToDeleteId = Number.parseInt(params.id)
 
-			const fileToDelete = await service.files.getById({ id: fileToDeleteId })
+			const fileToDelete = await service.files.getById(fileToDeleteId)
 
 			return user.id === fileToDelete.uploadedByUserId
 			&& checkIsUserHasAccessToAction(user, UserActionEnum.DeleteMyFileInfo)

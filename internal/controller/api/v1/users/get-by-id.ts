@@ -7,7 +7,7 @@ import type { IGetUserRequest, IGetUserResponse } from '@/models'
 export default async function getById(_: Request, params: Record<string, string>): Promise<Response> {
 	const getUsersRequestData: IGetUserRequest = { id: Number.parseInt(params.id || '0') }
 
-	const user = await service.users.getById(getUsersRequestData)
+	const user = await service.users.getById(getUsersRequestData.id)
 
 	return getSuccessResponse({ user } satisfies IGetUserResponse)
 }

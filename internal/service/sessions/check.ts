@@ -35,7 +35,7 @@ export default async function check(sessionValue: string): Promise<{ user: IUser
 		} satisfies ICustomError
 	}
 
-	const user = await service.users.getById({ id: session.userId })
+	const user = await service.users.getById(session.userId)
 
 	return {
 		user,
