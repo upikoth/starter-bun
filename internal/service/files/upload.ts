@@ -2,8 +2,6 @@ import crypto from 'crypto'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import { uploadFileToS3 } from '@/utils'
-
 import repository from '@/repository'
 
 import type {
@@ -32,7 +30,7 @@ export default async function upload(
 	const s3Id = crypto.randomBytes(32).toString('hex')
 
 	try {
-		await uploadFileToS3(data.file, s3Id, data.uploadedByUserId)
+		await repository.s3.uploadFileToS3(data.file, s3Id, data.uploadedByUserId)
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.s3Error,

@@ -13,7 +13,7 @@ function getS3Client() {
 	})
 }
 
-export async function uploadFileToS3(file: File, fileS3Id: string, userId: number) {
+async function uploadFileToS3(file: File, fileS3Id: string, userId: number) {
 	const client = getS3Client()
 
 	const command = new PutObjectCommand({
@@ -26,7 +26,7 @@ export async function uploadFileToS3(file: File, fileS3Id: string, userId: numbe
 	await client.send(command)
 }
 
-export async function deleteFileFromS3(fileS3Id: string, userId: number) {
+async function deleteFileFromS3(fileS3Id: string, userId: number) {
 	const client = getS3Client()
 
 	const command = new DeleteObjectCommand({
@@ -35,4 +35,9 @@ export async function deleteFileFromS3(fileS3Id: string, userId: number) {
 	})
 
 	await client.send(command)
+}
+
+export default {
+	uploadFileToS3,
+	deleteFileFromS3
 }

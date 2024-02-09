@@ -4,7 +4,7 @@ import { logger, initLogger } from '@/packages'
 
 import { getHttpResponse } from '@/controller'
 
-import { migrateIfNeeded } from '@/repository/main/sqlite'
+import repository from '@/repository'
 
 import middlewares from './middlewares'
 
@@ -16,7 +16,7 @@ export function startServer(): void {
 	})
 
 	try {
-		migrateIfNeeded()
+		repository.main.utils.migrateIfNeeded()
 	} catch (err) {
 		logger.error('Ошибка миграций БД', err)
 		return

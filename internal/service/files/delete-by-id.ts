@@ -1,7 +1,5 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import { deleteFileFromS3 } from '@/utils'
-
 import repository from '@/repository'
 
 import type {
@@ -36,7 +34,7 @@ export default async function deleteById(
 	}
 
 	try {
-		await deleteFileFromS3(file.s3Id, file.uploadedByUserId)
+		await repository.s3.deleteFileFromS3(file.s3Id, file.uploadedByUserId)
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.s3Error,
