@@ -13,7 +13,7 @@ import {
 	validateConfirmRegistrationRequestData
 } from './validators'
 
-export default async function confirmRegistration(data: IConfirmRegistrationRequest): Promise<IUser> {
+export default async function confirm(data: IConfirmRegistrationRequest): Promise<IUser> {
 	const validationError = validateConfirmRegistrationRequestData(data)
 
 	if (validationError) {

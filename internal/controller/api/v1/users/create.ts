@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { createUser as createUserFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	ICreateUserResponse,
@@ -17,7 +17,7 @@ export default async function create(req: Request): Promise<Response> {
 		password
 	}
 
-	const user = await createUserFromService(createUserRequestData)
+	const user = await service.users.create(createUserRequestData)
 
 	return getSuccessResponse({ user } satisfies ICreateUserResponse)
 }

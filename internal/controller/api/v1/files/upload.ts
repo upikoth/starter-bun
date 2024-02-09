@@ -4,10 +4,7 @@ import { getSessionFromRequest } from '@/utils'
 
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import {
-	uploadFile as uploadFileFromService,
-	checkSession as checkSessionFromService
-} from '@/service'
+import service from '@/service'
 
 import type {
 	IUploadFileRequest,
@@ -39,14 +36,14 @@ export default async function upload(req: Request): Promise<Response> {
 	}
 
 	const sessionId = getSessionFromRequest(req)
-	const { session } = await checkSessionFromService(sessionId)
+	const { session } = await service.sessions.check(sessionId)
 
 	const uploadFileRequestData: IUploadFileRequest = {
 		file,
 		uploadedByUserId: session.userId
 	}
 
-	const { file: filesResponseFromService } = await uploadFileFromService(uploadFileRequestData)
+	const { file: filesResponseFromService } = await service.files.upload(uploadFileRequestData)
 
 	const response = getSuccessResponse({
 		file: filesResponseFromService

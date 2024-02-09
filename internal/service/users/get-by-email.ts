@@ -11,7 +11,7 @@ import {
 	validateGetUserByEmailRequestData
 } from './validators'
 
-export default async function getUserByEmail(email: string): Promise<IUser | undefined> {
+export default async function getByEmail(email: string): Promise<IUser | undefined> {
 	const validationError = validateGetUserByEmailRequestData({ email })
 
 	if (validationError) {

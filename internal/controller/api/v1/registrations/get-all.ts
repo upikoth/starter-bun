@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { getRegistrations as getRegistrationsFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	IGetRegistrationsRequest,
@@ -18,7 +18,7 @@ export default async function getAll(req: Request): Promise<Response> {
 		offset
 	}
 
-	const { registrations, total } = await getRegistrationsFromService(getSessionsRequestData)
+	const { registrations, total } = await service.registrations.getAll(getSessionsRequestData)
 
 	return getSuccessResponse({
 		registrations,

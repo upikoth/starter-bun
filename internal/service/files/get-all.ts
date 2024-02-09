@@ -12,7 +12,7 @@ import {
 	validateGetFilesRequestData
 } from './validators'
 
-export default async function getFiles(
+export default async function getAll(
 	data: IGetFilesRequest
 ): Promise<{ files: IFile[], total: number }> {
 	const validationError = validateGetFilesRequestData(data)

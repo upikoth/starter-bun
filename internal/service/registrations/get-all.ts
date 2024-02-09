@@ -12,7 +12,7 @@ import {
 	validateGetRegistrationsRequestData
 } from './validators'
 
-export default async function getRegistrations(
+export default async function getAll(
 	data: IGetRegistrationsRequest
 ): Promise<{ registrations: IRegistration[], total: number }> {
 	const validationError = validateGetRegistrationsRequestData(data)

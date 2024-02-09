@@ -1,13 +1,13 @@
-import createUser from './create-user'
-import getUserByEmail from './get-user-by-email'
-import getUser from './get-user'
-import getUsers from './get-users'
-import updateUser from './update-user'
+import create from './create'
+import getById from './get-by-id'
+import getByEmail from './get-by-email'
+import getAll from './get-all'
+import update from './update'
 
-export {
-	createUser,
-	getUserByEmail,
-	getUser,
-	getUsers,
-	updateUser
+export default {
+	create,
+	getById,
+	getByEmail,
+	getAll,
+	update
 }

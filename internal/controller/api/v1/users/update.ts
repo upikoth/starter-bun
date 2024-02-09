@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { updateUser as updateUserFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	IUpdateUserRequest,
@@ -18,7 +18,7 @@ export default async function update(req: Request, params: Record<string, string
 		status: bodyJson.status as UserStatusEnum || undefined
 	}
 
-	const user = await updateUserFromService(updateUsersRequestData)
+	const user = await service.users.update(updateUsersRequestData)
 
 	return getSuccessResponse({ user } satisfies IUpdateUserResponse)
 }

@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { createRegistration as createRegistrationFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	ICreateRegistrationResponse,
@@ -18,7 +18,7 @@ export default async function create(req: Request): Promise<Response> {
 		password
 	}
 
-	const registration = await createRegistrationFromService(createSessionRequestData)
+	const registration = await service.registrations.create(createSessionRequestData)
 
 	const response = getSuccessResponse({ registration } satisfies ICreateRegistrationResponse)
 

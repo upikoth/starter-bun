@@ -1,6 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import { deleteAllSessionsOfUser } from '@/service'
+import service from '@/service'
 
 import repository from '@/repository'
 
@@ -15,7 +15,7 @@ import {
 	validateUpdateUserRequestData
 } from './validators'
 
-export default async function updateUser(data: IUpdateUserRequest): Promise<IUser> {
+export default async function update(data: IUpdateUserRequest): Promise<IUser> {
 	const validationError = validateUpdateUserRequestData(data)
 
 	if (validationError) {
@@ -35,7 +35,7 @@ export default async function updateUser(data: IUpdateUserRequest): Promise<IUse
 	}
 
 	if (data.status === UserStatusEnum.Blocked) {
-		deleteAllSessionsOfUser(data.id)
+		service.sessions.deleteByUserId(data.id)
 	}
 
 	const dbUser = await repository.main.users.update(data)

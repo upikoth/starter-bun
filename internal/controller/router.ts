@@ -4,11 +4,7 @@ import { HttpMethod } from '@/constants'
 
 import { checkIsUserHasAccessToAction } from '@/utils'
 
-import {
-	getUser as getUserFromFromService,
-	getSessionById as getSessionByIdFromService,
-	getFile as getFileFromService
-} from '@/service'
+import service from '@/service'
 
 import { IUser, UserActionEnum, UserRoleEnum } from '@/models'
 
@@ -86,7 +82,7 @@ const routes: IRoute[] = [
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/users/:id')(url.pathname) as { params: Record<string, string> }
 			const userToChangeId = Number.parseInt(params.id)
-			const userToChange = await getUserFromFromService({ id: userToChangeId })
+			const userToChange = await service.users.getById({ id: userToChangeId })
 
 			if (userToChange.role === UserRoleEnum.User
 				&& checkIsUserHasAccessToAction(user, UserActionEnum.UpdateAnyUserWuthRoleUserInfo)) {
@@ -145,7 +141,7 @@ const routes: IRoute[] = [
 			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
 			const fileGetId = Number.parseInt(params.id)
 
-			const fileToDelete = await getFileFromService({ id: fileGetId })
+			const fileToDelete = await service.files.getById({ id: fileGetId })
 
 			return user.id === fileToDelete.uploadedByUserId
 			&& checkIsUserHasAccessToAction(user, UserActionEnum.GetMyFileInfo)
@@ -170,7 +166,7 @@ const routes: IRoute[] = [
 			const { params } = match('/api/v1/files/:id')(url.pathname) as { params: Record<string, string> }
 			const fileToDeleteId = Number.parseInt(params.id)
 
-			const fileToDelete = await getFileFromService({ id: fileToDeleteId })
+			const fileToDelete = await service.files.getById({ id: fileToDeleteId })
 
 			return user.id === fileToDelete.uploadedByUserId
 			&& checkIsUserHasAccessToAction(user, UserActionEnum.DeleteMyFileInfo)
@@ -215,7 +211,7 @@ const routes: IRoute[] = [
 
 			const url = new URL(req.url)
 			const { params } = match('/api/v1/sessions/:id')(url.pathname) as { params: Record<string, string> }
-			const sessionToDelete = await getSessionByIdFromService(Number.parseInt(params.id))
+			const sessionToDelete = await service.sessions.getById(Number.parseInt(params.id))
 
 			return user.id === sessionToDelete.userId
 				&& checkIsUserHasAccessToAction(user, UserActionEnum.DeleteMySession)

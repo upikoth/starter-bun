@@ -1,13 +1,13 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { deleteRegistration as deleteRegistrationFromService } from '@/service'
+import service from '@/service'
 
 import type { IDeleteRegistrationRequest } from '@/models'
 
 export default async function deleteById(_: Request, params: Record<string, string>): Promise<Response> {
 	const deleteRegistrationRequestData: IDeleteRegistrationRequest = { id: Number.parseInt(params.id || '0') }
 
-	await deleteRegistrationFromService(deleteRegistrationRequestData)
+	await service.registrations.deletById(deleteRegistrationRequestData)
 
 	return getSuccessResponse({})
 }

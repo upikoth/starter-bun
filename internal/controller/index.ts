@@ -4,7 +4,7 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { checkIsCustomError, getSessionFromRequest } from '@/utils'
 
-import { checkSession as checkSessionFromService } from '@/service'
+import service from '@/service'
 
 import type { ICustomError } from '@/models'
 
@@ -46,7 +46,7 @@ async function getRequestHandler(req: Request) {
 			} satisfies ICustomError
 		}
 
-		const { user } = await checkSessionFromService(session)
+		const { user } = await service.sessions.check(session)
 		const isRightsValid = await route.validateRights(req, user)
 
 		if (!isRightsValid) {

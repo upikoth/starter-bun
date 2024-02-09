@@ -1,15 +1,15 @@
-import checkSession from './check-session'
-import createSession from './create-session'
-import deleteAllSessionsOfUser from './delete-all-sessions-of-user'
-import deleteSession from './delete-session'
-import getSessions from './get-sessions'
-import getSessionById from './get-session-by-id'
+import create from './create'
+import getById from './get-by-id'
+import getAll from './get-all'
+import check from './check'
+import deleteByUserId from './delete-by-user-id'
+import deleteById from './delete-by-id'
 
-export {
-	checkSession,
-	createSession,
-	deleteAllSessionsOfUser,
-	deleteSession,
-	getSessions,
-	getSessionById
+export default {
+	create,
+	getById,
+	getAll,
+	check,
+	deleteByUserId,
+	deleteById
 }

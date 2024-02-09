@@ -13,7 +13,7 @@ import {
 	validateDeleteFileRequestData
 } from './validators'
 
-export default async function deleteFile(
+export default async function deleteById(
 	data: IDeleteFileRequest
 ): Promise<void> {
 	const validationError = validateDeleteFileRequestData(data)

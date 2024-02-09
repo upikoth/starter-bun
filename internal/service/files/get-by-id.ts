@@ -3,17 +3,17 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import repository from '@/repository'
 
 import type {
-	IUser,
+	IFile,
 	ICustomError,
-	IGetUserRequest
+	IGetFileRequest
 } from '@/models'
 
 import {
-	validateGetUserRequestData
+	validateGetFileRequestData
 } from './validators'
 
-export default async function getUser(data: IGetUserRequest): Promise<IUser> {
-	const validationError = validateGetUserRequestData(data)
+export default async function getById(data: IGetFileRequest): Promise<IFile> {
+	const validationError = validateGetFileRequestData(data)
 
 	if (validationError) {
 		throw {
@@ -23,20 +23,20 @@ export default async function getUser(data: IGetUserRequest): Promise<IUser> {
 		} satisfies ICustomError
 	}
 
-	const dbUser = await repository.main.users.getById(data.id)
+	const dbFile = await repository.main.files.getById(data.id)
 
-	if (!dbUser) {
+	if (!dbFile) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
 			status: ErorrStatusEnum.BadRequest,
-			description: 'Пользователь не найден'
+			description: 'Файл не найден'
 		} satisfies ICustomError
 	}
 
 	return {
-		id: dbUser.id,
-		email: dbUser.email,
-		status: dbUser.status,
-		role: dbUser.role
+		id: dbFile.id,
+		name: dbFile.name,
+		s3Id: dbFile.s3Id,
+		uploadedByUserId: dbFile.uploadedByUserId
 	}
 }

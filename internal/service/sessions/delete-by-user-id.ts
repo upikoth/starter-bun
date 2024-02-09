@@ -10,7 +10,7 @@ import {
 	validateDeleteAllSessionsOfUserRequestData
 } from './validators'
 
-export default async function deleteAllSessionsOfUser(userId: number): Promise<void> {
+export default async function deleteByUserId(userId: number): Promise<void> {
 	const validationError = validateDeleteAllSessionsOfUserRequestData({ userId })
 
 	if (validationError) {

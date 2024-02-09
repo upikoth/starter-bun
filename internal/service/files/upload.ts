@@ -16,7 +16,7 @@ import {
 	validateUploadFileRequestData
 } from './validators'
 
-export default async function uploadFile(
+export default async function upload(
 	data: IUploadFileRequest
 ): Promise<{ file: IFile }> {
 	const validationError = validateUploadFileRequestData(data)

@@ -16,7 +16,7 @@ import {
 	validateCreateSessionRequestData
 } from './validators'
 
-export default async function createSession(data: ICreateSessionRequest): Promise<{ session: ISession, user: IUser }> {
+export default async function create(data: ICreateSessionRequest): Promise<{ session: ISession, user: IUser }> {
 	const validationError = validateCreateSessionRequestData(data)
 
 	if (validationError) {

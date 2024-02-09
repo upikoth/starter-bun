@@ -6,9 +6,7 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
 import { sendMail } from '@/utils'
 
-import {
-	getUserByEmail as getUserByEmailFromService
-} from '@/service'
+import service from '@/service'
 
 import repository from '@/repository'
 
@@ -22,7 +20,7 @@ import {
 	validateCreateRegistrationRequestData
 } from './validators'
 
-export default async function createRegistration(data: ICreateRegistrationRequest): Promise<IRegistration> {
+export default async function create(data: ICreateRegistrationRequest): Promise<IRegistration> {
 	const validationError = validateCreateRegistrationRequestData(data)
 
 	if (validationError) {
@@ -33,7 +31,7 @@ export default async function createRegistration(data: ICreateRegistrationReques
 		} satisfies ICustomError
 	}
 
-	const user = await getUserByEmailFromService(data.email)
+	const user = await service.users.getByEmail(data.email)
 
 	if (user) {
 		throw {

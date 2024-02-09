@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { getUsers as getUsersFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	IGetUsersRequest,
@@ -21,7 +21,7 @@ export default async function getAll(req: Request): Promise<Response> {
 		status
 	}
 
-	const { users, total } = await getUsersFromService(getUsersRequestData)
+	const { users, total } = await service.users.getAll(getUsersRequestData)
 
 	return getSuccessResponse({
 		users,

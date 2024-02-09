@@ -3,16 +3,17 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import repository from '@/repository'
 
 import type {
+	IUser,
 	ICustomError,
-	IDeleteRegistrationRequest
+	IGetUserRequest
 } from '@/models'
 
 import {
-	validateDeleteRegistrationRequestData
+	validateGetUserRequestData
 } from './validators'
 
-export default async function deleteRegistration(data: IDeleteRegistrationRequest): Promise<void> {
-	const validationError = validateDeleteRegistrationRequestData(data)
+export default async function getById(data: IGetUserRequest): Promise<IUser> {
+	const validationError = validateGetUserRequestData(data)
 
 	if (validationError) {
 		throw {
@@ -22,15 +23,20 @@ export default async function deleteRegistration(data: IDeleteRegistrationReques
 		} satisfies ICustomError
 	}
 
-	const registration = await repository.main.registrations.getById(data.id)
+	const dbUser = await repository.main.users.getById(data.id)
 
-	if (!registration) {
+	if (!dbUser) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
 			status: ErorrStatusEnum.BadRequest,
-			description: 'Регистрация не найдена'
+			description: 'Пользователь не найден'
 		} satisfies ICustomError
 	}
 
-	return repository.main.registrations.deleteById(data.id)
+	return {
+		id: dbUser.id,
+		email: dbUser.email,
+		status: dbUser.status,
+		role: dbUser.role
+	}
 }

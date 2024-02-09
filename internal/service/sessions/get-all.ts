@@ -12,7 +12,7 @@ import {
 	validateGetSessionsRequestData
 } from './validators'
 
-export default async function getSessions(
+export default async function getAll(
 	data: IGetSessionsRequest
 ): Promise<{ sessions: IGetSessionsResponseSession[], total: number }> {
 	const validationError = validateGetSessionsRequestData(data)

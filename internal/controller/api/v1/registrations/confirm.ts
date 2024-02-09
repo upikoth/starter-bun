@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { confirmRegistration as confirmRegistrationFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	IConfirmRegistrationResponse,
@@ -14,7 +14,7 @@ export default async function confirm(req: Request): Promise<Response> {
 
 	const createSessionRequestData: IConfirmRegistrationRequest = { token }
 
-	const user = await confirmRegistrationFromService(createSessionRequestData)
+	const user = await service.registrations.confirm(createSessionRequestData)
 
 	return getSuccessResponse({ user } satisfies IConfirmRegistrationResponse)
 }

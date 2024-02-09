@@ -4,7 +4,7 @@ import { HttpHeaderEnum, AUTHORIZATION_HEADER, MILLISECONDS_IN_MONTH } from '@/c
 
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { createSession as createSessionFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	ICreateSessionResponse,
@@ -21,7 +21,7 @@ export default async function create(req: Request): Promise<Response> {
 		password
 	}
 
-	const { session, user } = await createSessionFromService(createSessionRequestData)
+	const { session, user } = await service.sessions.create(createSessionRequestData)
 
 	const response = getSuccessResponse({
 		user,

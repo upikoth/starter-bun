@@ -1,6 +1,6 @@
 import { getSuccessResponse } from '@/controller/http.utils'
 
-import { getFiles as getFilesFromService } from '@/service'
+import service from '@/service'
 
 import type {
 	IGetFilesRequest,
@@ -24,7 +24,7 @@ export default async function getAll(req: Request): Promise<Response> {
 		uploadedByUserId
 	}
 
-	const { files, total } = await getFilesFromService(getFilesRequestData)
+	const { files, total } = await service.files.getAll(getFilesRequestData)
 
 	return getSuccessResponse({
 		files,

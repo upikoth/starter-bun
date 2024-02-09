@@ -3,17 +3,16 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import repository from '@/repository'
 
 import type {
-	IFile,
-	ICustomError,
-	IGetFileRequest
+	IDeleteSessionRequest,
+	ICustomError
 } from '@/models'
 
 import {
-	validateGetFileRequestData
+	validateDeleteSessionRequestData
 } from './validators'
 
-export default async function getFile(data: IGetFileRequest): Promise<IFile> {
-	const validationError = validateGetFileRequestData(data)
+export default async function deleteById(data: IDeleteSessionRequest): Promise<void> {
+	const validationError = validateDeleteSessionRequestData(data)
 
 	if (validationError) {
 		throw {
@@ -23,20 +22,15 @@ export default async function getFile(data: IGetFileRequest): Promise<IFile> {
 		} satisfies ICustomError
 	}
 
-	const dbFile = await repository.main.files.getById(data.id)
+	const session = await repository.main.sessions.getById(data.id)
 
-	if (!dbFile) {
+	if (!session) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
 			status: ErorrStatusEnum.BadRequest,
-			description: 'Файл не найден'
+			description: 'Сессия не найдена'
 		} satisfies ICustomError
 	}
 
-	return {
-		id: dbFile.id,
-		name: dbFile.name,
-		s3Id: dbFile.s3Id,
-		uploadedByUserId: dbFile.uploadedByUserId
-	}
+	return repository.main.sessions.deleteById(data.id)
 }

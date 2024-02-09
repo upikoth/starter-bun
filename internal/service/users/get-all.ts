@@ -12,7 +12,7 @@ import {
 	validateGetUsersRequestData
 } from './validators'
 
-export default async function getUsers(data: IGetUsersRequest): Promise<{ users: IUser[], total: number }> {
+export default async function getAll(data: IGetUsersRequest): Promise<{ users: IUser[], total: number }> {
 	const validationError = validateGetUsersRequestData(data)
 
 	if (validationError) {

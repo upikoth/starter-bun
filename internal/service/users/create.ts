@@ -15,7 +15,7 @@ import {
 	validateCreateUserRequestData
 } from './validators'
 
-export default async function createUser(data: ICreateUserRequest): Promise<IUser> {
+export default async function create(data: ICreateUserRequest): Promise<IUser> {
 	const validationError = validateCreateUserRequestData(data)
 
 	if (validationError) {

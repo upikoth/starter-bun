@@ -3,16 +3,16 @@ import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 import repository from '@/repository'
 
 import type {
-	IDeleteSessionRequest,
+	ISession,
 	ICustomError
 } from '@/models'
 
 import {
-	validateDeleteSessionRequestData
+	validateGetSessionByIdRequestData
 } from './validators'
 
-export default async function deleteSession(data: IDeleteSessionRequest): Promise<void> {
-	const validationError = validateDeleteSessionRequestData(data)
+export default async function getById(id: number): Promise<ISession> {
+	const validationError = validateGetSessionByIdRequestData({ id })
 
 	if (validationError) {
 		throw {
@@ -22,15 +22,15 @@ export default async function deleteSession(data: IDeleteSessionRequest): Promis
 		} satisfies ICustomError
 	}
 
-	const session = await repository.main.sessions.getById(data.id)
+	const session = await repository.main.sessions.getById(id)
 
 	if (!session) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErorrStatusEnum.NotFound,
 			description: 'Сессия не найдена'
 		} satisfies ICustomError
 	}
 
-	return repository.main.sessions.deleteById(data.id)
+	return session
 }

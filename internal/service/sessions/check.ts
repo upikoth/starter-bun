@@ -1,8 +1,6 @@
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import {
-	getUser as getUserFromService
-} from '@/service'
+import service from '@/service'
 
 import repository from '@/repository'
 
@@ -16,7 +14,7 @@ import {
 	validateCheckSessionRequestData
 } from './validators'
 
-export default async function checkSession(sessionValue: string): Promise<{ user: IUser, session: ISession }> {
+export default async function check(sessionValue: string): Promise<{ user: IUser, session: ISession }> {
 	const validationError = validateCheckSessionRequestData({ session: sessionValue })
 
 	if (validationError) {
@@ -37,7 +35,7 @@ export default async function checkSession(sessionValue: string): Promise<{ user
 		} satisfies ICustomError
 	}
 
-	const user = await getUserFromService({ id: session.userId })
+	const user = await service.users.getById({ id: session.userId })
 
 	return {
 		user,
