@@ -32,5 +32,5 @@ export default async function deleteSession(data: IDeleteSessionRequest): Promis
 		} satisfies ICustomError
 	}
 
-	return repository.main.sessions.deleteById(data)
+	return repository.main.sessions.deleteById(data.id)
 }

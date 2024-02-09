@@ -32,5 +32,5 @@ export default async function deleteRegistration(data: IDeleteRegistrationReques
 		} satisfies ICustomError
 	}
 
-	return repository.main.registrations.deleteById(data)
+	return repository.main.registrations.deleteById(data.id)
 }

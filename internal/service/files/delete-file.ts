@@ -46,5 +46,5 @@ export default async function deleteFile(
 		} satisfies ICustomError
 	}
 
-	await repository.main.files.deleteById(data)
+	await repository.main.files.deleteById(data.id)
 }

@@ -51,7 +51,7 @@ export default async function confirmRegistration(data: IConfirmRegistrationRequ
 		passwordSalt: registration.passwordSalt
 	})
 
-	await repository.main.registrations.deleteById({ id: registration.id })
+	await repository.main.registrations.deleteById(registration.id)
 
 	return {
 		id: dbUser.id,

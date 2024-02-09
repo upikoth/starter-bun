@@ -1,7 +1,7 @@
-import users from './users'
-import sessions from './sessions'
-import registrations from './registrations'
-import files from './files'
+import users from './service/users'
+import sessions from './service/sessions'
+import registrations from './service/registrations'
+import files from './service/files'
 
 export default {
 	users,
