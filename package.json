@@ -6,8 +6,8 @@
     "lint": "run-p lint:js lint:ts",
     "lint:js": "eslint .",
     "lint:ts": "tsc",
-    "build": "bun build --target=bun ./index.ts --outdir dist && cp -r ./internal/repository/sqlite/migrations dist",
-    "create-migrations": "drizzle-kit generate:sqlite --config ./internal/repository/sqlite/drizzle.config.ts"
+    "build": "bun build --target=bun ./index.ts --outdir dist && cp -r ./internal/repository/main/sqlite/migrations dist",
+    "create-migrations": "drizzle-kit generate:sqlite --config ./internal/repository/main/sqlite/drizzle.config.ts"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",
