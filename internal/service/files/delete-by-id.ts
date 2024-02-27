@@ -34,7 +34,7 @@ export default async function deleteById(
 	}
 
 	try {
-		await repository.s3.deleteFileFromS3(file.s3Id, file.uploadedByUserId)
+		await repository.s3.deleteFileFromS3(file.s3Path)
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.s3Error,

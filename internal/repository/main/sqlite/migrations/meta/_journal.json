@@ -78,6 +78,13 @@
       "when": 1706992846888,
       "tag": "0010_brave_talkback",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1708978066153,
+      "tag": "0011_silent_the_stranger",
+      "breakpoints": true
     }
   ]
 }

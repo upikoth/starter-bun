@@ -13,12 +13,12 @@ function getS3Client() {
 	})
 }
 
-async function uploadFileToS3(file: File, fileS3Id: string, userId: number) {
+async function uploadFileToS3(file: File, filePath: string) {
 	const client = getS3Client()
 
 	const command = new PutObjectCommand({
 		Bucket: environment.S3_BUCKET_NAME,
-		Key: `${userId}/${fileS3Id}`,
+		Key: filePath,
 		ContentType: file.type,
 		Body: Buffer.from(await file.arrayBuffer())
 	})
@@ -26,12 +26,12 @@ async function uploadFileToS3(file: File, fileS3Id: string, userId: number) {
 	await client.send(command)
 }
 
-async function deleteFileFromS3(fileS3Id: string, userId: number) {
+async function deleteFileFromS3(filePath: string) {
 	const client = getS3Client()
 
 	const command = new DeleteObjectCommand({
 		Bucket: environment.S3_BUCKET_NAME,
-		Key: `${userId}/${fileS3Id}`
+		Key: filePath
 	})
 
 	await client.send(command)

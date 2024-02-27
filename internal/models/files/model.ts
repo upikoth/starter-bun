@@ -1,6 +1,6 @@
 export interface IFile {
 	id: number;
-	s3Id: string;
+	s3Path: string;
 	name: string;
 	uploadedByUserId: number;
 }

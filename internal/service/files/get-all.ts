@@ -32,7 +32,7 @@ export default async function getAll(
 		files: dbFilesResult.files.map((f) => ({
 			id: f.id,
 			name: f.name,
-			s3Id: f.s3Id,
+			s3Path: f.s3Path,
 			uploadedByUserId: f.uploadedByUserId
 		}))
 	}

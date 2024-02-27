@@ -1,8 +1,8 @@
 import type { IMainFile } from './model'
 
-export interface IMainCreateResponse {
+export interface IMainCreateFileResponse {
 	id: number;
-	s3Id: string;
+	s3Path: string;
 	name: string;
 	uploadedByUserId: number;
 }

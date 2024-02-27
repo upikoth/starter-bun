@@ -46,7 +46,7 @@ export interface IDbRegistrationInsert extends DbRegistrationInsert { }
 export const files = sqliteTable('files', {
 	id: integer('id').primaryKey(),
 	name: text('name').notNull(),
-	s3Id: text('s3_id').notNull(),
+	s3Path: text('s3_path').notNull(),
 	uploadedByUserId: integer('uploaded_by_user_id').notNull().references(() => users.id)
 })
 

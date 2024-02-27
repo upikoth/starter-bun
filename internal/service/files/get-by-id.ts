@@ -35,7 +35,7 @@ export default async function getById(id: number): Promise<IFile> {
 	return {
 		id: dbFile.id,
 		name: dbFile.name,
-		s3Id: dbFile.s3Id,
+		s3Path: dbFile.s3Path,
 		uploadedByUserId: dbFile.uploadedByUserId
 	}
 }

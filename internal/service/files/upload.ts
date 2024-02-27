@@ -28,9 +28,10 @@ export default async function upload(
 	}
 
 	const s3Id = crypto.randomBytes(32).toString('hex')
+	const s3Path = `${data.uploadedByUserId}/${s3Id}`
 
 	try {
-		await repository.s3.uploadFileToS3(data.file, s3Id, data.uploadedByUserId)
+		await repository.s3.uploadFileToS3(data.file, s3Path)
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.s3Error,
@@ -40,7 +41,7 @@ export default async function upload(
 	}
 
 	const dbFile = await repository.main.files.create({
-		s3Id,
+		s3Path,
 		name: data.file.name,
 		uploadedByUserId: data.uploadedByUserId
 	})
