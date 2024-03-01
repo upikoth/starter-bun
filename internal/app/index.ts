@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/bun'
+
 import environment, { loadEnvironmentVariables } from '@/environment'
 
 import { logger, initLogger } from '@/packages'
@@ -12,6 +14,11 @@ export function startServer(): void {
 	loadEnvironmentVariables()
 	initLogger({
 		appName: environment.APP_NAME,
+		environment: environment.NODE_ENV
+	})
+	Sentry.init({
+		dsn: 'https://de1dbb6c90dba6fb674035f6daf034cd@o1149686.ingest.sentry.io/4506837135720448',
+		tracesSampleRate: 1.0,
 		environment: environment.NODE_ENV
 	})
 
