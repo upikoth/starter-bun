@@ -41,8 +41,81 @@ jobs:
       - name: Lint
         run: bun run lint
 
+  test:
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.0.23
+
+      - name: Cache npm dependencies
+        id: cache-npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Test
+        run: bun run test
+
+  test-environment:
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    env:
+      APP_PORT: ${{ vars.APP_PORT }}
+      APP_NAME: ${{ vars.APP_NAME }}
+      FRONT_URL: ${{ vars.FRONT_URL }}
+      S3_REGION: ${{ vars.S3_REGION }}
+      S3_ENDPOINT: ${{ vars.S3_ENDPOINT }}
+      S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+      EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+      S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.0.23
+
+      - name: Cache npm dependencies
+        id: cache-npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Test environment variables
+        run: bun run test:environment
+
   build-and-push-image:
-    needs: lint
+    needs:
+      - lint
+      - test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -78,7 +151,6 @@ jobs:
 
   deploy:
     needs:
-      - lint
       - build-and-push-image
     runs-on: ubuntu-latest
     environment:

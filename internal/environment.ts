@@ -12,10 +12,10 @@ const environment = {
 	S3_BUCKET_NAME: ''
 }
 
-type NodeEnv = 'production' | 'development'
+type NodeEnv = 'production' | 'development' | 'test'
 
 function checkIsNodeEnv(nodeEnv?: string): nodeEnv is NodeEnv {
-	return ['production', 'development'].includes(nodeEnv as NodeEnv)
+	return ['production', 'development', 'test'].includes(nodeEnv as NodeEnv)
 }
 
 export async function loadEnvironmentVariables() {

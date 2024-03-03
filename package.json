@@ -3,9 +3,12 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
+    "dev": "bun run --hot index.ts",
     "lint": "run-p lint:js lint:ts",
     "lint:js": "eslint .",
     "lint:ts": "tsc",
+    "test": "bun test --exclude internal/__tests__/environment.spec.ts",
+    "test:environment": "bun test internal/__tests__/environment.spec.ts",
     "build": "bun build --target=bun ./index.ts --outdir dist && cp -r ./internal/repository/main/sqlite/migrations dist",
     "create-migrations": "drizzle-kit generate:sqlite --config ./internal/repository/main/sqlite/drizzle.config.ts"
   },

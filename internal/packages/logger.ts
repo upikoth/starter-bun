@@ -24,7 +24,7 @@ const logger = winston.createLogger({
 
 interface ILoggerOptions {
 	appName: string;
-	environment: 'production' | 'development';
+	environment: 'production' | 'development' | 'test';
 }
 
 export function initLogger(options: ILoggerOptions) {
