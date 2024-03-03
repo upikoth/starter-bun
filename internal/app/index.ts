@@ -17,7 +17,7 @@ export function startServer(): void {
 		environment: environment.NODE_ENV
 	})
 	Sentry.init({
-		dsn: 'https://de1dbb6c90dba6fb674035f6daf034cd@o1149686.ingest.sentry.io/4506837135720448',
+		dsn: environment.SENTRY_DNS,
 		tracesSampleRate: 1.0,
 		environment: environment.NODE_ENV
 	})
@@ -39,8 +39,7 @@ export function startServer(): void {
 					middleware(req, responsePromise)
 				})
 
-				const response = await responsePromise
-				return response
+				return responsePromise
 			}
 		})
 

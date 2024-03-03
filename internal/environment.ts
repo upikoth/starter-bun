@@ -9,7 +9,8 @@ const environment = {
 	S3_ENDPOINT: '',
 	S3_ACCESS_KEY_ID: '',
 	S3_SECRET_ACCESS_KEY: '',
-	S3_BUCKET_NAME: ''
+	S3_BUCKET_NAME: '',
+	SENTRY_DNS: ''
 }
 
 type NodeEnv = 'production' | 'development' | 'test'
@@ -65,6 +66,10 @@ export async function loadEnvironmentVariables() {
 		throw new Error('Не задана env переменная S3_BUCKET_NAME')
 	}
 
+	if (typeof env.SENTRY_DNS !== 'string') {
+		throw new Error('Не задана env переменная SENTRY_DNS')
+	}
+
 	Object.assign(environment, {
 		APP_PORT: env.APP_PORT,
 		APP_NAME: env.APP_NAME,
@@ -76,7 +81,8 @@ export async function loadEnvironmentVariables() {
 		S3_ENDPOINT: env.S3_ENDPOINT,
 		S3_ACCESS_KEY_ID: env.S3_ACCESS_KEY_ID,
 		S3_SECRET_ACCESS_KEY: env.S3_SECRET_ACCESS_KEY,
-		S3_BUCKET_NAME: env.S3_BUCKET_NAME
+		S3_BUCKET_NAME: env.S3_BUCKET_NAME,
+		SENTRY_DNS: env.SENTRY_DNS
 	})
 }
 
