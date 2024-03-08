@@ -11,7 +11,7 @@ import { IUser, UserActionEnum, UserRoleEnum } from '@/models'
 import api from './api'
 
 interface IRoute {
-	pathname: string;
+	pathname: string | RegExp;
 	method: HttpMethod;
 	handler: (req: Request) => Promise<Response> | Response;
 	authRequired: boolean;
@@ -19,6 +19,18 @@ interface IRoute {
 }
 
 const routes: IRoute[] = [
+	{
+		pathname: /\/api\/docs\/?.*/,
+		method: HttpMethod.Get,
+		handler: (req: Request) => {
+			const url = new URL(req.url)
+			const filePath = `docs/${url.pathname.replace(/\/api\/docs\/?/g, '') || 'index.html'}`
+
+			return new Response(Bun.file(filePath))
+		},
+		authRequired: false,
+		validateRights: () => true
+	},
 	{
 		pathname: '/api/v1/health',
 		method: HttpMethod.Get,

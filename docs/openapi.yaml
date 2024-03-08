@@ -1,0 +1,53 @@
+openapi: 3.0.1
+info:
+  title: Starter API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000/
+    description: Dev server
+  - url: https://starter.upikoth.dev/
+    description: Production server
+
+externalDocs:
+  description: Документация по проекту starter
+  url: https://upikoth.dev/projects/starter/intro.html
+
+tags:
+  - name: health
+    description: Проверка работоспособности приложения
+
+paths:
+  /api/v1/health:
+    get:
+      tags:
+        - health
+      description: Проверка работоспособности приложения
+      responses:
+        200:
+          description: Приложение работает
+          $ref: '#/components/responses/success'
+
+components:
+  schemas:
+    successResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          default: true
+        data:
+          type: object
+  responses:
+    success:
+      description: Общий ответ при успешно выполенном запросе
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/successResponse'
+          examples:
+            successResponse:
+              externalValue: '/api/docs/examples/success-response.json'

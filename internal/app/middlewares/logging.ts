@@ -11,7 +11,14 @@ export default async function logging(req: Request, res: Promise<Response>) {
 	})
 
 	const response = await res
-	const responseJson = await response.clone().json()
+
+	let responseJson = { success: true, data: {}, error: {} }
+
+	try {
+		responseJson = await response.clone().json()
+	} catch {
+		// Дополнительная обработка не нужна.
+	}
 
 	if (responseJson.success) {
 		logger.info(`response: ${url.pathname}`, { responseData: responseJson.data })
