@@ -4,10 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --hot index.ts",
+    "preview": "bun run dist/index.js",
     "lint": "run-p lint:js lint:ts",
     "lint:js": "eslint .",
     "lint:ts": "tsc",
-    "test": "bun test",
+    "test": "bun test --env-file=.env.local",
     "test:environment": "bun test ./internal/__tests__/environment.environment-spec.ts",
     "build": "bun build --target=bun ./index.ts --outdir dist && cp -r ./internal/repository/main/sqlite/migrations dist && cp -r ./docs dist",
     "create-migrations": "drizzle-kit generate:sqlite --config ./internal/repository/main/sqlite/drizzle.config.ts"

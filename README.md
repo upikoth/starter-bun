@@ -5,7 +5,7 @@
 ## Запуск приложения:
 
 ```bash
-bun run --hot index.ts
+bun run dev
 ```
 
 ## Логирование:

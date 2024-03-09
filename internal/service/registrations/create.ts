@@ -4,8 +4,6 @@ import environment from '@/environment'
 
 import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
 
-import { sendMail } from '@/utils'
-
 import service from '@/service'
 
 import repository from '@/repository'
@@ -55,7 +53,7 @@ export default async function create(data: ICreateRegistrationRequest): Promise<
 		activationToken
 	})
 
-	await sendMail({
+	await repository.mailer.sendMail({
 		to: data.email,
 		subject: `Регистрация пользователя на ${environment.FRONT_URL}`,
 		html: `

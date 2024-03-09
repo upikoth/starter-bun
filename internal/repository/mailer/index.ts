@@ -2,13 +2,13 @@ import nodemailer from 'nodemailer'
 
 import environment from '@/environment'
 
-interface ISendMailData {
+export interface ISendMailData {
 	to: string;
 	subject: string;
 	html: string;
 }
 
-export function sendMail(data: ISendMailData) {
+function sendMail(data: ISendMailData) {
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
@@ -18,4 +18,8 @@ export function sendMail(data: ISendMailData) {
 	})
 
 	return transporter.sendMail(data)
+}
+
+export default {
+	sendMail
 }

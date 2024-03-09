@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/bun'
+import type { Server } from 'bun'
 
 import environment, { loadEnvironmentVariables } from '@/environment'
 
@@ -10,7 +11,7 @@ import repository from '@/repository'
 
 import middlewares from './middlewares'
 
-export function startServer(): void {
+export function startServer(): Server | null {
 	loadEnvironmentVariables()
 	initLogger({
 		appName: environment.APP_NAME,
@@ -26,11 +27,13 @@ export function startServer(): void {
 		repository.main.utils.migrateIfNeeded()
 	} catch (err) {
 		logger.error('Ошибка миграций БД', err)
-		return
+		return null
 	}
 
+	let server: Server | null = null
+
 	try {
-		Bun.serve({
+		server = Bun.serve({
 			port: environment.APP_PORT,
 			async fetch(req) {
 				const responsePromise = getHttpResponse(req)
@@ -47,4 +50,6 @@ export function startServer(): void {
 	} catch (err) {
 		logger.error('Ошибка старта сервера', err)
 	}
+
+	return server
 }
