@@ -1,7 +1,7 @@
 import { expect, test } from 'bun:test'
 
 import { getActiveServer } from '../index'
-import successResponse from '../../docs/examples/success-response.json'
+import successResponse from '../../docs/examples/responses/common/success.json'
 
 test('/api/v1/health', async () => {
 	const server = getActiveServer()

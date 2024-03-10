@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Starter API
   version: 1.0.0
@@ -28,8 +28,71 @@ paths:
           description: Приложение работает
           $ref: '#/components/responses/success'
 
+  /api/v1/session:
+    get:
+      tags:
+        - session
+      description: Получение информации о текущей сессии пользователя
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Информация о текущей сессии пользователя
+          $ref: '#/components/responses/getSessionSuccess'
+        401:
+          description: Пользователь не авторизован
+          $ref: '#/components/responses/userNotAuthorized'
+
 components:
   schemas:
+    user:
+      type: object
+      required:
+        - id
+        - email
+        - status
+        - role
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+          enum:
+            - active
+            - blocked
+        role :
+          type: string
+          enum:
+            - user
+            - admin
+            - super-admin
+
+    notAuthorizedResponse:
+      type: object
+      required:
+        - success
+        - data
+        - error
+      properties: 
+        success:
+          type: boolean
+          default: false
+        data:
+          type: object
+        error:
+          type: object
+          required:
+            - code
+            - description
+          properties:
+            code:
+              type: integer
+            description:
+              type: string
+
     successResponse:
       type: object
       required:
@@ -41,6 +104,32 @@ components:
           default: true
         data:
           type: object
+
+    getSessionSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          default: true
+        data:
+          type: object
+          required:
+            - user
+            - session
+          properties:
+            user:
+              $ref: '#/components/schemas/user'
+            session:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+
   responses:
     success:
       description: Общий ответ при успешно выполенном запросе
@@ -50,4 +139,34 @@ components:
             $ref: '#/components/schemas/successResponse'
           examples:
             successResponse:
-              externalValue: '/api/docs/examples/success-response.json'
+              summary: Успешный ответ без доп. информации
+              externalValue: '/api/docs/examples/responses/common/success.json'
+    getSessionSuccess:
+      description: Успешное получение информации о сессии пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getSessionSuccessResponse'
+          examples:
+            getSessionSuccessResponse:
+              summary: Успешный ответ. Роль - пользователь. Активный
+              externalValue: '/api/docs/examples/responses/session/get-success.json'
+    userNotAuthorized:
+      description: Пользователь не авторизован
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/notAuthorizedResponse'
+          examples:
+            userNotAuthorized:
+              summary: Ошибка авторизации
+              externalValue: '/api/docs/examples/responses/common/not-authorized.json'
+  securitySchemes:
+    cookieAuth:
+      name: Authorization
+      description: Авторизация с помощью токена. Значение передается в cookie Authorization
+      type: apiKey
+      in: cookie
+
+security:
+  - cookieAuth: []

@@ -1,0 +1,14 @@
+{
+  "data": {
+    "user": {
+      "id": 1,
+      "email": "example@mail.ru",
+      "status": "active",
+      "role": "user"
+    },
+    "session": {
+      "id": 1
+    }
+  },
+  "success": true
+}

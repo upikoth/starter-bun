@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": 9,
+    "description": "Пользователь не авторизован"
+  },
+  "data": {},
+  "success": false
+}
