@@ -16,6 +16,8 @@ externalDocs:
 tags:
   - name: health
     description: Проверка работоспособности приложения
+  - name: sessions
+    description: CRUD методы для сессии
 
 paths:
   /api/v1/health:
@@ -26,22 +28,22 @@ paths:
       responses:
         200:
           description: Приложение работает
-          $ref: '#/components/responses/success'
+          $ref: '#/components/responses/defaultSuccess'
 
   /api/v1/session:
     get:
       tags:
-        - session
+        - sessions
       description: Получение информации о текущей сессии пользователя
       security:
         - cookieAuth: []
       responses:
         200:
           description: Информация о текущей сессии пользователя
-          $ref: '#/components/responses/getSessionSuccess'
+          $ref: '#/components/responses/sessionsGetCurrentSessionSuccess'
         401:
           description: Пользователь не авторизован
-          $ref: '#/components/responses/userNotAuthorized'
+          $ref: '#/components/responses/defaultNotAuthorized'
 
 components:
   schemas:
@@ -70,7 +72,28 @@ components:
             - admin
             - super-admin
 
-    notAuthorizedResponse:
+    session:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+
+    defaultSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - true
+        data:
+          type: object
+
+    defaultNotAuthorizedResponse:
       type: object
       required:
         - success
@@ -79,7 +102,8 @@ components:
       properties: 
         success:
           type: boolean
-          default: false
+          enum:
+            - false
         data:
           type: object
         error:
@@ -90,10 +114,14 @@ components:
           properties:
             code:
               type: integer
+              enum:
+                - 9
             description:
               type: string
+              enum:
+                - 'Пользователь не авторизован'
 
-    successResponse:
+    sessionsGetCurrentSessionSuccessResponse:
       type: object
       required:
         - success
@@ -101,19 +129,8 @@ components:
       properties: 
         success:
           type: boolean
-          default: true
-        data:
-          type: object
-
-    getSessionSuccessResponse:
-      type: object
-      required:
-        - success
-        - data
-      properties: 
-        success:
-          type: boolean
-          default: true
+          enum:
+            - true
         data:
           type: object
           required:
@@ -123,44 +140,42 @@ components:
             user:
               $ref: '#/components/schemas/user'
             session:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: integer
+              $ref: '#/components/schemas/session'
 
   responses:
-    success:
-      description: Общий ответ при успешно выполенном запросе
+    defaultSuccess:
+      description: Стандартный ответ при успешно выполенном запросе
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/successResponse'
+            $ref: '#/components/schemas/defaultSuccessResponse'
           examples:
-            successResponse:
+            defaultSuccess:
               summary: Успешный ответ без доп. информации
-              externalValue: '/api/docs/examples/responses/common/success.json'
-    getSessionSuccess:
-      description: Успешное получение информации о сессии пользователя
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/getSessionSuccessResponse'
-          examples:
-            getSessionSuccessResponse:
-              summary: Успешный ответ. Роль - пользователь. Активный
-              externalValue: '/api/docs/examples/responses/session/get-success.json'
-    userNotAuthorized:
+              externalValue: /api/docs/examples/default/200.json
+
+    defaultNotAuthorized:
       description: Пользователь не авторизован
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/notAuthorizedResponse'
+            $ref: '#/components/schemas/defaultNotAuthorizedResponse'
           examples:
-            userNotAuthorized:
+            defaultNotAuthorized:
               summary: Ошибка авторизации
-              externalValue: '/api/docs/examples/responses/common/not-authorized.json'
+              externalValue: /api/docs/examples/default/401.json
+
+    sessionsGetCurrentSessionSuccess:
+      description: Успешное получение информации о сессии пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/sessionsGetCurrentSessionSuccessResponse'
+          examples:
+            activeUser:
+              summary: Активный пользователь
+              externalValue: /api/docs/examples/sessions/get-current-session/response-success.json
+
   securitySchemes:
     cookieAuth:
       name: Authorization
