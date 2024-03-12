@@ -36,7 +36,7 @@ paths:
         - sessions
       description: Получение информации о текущей сессии пользователя
       security:
-        - cookieAuth: []
+        - swaggerAuthorization: []
       responses:
         200:
           description: Информация о текущей сессии пользователя
@@ -177,11 +177,13 @@ components:
               externalValue: /api/docs/examples/sessions/get-current-session/response-success.json
 
   securitySchemes:
-    cookieAuth:
-      name: Authorization
-      description: Авторизация с помощью токена. Значение передается в cookie Authorization
+    swaggerAuthorization:
+      description:
+        Авторизация с помощью токена. Значение передается в header'е SwaggerAuthorization
+        Получить значение можно из cookie Authorization активной сессии
+      name: SwaggerAuthorization
       type: apiKey
-      in: cookie
+      in: header
 
 security:
-  - cookieAuth: []
+  - swaggerAuthorization: []
