@@ -11,6 +11,16 @@ import repository from '@/repository'
 
 import middlewares from './middlewares'
 
+export function mainRequestHandler(req: Request) {
+	const responsePromise = getHttpResponse(req)
+
+	middlewares.forEach((middleware) => {
+		middleware(req, responsePromise)
+	})
+
+	return responsePromise
+}
+
 export function startServer(): Server | null {
 	loadEnvironmentVariables()
 	initLogger({
@@ -36,13 +46,7 @@ export function startServer(): Server | null {
 		server = Bun.serve({
 			port: environment.APP_PORT,
 			async fetch(req) {
-				const responsePromise = getHttpResponse(req)
-
-				middlewares.forEach((middleware) => {
-					middleware(req, responsePromise)
-				})
-
-				return responsePromise
+				return mainRequestHandler(req)
 			}
 		})
 
