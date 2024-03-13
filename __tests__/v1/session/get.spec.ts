@@ -3,7 +3,7 @@ import {
 } from 'bun:test'
 import examples from '@docs/examples'
 
-import { AUTHORIZATION_HEADER } from '@/constants'
+import { AUTHORIZATION_HEADER, HttpMethod } from '@/constants'
 
 import mainExamples from '@/repository/main/docs/examples'
 
@@ -22,10 +22,11 @@ mock.module('@/repository', () => ({
 	}
 }))
 
-describe('/api/v1/session', () => {
+describe('/api/v1/session - Get', () => {
 	test('Получение данных пользователя', async () => {
 		const request = new Request({
 			url: 'https://example-host.ru/api/v1/session',
+			method: HttpMethod.Get,
 			headers: {
 				Cookie: `${AUTHORIZATION_HEADER}=session-test-example`
 			}
@@ -39,7 +40,8 @@ describe('/api/v1/session', () => {
 
 	test('Пользователь не авторизован', async () => {
 		const request = new Request({
-			url: 'https://example-host.ru/api/v1/session'
+			url: 'https://example-host.ru/api/v1/session',
+			method: HttpMethod.Get
 		})
 
 		const response = await mainRequestHandler(request)

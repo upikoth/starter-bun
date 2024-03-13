@@ -1,11 +1,14 @@
 import { expect, test } from 'bun:test'
 import examples from '@docs/examples'
 
+import { HttpMethod } from '@/constants'
+
 import { mainRequestHandler } from '@/app'
 
 test('Проверка ответа на неизвестный запрос', async () => {
 	const request = new Request({
-		url: 'https://example-host.ru/api/v1/404'
+		url: 'https://example-host.ru/api/v1/404',
+		method: HttpMethod.Get
 	})
 
 	const response = await mainRequestHandler(request)
