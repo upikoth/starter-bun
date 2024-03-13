@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": 6,
+    "description": "Email или пароль указаны неверно"
+  },
+  "data": {},
+  "success": false
+}

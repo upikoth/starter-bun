@@ -45,6 +45,22 @@ paths:
           description: Пользователь не авторизован
           $ref: '#/components/responses/defaultNotAuthorized'
 
+  /api/v1/sessions:
+    post:
+      tags:
+        - sessions
+      description: Создание сессии пользователя по логину и паролю
+      requestBody:
+        $ref: '#/components/requestBodies/sessionsCreateSessionBodyRequest'
+
+      responses:
+        200:
+          description: Сессия успешно создана
+          $ref: '#/components/responses/sessionsCreateSessionSuccessResponse'
+        400:
+          description: Переданы некорректные логин или пароль
+          $ref: '#/components/responses/sessionsCreateSessionWrongData'
+
 components:
   schemas:
     user:
@@ -119,7 +135,7 @@ components:
             description:
               type: string
               enum:
-                - 'Пользователь не авторизован'
+                - Пользователь не авторизован
 
     sessionsGetCurrentSessionSuccessResponse:
       type: object
@@ -141,6 +157,78 @@ components:
               $ref: '#/components/schemas/user'
             session:
               $ref: '#/components/schemas/session'
+
+    sessionsCreateSessionBodyRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    sessionsCreateSessionSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - true
+        data:
+          type: object
+          required:
+            - user
+            - session
+          properties:
+            user:
+              $ref: '#/components/schemas/user'
+            session:
+              $ref: '#/components/schemas/session'
+
+    sessionsCreateSessionWrongDataResponse:
+      type: object
+      required:
+        - success
+        - data
+        - error
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - false
+        data:
+          type: object
+        error:
+          type: object
+          required:
+            - code
+            - description
+          properties:
+            code:
+              type: integer
+              enum:
+                - 6
+            description:
+              type: string
+              enum:
+                - Email или пароль указаны неверно
+
+  requestBodies:
+    sessionsCreateSessionBodyRequest:
+      description: Логин и пароль для входа в приложение
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/sessionsCreateSessionBodyRequest'
+          examples:
+            emailAndPassword:
+              summary: Логин и пароль
+              externalValue: /api/docs/examples/sessions/create/request-email-password.json
 
   responses:
     defaultSuccess:
@@ -176,11 +264,36 @@ components:
               summary: Активный пользователь
               externalValue: /api/docs/examples/sessions/get-current-session/response-success.json
 
+    sessionsCreateSessionSuccessResponse:
+      description: Успешное создание сессии пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/sessionsCreateSessionSuccessResponse'
+          examples:
+            success:
+              summary: Данные о пользователе
+              externalValue: /api/docs/examples/sessions/create/response-success.json
+
+    sessionsCreateSessionWrongData:
+      description: Ошибка при создании сессии
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/sessionsCreateSessionWrongDataResponse'
+          examples:
+            success:
+              summary: Некорректные логин или пароль
+              externalValue: /api/docs/examples/sessions/create/response-wrong-data.json
+
   securitySchemes:
     swaggerAuthorization:
       description:
         Авторизация с помощью токена. Значение передается в header'е SwaggerAuthorization
         Получить значение можно из cookie Authorization активной сессии
+
+        Также можно вызвать POST метод /api/v1/sessions, передав корректные email и пароль, после чего
+        токен установится в куки и будет передаваться во все методы при последующих вызовах
       name: SwaggerAuthorization
       type: apiKey
       in: header
