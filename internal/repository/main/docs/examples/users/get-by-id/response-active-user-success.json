@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "email": "example@mail.ru",
+  "role": "user",
+  "status": "active",
+  "passwordHash": "password-hash-test-example",
+  "passwordSalt": "password-salt-test-example"
+}

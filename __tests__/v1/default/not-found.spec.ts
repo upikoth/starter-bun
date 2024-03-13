@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test'
-import defaultNotFound from '@docs/examples/default/404.json'
+import examples from '@docs/examples'
 
 import { mainRequestHandler } from '@/app'
 
@@ -11,5 +11,5 @@ test('Проверка ответа на неизвестный запрос', a
 	const response = await mainRequestHandler(request)
 	const responseJson = await response.json()
 
-	expect(responseJson).toMatchObject(defaultNotFound)
+	expect(responseJson).toMatchObject(examples.responses.default.notFound)
 })

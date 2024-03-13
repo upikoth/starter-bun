@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test'
-import defaultSuccess from '@docs/examples/default/200.json'
+import examples from '@docs/examples'
 
 import { mainRequestHandler } from '@/app'
 
@@ -11,5 +11,5 @@ test('/api/v1/health', async () => {
 	const response = await mainRequestHandler(request)
 	const responseJson = await response.json()
 
-	expect(responseJson).toMatchObject(defaultSuccess)
+	expect(responseJson).toMatchObject(examples.responses.default.success)
 })
