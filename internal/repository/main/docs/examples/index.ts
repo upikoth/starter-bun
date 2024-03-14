@@ -2,6 +2,7 @@ import sessionsGetBySessionSuccessResponse from './sessions/get-by-session/respo
 import usersCreateSessionSuccessResponse from './sessions/create/response-success.json'
 import usersGetByIdActiveUserSuccessResponse from './users/get-by-id/response-active-user-success.json'
 import usersGetByEmailActiveUserSuccessResponse from './users/get-by-email/response-active-user-success.json'
+import usersGetByEmailBlockedUserSuccessResponse from './users/get-by-email/response-blocked-user-success.json'
 
 const responses = {
 	sessions: {
@@ -17,7 +18,8 @@ const responses = {
 			userActiveSuccess: usersGetByIdActiveUserSuccessResponse
 		},
 		getByEmail: {
-			userActiveSuccess: usersGetByEmailActiveUserSuccessResponse
+			userActiveSuccess: usersGetByEmailActiveUserSuccessResponse,
+			userBlockedSuccess: usersGetByEmailBlockedUserSuccessResponse
 		}
 	}
 }
