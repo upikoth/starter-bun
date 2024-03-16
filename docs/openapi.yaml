@@ -46,6 +46,26 @@ paths:
           $ref: '#/components/responses/defaultNotAuthorized'
 
   /api/v1/sessions:
+    get:
+      tags:
+        - sessions
+      description: Получение информации обо всех сессиях в приложении
+
+      parameters:
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/offsetParameter'
+
+      responses:
+        200:
+          description: Список всех сессий
+          $ref: '#/components/responses/sessionsGetAllSessionSuccessResponse'
+        401:
+          description: Пользователь не авторизован
+          $ref: '#/components/responses/defaultNotAuthorized'
+        403:
+          description: Недостаточно прав
+          $ref: '#/components/responses/defaultForbidden'
+
     post:
       tags:
         - sessions
@@ -129,6 +149,34 @@ components:
               enum:
                 - Пользователь не авторизован
 
+    defaultForbiddenResponse:
+      type: object
+      required:
+        - success
+        - data
+        - error
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - false
+        data:
+          type: object
+        error:
+          type: object
+          required:
+            - code
+            - description
+          properties:
+            code:
+              type: integer
+              enum:
+                - 10
+            description:
+              type: string
+              enum:
+                - Недостаточно прав
+
     sessionsGetCurrentSessionSuccessResponse:
       type: object
       required:
@@ -154,6 +202,43 @@ components:
               properties:
                 id:
                   type: integer
+
+    sessionsGetAllSessionSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - true
+        data:
+          type: object
+          required:
+            - sessions
+            - limit
+            - offset
+            - total
+          properties:
+            sessions:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                  - userId
+                properties:
+                  id:
+                    type: integer
+                  userId:
+                    type: integer
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total:
+              type: integer
 
     sessionsCreateSessionBodyRequest:
       type: object
@@ -220,6 +305,27 @@ components:
               enum:
                 - Email или пароль указаны неверно
 
+  parameters:
+    limitParameter:
+      description: Максимальное количество элементов в ответе
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 10
+
+    offsetParameter:
+      description: Отступ, начиная с которого нужно возвращать элементы
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+
   requestBodies:
     sessionsCreateSessionBodyRequest:
       description: Логин и пароль для входа в приложение
@@ -255,6 +361,17 @@ components:
               summary: Ошибка авторизации
               externalValue: /api/docs/examples/default/401.json
 
+    defaultForbidden:
+      description: Недостаточно прав
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/defaultForbiddenResponse'
+          examples:
+            defaultForbidden:
+              summary: Недостаточно прав
+              externalValue: /api/docs/examples/default/403.json
+
     sessionsGetCurrentSessionSuccess:
       description: Успешное получение информации о сессии пользователя
       content:
@@ -265,6 +382,17 @@ components:
             activeUser:
               summary: Активный пользователь
               externalValue: /api/docs/examples/sessions/get-current-session/response-success.json
+
+    sessionsGetAllSessionSuccessResponse:
+      description: Успешное получение списка сессий
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/sessionsGetAllSessionSuccessResponse'
+          examples:
+            success:
+              summary: Список сессий пользователей
+              externalValue: /api/docs/examples/sessions/get-all/response-success.json
 
     sessionsCreateSessionSuccessResponse:
       description: Успешное создание сессии пользователя

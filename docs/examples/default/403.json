@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": 10,
+    "description": "Недостаточно прав"
+  },
+  "data": {},
+  "success": false
+}
