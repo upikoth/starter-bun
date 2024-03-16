@@ -16,17 +16,3 @@ test('Проверяет что getSessionFromRequest возвращает зн�
 
 	expect(getSessionFromRequest(req)).toBe(sessionValue)
 })
-
-test(`Проверяет что getSessionFromRequest возвращает значение сессии,
-			если передать ее в header SwaggerAuthorization`, () => {
-	const sessionValue = 'sessionValueDummy'
-
-	const req = new Request({
-		url: 'http://localhost:8080/dummy-url',
-		headers: {
-			SwaggerAuthorization: sessionValue
-		}
-	})
-
-	expect(getSessionFromRequest(req)).toBe(sessionValue)
-})

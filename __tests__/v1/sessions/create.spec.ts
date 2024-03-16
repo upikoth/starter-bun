@@ -13,7 +13,7 @@ import mainExamples from '@/repository/main/docs/examples'
 import { mainRequestHandler } from '@/app'
 
 describe('/api/v1/sessions - Post', () => {
-	test('Сессия успешно создана', async () => {
+	test('При передаче корректного логина и пароля, сессия успешно создается', async () => {
 		mock.module('@/repository', () => ({
 			default: {
 				main: {
@@ -60,7 +60,7 @@ describe('/api/v1/sessions - Post', () => {
 		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
 	})
 
-	test('Некорректно указан email', async () => {
+	test('Если передать не существующий email, вернется ошибка', async () => {
 		mock.module('@/repository', () => ({
 			default: {
 				main: {
@@ -83,7 +83,7 @@ describe('/api/v1/sessions - Post', () => {
 		expect(responseJson).toMatchObject(examples.responses.sessions.create.wrongData)
 	})
 
-	test('Некорректно указан пароль', async () => {
+	test('Если передать некорректный пароль, вернется ошибка', async () => {
 		mock.module('@/repository', () => ({
 			default: {
 				main: {
@@ -113,7 +113,7 @@ describe('/api/v1/sessions - Post', () => {
 		expect(responseJson).toMatchObject(examples.responses.sessions.create.wrongData)
 	})
 
-	test('Заблокированные пользователь не должен иметь возможность авторизоваться', async () => {
+	test('Если заблокированный пользователь попытается авторизоваться, вернется ошибка', async () => {
 		mock.module('@/repository', () => ({
 			default: {
 				main: {
@@ -135,7 +135,7 @@ describe('/api/v1/sessions - Post', () => {
 		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
 	})
 
-	test('Если хэш созданной сессии уже существует, должна вернуться ошибка', async () => {
+	test('Если хэш созданной сессии уже существует, вернется ошибка', async () => {
 		mock.module('@/repository', () => ({
 			default: {
 				main: {

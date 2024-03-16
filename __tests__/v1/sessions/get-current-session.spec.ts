@@ -23,7 +23,7 @@ mock.module('@/repository', () => ({
 }))
 
 describe('/api/v1/session - Get', () => {
-	test('Получение данных пользователя', async () => {
+	test('Если передать корректную сессию, вернется подробная информация о сессии пользователя', async () => {
 		const request = new Request({
 			url: 'https://example-host.ru/api/v1/session',
 			method: HttpMethod.Get,
@@ -38,7 +38,7 @@ describe('/api/v1/session - Get', () => {
 		expect(responseJson).toMatchObject(examples.responses.sessions.getCurrentSession.success)
 	})
 
-	test('Пользователь не авторизован', async () => {
+	test('Если не передать сессионный токен, метод вернет ответ что пользователь не авторизован', async () => {
 		const request = new Request({
 			url: 'https://example-host.ru/api/v1/session',
 			method: HttpMethod.Get

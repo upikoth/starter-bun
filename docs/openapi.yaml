@@ -36,7 +36,7 @@ paths:
         - sessions
       description: Получение информации о текущей сессии пользователя
       security:
-        - swaggerAuthorization: []
+        - authorization: []
       responses:
         200:
           description: Информация о текущей сессии пользователя
@@ -87,14 +87,6 @@ components:
             - user
             - admin
             - super-admin
-
-    session:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: integer
 
     defaultSuccessResponse:
       type: object
@@ -156,7 +148,12 @@ components:
             user:
               $ref: '#/components/schemas/user'
             session:
-              $ref: '#/components/schemas/session'
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
 
     sessionsCreateSessionBodyRequest:
       type: object
@@ -188,7 +185,12 @@ components:
             user:
               $ref: '#/components/schemas/user'
             session:
-              $ref: '#/components/schemas/session'
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
 
     sessionsCreateSessionWrongDataResponse:
       type: object
@@ -287,16 +289,17 @@ components:
               externalValue: /api/docs/examples/sessions/create/response-wrong-data.json
 
   securitySchemes:
-    swaggerAuthorization:
+    authorization:
       description:
-        Авторизация с помощью токена. Значение передается в header'е SwaggerAuthorization
-        Получить значение можно из cookie Authorization активной сессии
-
-        Также можно вызвать POST метод /api/v1/sessions, передав корректные email и пароль, после чего
+        Для авторизации нужно вызвать POST метод /api/v1/sessions, передав корректные email и пароль, после чего
         токен установится в куки и будет передаваться во все методы при последующих вызовах
-      name: SwaggerAuthorization
+
+        Для удаления сессии нужно вызвать DELETE метод /api/v1/sessions, после чего куки удалятся
+
+        Авторизация через поле ниже работать не будет из-за политик безопасности браузера
+      name: Authorization
       type: apiKey
-      in: header
+      in: cookie
 
 security:
-  - swaggerAuthorization: []
+  - authorization: []
