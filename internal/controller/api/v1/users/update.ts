@@ -10,7 +10,7 @@ import type {
 } from '@/models'
 
 export default async function update(req: Request, params: Record<string, string>): Promise<Response> {
-	const bodyJson = ((await req.json()) || {}) as Record<string, string>
+	const bodyJson = req.body ? await req.json() : {}
 
 	const updateUsersRequestData: IUpdateUserRequest = {
 		id: Number.parseInt(params.id || '0'),

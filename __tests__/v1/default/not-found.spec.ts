@@ -16,3 +16,15 @@ test('Если передать несуществующий запрос, ве�
 
 	expect(responseJson).toMatchObject(examples.responses.default.notFound)
 })
+
+test('Если передать существующий запрос с несуществующим методом, вернется 404 ошибка', async () => {
+	const request = new Request({
+		url: 'https://example-host.ru/api/v1/health',
+		method: HttpMethod.Post
+	})
+
+	const response = await mainRequestHandler(request)
+	const responseJson = await response.json()
+
+	expect(responseJson).toMatchObject(examples.responses.default.notFound)
+})

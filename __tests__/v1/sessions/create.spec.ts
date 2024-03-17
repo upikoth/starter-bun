@@ -60,6 +60,17 @@ describe('/api/v1/sessions - Post', () => {
 		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
 	})
 
+	test('Если не передать body запроса, вернется ошибка', async () => {
+		const request = new Request({
+			url: 'https://example-host.ru/api/v1/sessions',
+			method: HttpMethod.Post
+		})
+
+		const response = await mainRequestHandler(request)
+
+		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+	})
+
 	test('Если передать не существующий email, вернется ошибка', async () => {
 		mock.module('@/repository', () => ({
 			default: {
