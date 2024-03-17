@@ -35,8 +35,6 @@ paths:
       tags:
         - sessions
       description: Получение информации о текущей сессии пользователя
-      security:
-        - authorization: []
       responses:
         200:
           description: Информация о текущей сессии пользователя

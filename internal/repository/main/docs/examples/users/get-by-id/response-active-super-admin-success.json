@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "email": "example@mail.ru",
+  "role": "super-admin",
+  "status": "active",
+  "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+  "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+}

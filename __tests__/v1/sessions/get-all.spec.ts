@@ -1,0 +1,139 @@
+import {
+	expect, test, describe, mock
+} from 'bun:test'
+import examples from '@docs/examples'
+
+import { AUTHORIZATION_HEADER, ErorrStatusEnum, HttpMethod } from '@/constants'
+
+import mainExamples from '@/repository/main/docs/examples'
+
+import { mainRequestHandler } from '@/app'
+
+describe('/api/v1/sessions - Get', () => {
+	test('Если не передать сессионный токен, метод вернет ответ что пользователь не авторизован', async () => {
+		const request = new Request({
+			url: 'https://example-host.ru/api/v1/session',
+			method: HttpMethod.Get
+		})
+
+		const response = await mainRequestHandler(request)
+		const responseJson = await response.json()
+
+		expect(responseJson).toMatchObject(examples.responses.default.notAuthorized)
+	})
+
+	test('Если передать токен пользователя с ролью User, метод вернет ответ что недостаточно прав', async () => {
+		mock.module('@/repository', () => ({
+			default: {
+				main: {
+					sessions: {
+						getBySession: () => mainExamples.responses.sessions.getBySession.success
+					},
+					users: {
+						getById: () => mainExamples.responses.users.getById.userActiveSuccess
+					}
+				}
+			}
+		}))
+
+		const request = new Request({
+			url: 'https://example-host.ru/api/v1/sessions',
+			method: HttpMethod.Get,
+			headers: {
+				Cookie: `${AUTHORIZATION_HEADER}=session-test-example`
+			}
+		})
+
+		const response = await mainRequestHandler(request)
+		const responseJson = await response.json()
+
+		expect(responseJson).toMatchObject(examples.responses.default.forbidden)
+	})
+
+	test('Если передать некорректно limit или offset, вернется ошибка', async () => {
+		mock.module('@/repository', () => ({
+			default: {
+				main: {
+					sessions: {
+						getBySession: () => mainExamples.responses.sessions.getBySession.success
+					},
+					users: {
+						getById: () => mainExamples.responses.users.getById.adminActiveSuccess
+					}
+				}
+			}
+		}))
+
+		const query = (new URLSearchParams(examples.requests.sessions.getAll.wrong)).toString()
+
+		const request = new Request({
+			url: `https://example-host.ru/api/v1/sessions?${query}`,
+			method: HttpMethod.Get,
+			headers: {
+				Cookie: `${AUTHORIZATION_HEADER}=session-test-example`
+			}
+		})
+
+		const response = await mainRequestHandler(request)
+
+		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+	})
+
+	test('Если передать токен пользователя с ролью Admin, метод вернет список сессий', async () => {
+		mock.module('@/repository', () => ({
+			default: {
+				main: {
+					sessions: {
+						getBySession: () => mainExamples.responses.sessions.getBySession.success,
+						getAll: () => mainExamples.responses.sessions.getAll.success
+					},
+					users: {
+						getById: () => mainExamples.responses.users.getById.adminActiveSuccess
+					}
+				}
+			}
+		}))
+
+		const request = new Request({
+			url: 'https://example-host.ru/api/v1/sessions',
+			method: HttpMethod.Get,
+			headers: {
+				Cookie: `${AUTHORIZATION_HEADER}=session-test-example`
+			}
+		})
+
+		const response = await mainRequestHandler(request)
+		const responseJson = await response.json()
+
+		expect(responseJson).toMatchObject(examples.responses.sessions.getAll.success)
+	})
+
+	test('Если передать токен пользователя с ролью SuperAdmin, метод вернет список сессий', async () => {
+		mock.module('@/repository', () => ({
+			default: {
+				main: {
+					sessions: {
+						getBySession: () => mainExamples.responses.sessions.getBySession.success,
+						getAll: () => mainExamples.responses.sessions.getAll.success
+					},
+					users: {
+						getById: () => mainExamples.responses.users.getById.superAdminActiveSuccess
+					}
+				}
+			}
+		}))
+
+		const request = new Request({
+			url: 'https://example-host.ru/api/v1/sessions',
+			method: HttpMethod.Get,
+			headers: {
+				Cookie: `${AUTHORIZATION_HEADER}=session-test-example`
+			}
+		})
+
+		const response = await mainRequestHandler(request)
+		const responseJson = await response.json()
+
+		expect(responseJson).toMatchObject(examples.responses.sessions.getAll.success)
+	})
+})
