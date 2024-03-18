@@ -14,7 +14,7 @@ test('Если передать несуществующий запрос, ве�
 	const response = await mainRequestHandler(request)
 	const responseJson = await response.json()
 
-	expect(responseJson).toMatchObject(examples.responses.default.notFound)
+	expect(responseJson).toMatchObject(examples.default.responses.notFound)
 })
 
 test('Если передать существующий запрос с несуществующим методом, вернется 404 ошибка', async () => {
@@ -26,5 +26,5 @@ test('Если передать существующий запрос с нес�
 	const response = await mainRequestHandler(request)
 	const responseJson = await response.json()
 
-	expect(responseJson).toMatchObject(examples.responses.default.notFound)
+	expect(responseJson).toMatchObject(examples.default.responses.notFound)
 })

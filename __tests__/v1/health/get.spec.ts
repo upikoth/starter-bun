@@ -14,5 +14,5 @@ test('/api/v1/health - Get', async () => {
 	const response = await mainRequestHandler(request)
 	const responseJson = await response.json()
 
-	expect(responseJson).toMatchObject(examples.responses.default.success)
+	expect(responseJson).toMatchObject(examples.default.responses.success)
 })

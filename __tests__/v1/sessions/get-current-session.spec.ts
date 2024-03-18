@@ -13,10 +13,10 @@ mock.module('@/repository', () => ({
 	default: {
 		main: {
 			sessions: {
-				getBySession: () => mainExamples.responses.sessions.getBySession.success
+				getBySession: () => mainExamples.sessions.responses.getBySession.success
 			},
 			users: {
-				getById: () => mainExamples.responses.users.getById.userActiveSuccess
+				getById: () => mainExamples.users.responses.getById.userActiveSuccess
 			}
 		}
 	}
@@ -35,7 +35,7 @@ describe('/api/v1/session - Get', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.sessions.getCurrentSession.success)
+		expect(responseJson).toMatchObject(examples.sessions.responses.getCurrentSession.success)
 	})
 
 	test('Если не передать сессионный токен, метод вернет ответ что пользователь не авторизован', async () => {
@@ -47,6 +47,6 @@ describe('/api/v1/session - Get', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.default.notAuthorized)
+		expect(responseJson).toMatchObject(examples.default.responses.notAuthorized)
 	})
 })

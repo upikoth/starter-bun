@@ -19,10 +19,10 @@ describe('/api/v1/sessions - Post', () => {
 				main: {
 					sessions: {
 						getBySession: () => undefined,
-						create: () => mainExamples.responses.sessions.create.success
+						create: () => mainExamples.sessions.responses.create.success
 					},
 					users: {
-						getByEmail: () => mainExamples.responses.users.getByEmail.userActiveSuccess
+						getByEmail: () => mainExamples.users.responses.getByEmail.userActiveSuccess
 					}
 				}
 			}
@@ -31,7 +31,7 @@ describe('/api/v1/sessions - Post', () => {
 		const request = new Request({
 			url: 'https://example-host.ru/api/v1/sessions',
 			method: HttpMethod.Post,
-			body: JSON.stringify(examples.requests.sessions.create.emailPassword)
+			body: JSON.stringify(examples.sessions.requests.create.emailPassword)
 		})
 
 		const response = await mainRequestHandler(request)
@@ -40,11 +40,11 @@ describe('/api/v1/sessions - Post', () => {
 		const parsedSetCookieObject = cookie.parse(response.headers.get('Set-Cookie') || '')
 
 		expect(parsedSetCookieObject[AUTHORIZATION_HEADER]).toBeString()
-		expect(responseJson).toMatchObject(examples.responses.sessions.create.success)
+		expect(responseJson).toMatchObject(examples.sessions.responses.create.success)
 	})
 
 	test('Если не передать одно из обязательных полей, вернется ошибка', async () => {
-		const bodyJson = structuredClone(examples.requests.sessions.create.emailPassword)
+		const bodyJson = structuredClone(examples.sessions.requests.create.emailPassword)
 		const requiredFieldNames = ['email', 'password'] as const
 
 		delete bodyJson[requiredFieldNames[random(1)]]
@@ -85,13 +85,13 @@ describe('/api/v1/sessions - Post', () => {
 		const request = new Request({
 			url: 'https://example-host.ru/api/v1/sessions',
 			method: HttpMethod.Post,
-			body: JSON.stringify(examples.requests.sessions.create.emailPassword)
+			body: JSON.stringify(examples.sessions.requests.create.emailPassword)
 		})
 
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.sessions.create.wrongData)
+		expect(responseJson).toMatchObject(examples.sessions.responses.create.wrongData)
 	})
 
 	test('Если передать некорректный пароль, вернется ошибка', async () => {
@@ -100,10 +100,10 @@ describe('/api/v1/sessions - Post', () => {
 				main: {
 					sessions: {
 						getBySession: () => undefined,
-						create: () => mainExamples.responses.sessions.create.success
+						create: () => mainExamples.sessions.responses.create.success
 					},
 					users: {
-						getByEmail: () => mainExamples.responses.users.getByEmail.userActiveSuccess
+						getByEmail: () => mainExamples.users.responses.getByEmail.userActiveSuccess
 					}
 				}
 			}
@@ -113,7 +113,7 @@ describe('/api/v1/sessions - Post', () => {
 			url: 'https://example-host.ru/api/v1/sessions',
 			method: HttpMethod.Post,
 			body: JSON.stringify({
-				...examples.requests.sessions.create.emailPassword,
+				...examples.sessions.requests.create.emailPassword,
 				password: 'wrong-password'
 			})
 		})
@@ -121,7 +121,7 @@ describe('/api/v1/sessions - Post', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.sessions.create.wrongData)
+		expect(responseJson).toMatchObject(examples.sessions.responses.create.wrongData)
 	})
 
 	test('Если заблокированный пользователь попытается авторизоваться, вернется ошибка', async () => {
@@ -129,7 +129,7 @@ describe('/api/v1/sessions - Post', () => {
 			default: {
 				main: {
 					users: {
-						getByEmail: () => mainExamples.responses.users.getByEmail.userBlockedSuccess
+						getByEmail: () => mainExamples.users.responses.getByEmail.userBlockedSuccess
 					}
 				}
 			}
@@ -138,7 +138,7 @@ describe('/api/v1/sessions - Post', () => {
 		const request = new Request({
 			url: 'https://example-host.ru/api/v1/sessions',
 			method: HttpMethod.Post,
-			body: JSON.stringify(examples.requests.sessions.create.emailPassword)
+			body: JSON.stringify(examples.sessions.requests.create.emailPassword)
 		})
 
 		const response = await mainRequestHandler(request)
@@ -151,11 +151,11 @@ describe('/api/v1/sessions - Post', () => {
 			default: {
 				main: {
 					sessions: {
-						getBySession: () => mainExamples.responses.sessions.getBySession.success,
-						create: () => mainExamples.responses.sessions.create.success
+						getBySession: () => mainExamples.sessions.responses.getBySession.success,
+						create: () => mainExamples.sessions.responses.create.success
 					},
 					users: {
-						getByEmail: () => mainExamples.responses.users.getByEmail.userActiveSuccess
+						getByEmail: () => mainExamples.users.responses.getByEmail.userActiveSuccess
 					}
 				}
 			}
@@ -164,7 +164,7 @@ describe('/api/v1/sessions - Post', () => {
 		const request = new Request({
 			url: 'https://example-host.ru/api/v1/sessions',
 			method: HttpMethod.Post,
-			body: JSON.stringify(examples.requests.sessions.create.emailPassword)
+			body: JSON.stringify(examples.sessions.requests.create.emailPassword)
 		})
 
 		const response = await mainRequestHandler(request)

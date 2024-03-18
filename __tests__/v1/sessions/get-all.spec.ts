@@ -19,7 +19,7 @@ describe('/api/v1/sessions - Get', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.default.notAuthorized)
+		expect(responseJson).toMatchObject(examples.default.responses.notAuthorized)
 	})
 
 	test('Если передать токен пользователя с ролью User, метод вернет ответ что недостаточно прав', async () => {
@@ -27,10 +27,10 @@ describe('/api/v1/sessions - Get', () => {
 			default: {
 				main: {
 					sessions: {
-						getBySession: () => mainExamples.responses.sessions.getBySession.success
+						getBySession: () => mainExamples.sessions.responses.getBySession.success
 					},
 					users: {
-						getById: () => mainExamples.responses.users.getById.userActiveSuccess
+						getById: () => mainExamples.users.responses.getById.userActiveSuccess
 					}
 				}
 			}
@@ -47,7 +47,7 @@ describe('/api/v1/sessions - Get', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.default.forbidden)
+		expect(responseJson).toMatchObject(examples.default.responses.forbidden)
 	})
 
 	test('Если передать некорректно limit или offset, вернется ошибка', async () => {
@@ -55,16 +55,16 @@ describe('/api/v1/sessions - Get', () => {
 			default: {
 				main: {
 					sessions: {
-						getBySession: () => mainExamples.responses.sessions.getBySession.success
+						getBySession: () => mainExamples.sessions.responses.getBySession.success
 					},
 					users: {
-						getById: () => mainExamples.responses.users.getById.adminActiveSuccess
+						getById: () => mainExamples.users.responses.getById.adminActiveSuccess
 					}
 				}
 			}
 		}))
 
-		const query = (new URLSearchParams(examples.requests.sessions.getAll.wrong)).toString()
+		const query = (new URLSearchParams(examples.sessions.requests.getAll.wrong)).toString()
 
 		const request = new Request({
 			url: `https://example-host.ru/api/v1/sessions?${query}`,
@@ -84,11 +84,11 @@ describe('/api/v1/sessions - Get', () => {
 			default: {
 				main: {
 					sessions: {
-						getBySession: () => mainExamples.responses.sessions.getBySession.success,
-						getAll: () => mainExamples.responses.sessions.getAll.success
+						getBySession: () => mainExamples.sessions.responses.getBySession.success,
+						getAll: () => mainExamples.sessions.responses.getAll.success
 					},
 					users: {
-						getById: () => mainExamples.responses.users.getById.adminActiveSuccess
+						getById: () => mainExamples.users.responses.getById.adminActiveSuccess
 					}
 				}
 			}
@@ -105,7 +105,7 @@ describe('/api/v1/sessions - Get', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.sessions.getAll.success)
+		expect(responseJson).toMatchObject(examples.sessions.responses.getAll.success)
 	})
 
 	test('Если передать токен пользователя с ролью SuperAdmin, метод вернет список сессий', async () => {
@@ -113,11 +113,11 @@ describe('/api/v1/sessions - Get', () => {
 			default: {
 				main: {
 					sessions: {
-						getBySession: () => mainExamples.responses.sessions.getBySession.success,
-						getAll: () => mainExamples.responses.sessions.getAll.success
+						getBySession: () => mainExamples.sessions.responses.getBySession.success,
+						getAll: () => mainExamples.sessions.responses.getAll.success
 					},
 					users: {
-						getById: () => mainExamples.responses.users.getById.superAdminActiveSuccess
+						getById: () => mainExamples.users.responses.getById.superAdminActiveSuccess
 					}
 				}
 			}
@@ -134,6 +134,6 @@ describe('/api/v1/sessions - Get', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(responseJson).toMatchObject(examples.responses.sessions.getAll.success)
+		expect(responseJson).toMatchObject(examples.sessions.responses.getAll.success)
 	})
 })
