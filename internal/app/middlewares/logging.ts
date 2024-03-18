@@ -2,6 +2,11 @@ import { logger } from '@/packages'
 
 export default async function logging(req: Request, res: Promise<Response>) {
 	const url = new URL(req.url)
+
+	if (url.pathname.startsWith('/api/docs')) {
+		return
+	}
+
 	const query = url.search
 	const body = await req.clone().text()
 
