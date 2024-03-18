@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": 4,
+    "description": "Сессия не найдена"
+  },
+  "data": {},
+  "success": false
+}

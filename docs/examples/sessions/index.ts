@@ -4,6 +4,7 @@ import getAllSessionsWrongRequest from './get-all/request-wrong.json'
 import createSessionEmailPasswordRequest from './create/request-email-password.json'
 import createSessionSuccessResponse from './create/response-success.json'
 import createSessionWrongDataResponse from './create/response-wrong-data.json'
+import deleteSessionNotFoundResponse from './delete/response-not-found.json'
 
 const responses = {
 	getCurrentSession: {
@@ -15,6 +16,9 @@ const responses = {
 	create: {
 		success: createSessionSuccessResponse,
 		wrongData: createSessionWrongDataResponse
+	},
+	delete: {
+		notFound: deleteSessionNotFoundResponse
 	}
 }
 

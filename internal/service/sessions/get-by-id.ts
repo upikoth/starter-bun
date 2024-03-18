@@ -27,7 +27,7 @@ export default async function getById(id: number): Promise<ISession> {
 	if (!session) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.NotFound,
+			status: ErorrStatusEnum.BadRequest,
 			description: 'Сессия не найдена'
 		} satisfies ICustomError
 	}
