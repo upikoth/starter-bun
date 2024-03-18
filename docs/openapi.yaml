@@ -93,8 +93,8 @@ paths:
           description: Сессия успешно удалена
           $ref: '#/components/responses/defaultSuccess'
         400:
-          description: Сессия с переданным id не найдена
-          $ref: '#/components/responses/sessionDeleteSessionNotFound'
+          description: Ошибки при удалении сессии
+          $ref: '#/components/responses/sessionDeleteSessionError'
         401:
           description: Пользователь не авторизован
           $ref: '#/components/responses/defaultNotAuthorized'
@@ -326,7 +326,7 @@ components:
               enum:
                 - Email или пароль указаны неверно
 
-    sessionDeleteSessionNotFoundResponse:
+    sessionDeleteSessionErrorResponse:
       type: object
       required:
         - success
@@ -349,10 +349,12 @@ components:
               type: integer
               enum:
                 - 4
+                - 3
             description:
               type: string
               enum:
                 - Сессия не найдена
+                - \"id\" must be a number
 
   parameters:
     defaultId:
@@ -474,16 +476,19 @@ components:
               summary: Некорректные логин или пароль
               externalValue: /api/docs/examples/sessions/create/response-wrong-data.json
     
-    sessionDeleteSessionNotFound:
+    sessionDeleteSessionError:
       description: Сессия с переданным id не найдена
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/sessionDeleteSessionNotFoundResponse'
+            $ref: '#/components/schemas/sessionDeleteSessionErrorResponse'
           examples:
-            success:
+            notFound:
               summary: Сессия с переданным id не найдена
               externalValue: /api/docs/examples/sessions/delete/response-not-found.json
+            wrongId:
+              summary: Переданный id некорректен
+              externalValue: /api/docs/examples/sessions/delete/response-wrong-id.json
 
   securitySchemes:
     authorization:
