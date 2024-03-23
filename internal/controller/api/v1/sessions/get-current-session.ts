@@ -4,7 +4,7 @@ import { getSuccessResponse } from '@/controller/http.utils'
 
 import service from '@/service'
 
-import type { IGetCurrentSessionResponse } from '@/models'
+import type { IGetCurrentSessionResponseData } from '@/models'
 
 export default async function getCurrentSession(req: Request): Promise<Response> {
 	const sessionValue = getSessionFromRequest(req)
@@ -14,5 +14,5 @@ export default async function getCurrentSession(req: Request): Promise<Response>
 	return getSuccessResponse({
 		user,
 		session: { id: session.id }
-	} satisfies IGetCurrentSessionResponse)
+	} satisfies IGetCurrentSessionResponseData)
 }

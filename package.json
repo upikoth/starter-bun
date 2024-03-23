@@ -11,7 +11,8 @@
     "test": "bun test --env-file=.env.local",
     "test:environment": "bun test ./internal/__tests__/environment.environment-spec.ts",
     "build": "bun build --target=bun ./index.ts --outdir dist && cp -r ./internal/repository/main/sqlite/migrations dist && cp -r ./docs dist",
-    "create-migrations": "drizzle-kit generate:sqlite --config ./internal/repository/main/sqlite/drizzle.config.ts"
+    "create-migrations": "drizzle-kit generate:sqlite --config ./internal/repository/main/sqlite/drizzle.config.ts",
+    "update-types": "openapi-typescript ./docs/openapi.yaml -o ./internal/models/schema.ts && eslint ./internal/models/schema.ts --fix"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",

@@ -4,7 +4,7 @@ import service from '@/service'
 
 import type {
 	IGetSessionsRequest,
-	IGetSessionsResponse
+	IGetSessionsResponseData
 } from '@/models'
 
 export default async function getAll(req: Request): Promise<Response> {
@@ -25,5 +25,5 @@ export default async function getAll(req: Request): Promise<Response> {
 		limit,
 		offset,
 		total
-	} satisfies IGetSessionsResponse)
+	} satisfies IGetSessionsResponseData)
 }

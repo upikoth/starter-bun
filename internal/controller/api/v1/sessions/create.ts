@@ -7,7 +7,7 @@ import { getSuccessResponse } from '@/controller/http.utils'
 import service from '@/service'
 
 import type {
-	ICreateSessionResponse,
+	ICreateSessionResponseData,
 	ICreateSessionRequest
 } from '@/models'
 
@@ -27,7 +27,7 @@ export default async function create(req: Request): Promise<Response> {
 	const response = getSuccessResponse({
 		user,
 		session: { id: session.id }
-	} satisfies ICreateSessionResponse)
+	} satisfies ICreateSessionResponseData)
 
 	const cookieHeader = cookie.serialize(AUTHORIZATION_HEADER, session.session, {
 		httpOnly: true,

@@ -5,7 +5,7 @@ import repository from '@/repository'
 import type {
 	IGetSessionsRequest,
 	ICustomError,
-	IGetSessionsResponseSession
+	ISession
 } from '@/models'
 
 import {
@@ -14,7 +14,7 @@ import {
 
 export default async function getAll(
 	data: IGetSessionsRequest
-): Promise<{ sessions: IGetSessionsResponseSession[], total: number }> {
+): Promise<{ sessions: Omit<ISession, 'session'>[], total: number }> {
 	const validationError = validateGetSessionsRequestData(data)
 
 	if (validationError) {
