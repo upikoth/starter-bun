@@ -17,7 +17,9 @@ tags:
   - name: health
     description: Проверка работоспособности приложения
   - name: sessions
-    description: CRUD методы для сессии
+    description: Методы для работы с сессией
+  - name: users
+    description: Методы для работы с пользователями
 
 paths:
   /api/v1/health:
@@ -95,6 +97,28 @@ paths:
         400:
           description: Ошибки при удалении сессии
           $ref: '#/components/responses/sessionDeleteSessionError'
+        401:
+          description: Пользователь не авторизован
+          $ref: '#/components/responses/defaultNotAuthorized'
+        403:
+          description: Недостаточно прав
+          $ref: '#/components/responses/defaultForbidden'
+
+  /api/v1/users:
+    get:
+      tags:
+        - users
+      description: Получение информации обо всех пользователях
+
+      parameters:
+        - $ref: '#/components/parameters/limitParameter'
+        - $ref: '#/components/parameters/offsetParameter'
+        - $ref: '#/components/parameters/userStatusParameter'
+
+      responses:
+        200:
+          description: Список всех пользователей
+          $ref: '#/components/responses/usersGetAllUsersSuccessResponse'
         401:
           description: Пользователь не авторизован
           $ref: '#/components/responses/defaultNotAuthorized'
@@ -356,6 +380,35 @@ components:
                 - Сессия не найдена
                 - \"id\" must be a number
 
+    usersGetAllUsersSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - true
+        data:
+          type: object
+          required:
+            - users
+            - limit
+            - offset
+            - total
+          properties:
+            users:
+              type: array
+              items:
+                $ref: '#/components/schemas/user'
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total:
+              type: integer
+
   parameters:
     defaultId:
       description: Id сущности
@@ -385,6 +438,17 @@ components:
         type: integer
         minimum: 0
         default: 0
+
+    userStatusParameter:
+      description: Фильтр по статусу пользователя
+      in: query
+      name: status
+      required: false
+      schema:
+        type: string
+        enum:
+          - active
+          - blocked
 
   requestBodies:
     sessionsCreateSessionBodyRequest:
@@ -489,6 +553,17 @@ components:
             wrongId:
               summary: Переданный id некорректен
               externalValue: /api/docs/examples/sessions/delete/response-wrong-id.json
+
+    usersGetAllUsersSuccessResponse:
+      description: Успешное получение списка пользователей
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/usersGetAllUsersSuccessResponse'
+          examples:
+            success:
+              summary: Список пользователей
+              externalValue: /api/docs/examples/users/get-all/response-success.json
 
   securitySchemes:
     authorization:

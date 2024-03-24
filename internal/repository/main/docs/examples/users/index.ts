@@ -3,6 +3,7 @@ import getByIdActiveAdminSuccessResponse from './get-by-id/response-active-admin
 import getByIdActiveSuperAdminSuccessResponse from './get-by-id/response-active-super-admin-success.json'
 import getByEmailActiveUserSuccessResponse from './get-by-email/response-active-user-success.json'
 import getByEmailBlockedUserSuccessResponse from './get-by-email/response-blocked-user-success.json'
+import getAllUsersSuccessResponse from './get-all/response-success.json'
 
 const responses = {
 	getById: {
@@ -13,6 +14,9 @@ const responses = {
 	getByEmail: {
 		userActiveSuccess: getByEmailActiveUserSuccessResponse,
 		userBlockedSuccess: getByEmailBlockedUserSuccessResponse
+	},
+	getAll: {
+		success: getAllUsersSuccessResponse
 	}
 }
 

@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "example@mail.ru",
+      "role": "user",
+      "status": "active",
+      "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+      "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+    },
+    {
+      "id": 2,
+      "email": "example@mail.ru",
+      "role": "super-admin",
+      "status": "active",
+      "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+      "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+    },
+    {
+      "id": 3,
+      "email": "example@mail.ru",
+      "role": "admin",
+      "status": "active",
+      "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+      "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+    },
+    {
+      "id": 4,
+      "email": "example@mail.ru",
+      "role": "user",
+      "status": "active",
+      "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+      "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+    },
+    {
+      "id": 5,
+      "email": "example@mail.ru",
+      "role": "super-admin",
+      "status": "blocked",
+      "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+      "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+    },
+    {
+      "id": 6,
+      "email": "example@mail.ru",
+      "role": "admin",
+      "status": "blocked",
+      "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+      "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+    },
+    {
+      "id": 7,
+      "email": "example@mail.ru",
+      "role": "user",
+      "status": "blocked",
+      "passwordHash": "d108eb16ab1ec0e8e102e4153a0089542dfa0c1ad1a630cd0fc6f4bdb20e96fb4b1affdde5861a9a4f3de7f576044f7523e63104021264ab0a61dc550c0ade9b",
+      "passwordSalt": "2b194aab332dcc8fd02a846b81855963"
+    }
+  ],
+  "total": 7
+}

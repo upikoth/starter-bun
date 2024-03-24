@@ -1,0 +1,52 @@
+{
+  "data": {
+    "users": [
+      {
+        "id": 1,
+        "email": "example@mail.ru",
+        "status": "active",
+        "role": "user"
+      },
+      {
+        "id": 2,
+        "email": "example@mail.ru",
+        "status": "active",
+        "role": "super-admin"
+      },
+      {
+        "id": 3,
+        "email": "example@mail.ru",
+        "status": "active",
+        "role": "admin"
+      },
+      {
+        "id": 4,
+        "email": "example@mail.ru",
+        "status": "active",
+        "role": "user"
+      },
+      {
+        "id": 5,
+        "email": "example@mail.ru",
+        "status": "blocked",
+        "role": "super-admin"
+      },
+      {
+        "id": 6,
+        "email": "example@mail.ru",
+        "status": "blocked",
+        "role": "admin"
+      },
+      {
+        "id": 7,
+        "email": "example@mail.ru",
+        "status": "blocked",
+        "role": "user"
+      }
+    ],
+    "limit": 10,
+    "offset": 0,
+    "total": 7
+  },
+  "success": true
+}
