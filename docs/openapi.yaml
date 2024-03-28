@@ -126,6 +126,29 @@ paths:
           description: Недостаточно прав
           $ref: '#/components/responses/defaultForbidden'
 
+  /api/v1/users/{id}:
+    get:
+      tags:
+        - users
+      description: Получение информации о пользователе по id
+
+      parameters:
+        - $ref: '#/components/parameters/defaultId'
+
+      responses:
+        200:
+          description: Информация о пользователе
+          $ref: '#/components/responses/usersGetUserByIdSuccessResponse'
+        400:
+          description: Ошибки получении информации о пользователе
+          $ref: '#/components/responses/sessionDeleteSessionError'
+        401:
+          description: Пользователь не авторизован
+          $ref: '#/components/responses/defaultNotAuthorized'
+        403:
+          description: Недостаточно прав
+          $ref: '#/components/responses/defaultForbidden'
+
 components:
   schemas:
     user:
@@ -409,6 +432,25 @@ components:
             total:
               type: integer
 
+    usersGetUserByIdSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - true
+        data:
+          type: object
+          required:
+            - user
+          properties:
+            user:
+              type: object
+              $ref: '#/components/schemas/user'
+
   parameters:
     defaultId:
       description: Id сущности
@@ -564,6 +606,32 @@ components:
             success:
               summary: Список пользователей
               externalValue: /api/docs/examples/users/get-all/response-success.json
+
+    usersGetUserByIdSuccessResponse:
+      description: Успешное получение информации о пользователе
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/usersGetUserByIdSuccessResponse'
+          examples:
+            successUserActive:
+              summary: Информация об активном пользователе с ролью User
+              externalValue: /api/docs/examples/users/get-by-id/response-success-user-active.json
+            successAdminActive:
+              summary: Информация об активном пользователе с ролью Admin
+              externalValue: /api/docs/examples/users/get-by-id/response-success-admin-active.json
+            successSuperAdminActive:
+              summary: Информация об активном пользователе с ролью SuperAdmin
+              externalValue: /api/docs/examples/users/get-by-id/response-success-super-admin-active.json
+            successUserBlocked:
+              summary: Информация о заблокированном пользователе с ролью User
+              externalValue: /api/docs/examples/users/get-by-id/response-success-user-blocked.json
+            successAdminBlocked:
+              summary: Информация о заблокированном пользователе с ролью Admin
+              externalValue: /api/docs/examples/users/get-by-id/response-success-admin-blocked.json
+            successSuperAdminBlocked:
+              summary: Информация о заблокированном пользователе с ролью SuperAdmin
+              externalValue: /api/docs/examples/users/get-by-id/response-success-super-admin-blocked.json
 
   securitySchemes:
     authorization:
