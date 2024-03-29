@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": 5,
+    "description": "Пользователь с таким email уже существует"
+  },
+  "data": {},
+  "success": false
+}

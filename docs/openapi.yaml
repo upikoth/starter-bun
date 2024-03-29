@@ -126,6 +126,28 @@ paths:
           description: Недостаточно прав
           $ref: '#/components/responses/defaultForbidden'
 
+    post:
+      tags:
+        - users
+      description: Создание пользователя по логину и паролю.
+        Создать нового пользователя без подтверждения почты может только пользователь с ролью SuperAdmin
+      requestBody:
+        $ref: '#/components/requestBodies/usersCreateUserBodyRequest'
+
+      responses:
+        200:
+          description: Пользователь успешно создан
+          $ref: '#/components/responses/usersCreateUsernSuccessResponse'
+        400:
+          description: Переданы некорректные данные
+          $ref: '#/components/responses/usersCreateUserWrongData'
+        401:
+          description: Пользователь не авторизован
+          $ref: '#/components/responses/defaultNotAuthorized'
+        403:
+          description: Недостаточно прав
+          $ref: '#/components/responses/defaultForbidden'
+
   /api/v1/users/{id}:
     get:
       tags:
@@ -245,6 +267,30 @@ components:
               enum:
                 - Недостаточно прав
 
+    defaultWrongDataResponse:
+      type: object
+      required:
+        - success
+        - data
+        - error
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - false
+        data:
+          type: object
+        error:
+          type: object
+          required:
+            - code
+            - description
+          properties:
+            code:
+              type: integer
+            description:
+              type: string
+
     sessionsGetCurrentSessionSuccessResponse:
       type: object
       required:
@@ -316,6 +362,7 @@ components:
       properties:
         email:
           type: string
+          format: email
         password:
           type: string
 
@@ -451,6 +498,36 @@ components:
               type: object
               $ref: '#/components/schemas/user'
 
+    usersCreateUserBodyRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    usersCreateUsernSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - true
+        data:
+          type: object
+          required:
+            - user
+          properties:
+            user:
+              $ref: '#/components/schemas/user'
+
   parameters:
     defaultId:
       description: Id сущности
@@ -503,6 +580,17 @@ components:
             emailAndPassword:
               summary: Логин и пароль
               externalValue: /api/docs/examples/sessions/create/request-email-password.json
+
+    usersCreateUserBodyRequest:
+      description: Логин и пароль для создания пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/usersCreateUserBodyRequest'
+          examples:
+            emailAndPassword:
+              summary: Логин и пароль
+              externalValue: /api/docs/examples/users/create/request-email-password.json
 
   responses:
     defaultSuccess:
@@ -578,7 +666,7 @@ components:
           schema:
             $ref: '#/components/schemas/sessionsCreateSessionWrongDataResponse'
           examples:
-            success:
+            wrongData:
               summary: Некорректные логин или пароль
               externalValue: /api/docs/examples/sessions/create/response-wrong-data.json
     
@@ -632,6 +720,34 @@ components:
             successSuperAdminBlocked:
               summary: Информация о заблокированном пользователе с ролью SuperAdmin
               externalValue: /api/docs/examples/users/get-by-id/response-success-super-admin-blocked.json
+
+    usersCreateUserWrongData:
+      description: Ошибка при создании пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/defaultWrongDataResponse'
+          examples:
+            emailAlreadyExist:
+              summary: Пользователь уже сущуствует
+              externalValue: /api/docs/examples/users/create/response-wrong-data-user-exist.json
+            wrongEmail:
+              summary: Такой email сущуствует
+              externalValue: /api/docs/examples/users/create/response-wrong-email.json
+            wrongPassword:
+              summary: Некорректный пароль
+              externalValue: /api/docs/examples/users/create/response-wrong-password.json
+
+    usersCreateUsernSuccessResponse:
+      description: Успешное создание пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/usersCreateUsernSuccessResponse'
+          examples:
+            success:
+              summary: Данные о созданном пользователе
+              externalValue: /api/docs/examples/users/create/response-success.json
 
   securitySchemes:
     authorization:

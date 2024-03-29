@@ -1,0 +1,11 @@
+{
+  "data": {
+    "user": {
+      "id": 1,
+      "email": "example@mail.ru",
+      "role": "user",
+      "status": "active"
+    }
+  },
+  "success": true
+}
