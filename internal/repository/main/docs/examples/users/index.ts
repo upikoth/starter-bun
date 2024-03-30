@@ -4,6 +4,7 @@ import getByIdActiveSuperAdminSuccessResponse from './get-by-id/response-active-
 import getByEmailActiveUserSuccessResponse from './get-by-email/response-active-user-success.json'
 import getByEmailBlockedUserSuccessResponse from './get-by-email/response-blocked-user-success.json'
 import getAllUsersSuccessResponse from './get-all/response-success.json'
+import createUserRoleUserSuccessResponse from './create/response-active-user-success.json'
 
 const responses = {
 	getById: {
@@ -17,6 +18,9 @@ const responses = {
 	},
 	getAll: {
 		success: getAllUsersSuccessResponse
+	},
+	create: {
+		userActiveSuccess: createUserRoleUserSuccessResponse
 	}
 }
 
