@@ -5,6 +5,7 @@ import getByEmailActiveUserSuccessResponse from './get-by-email/response-active-
 import getByEmailBlockedUserSuccessResponse from './get-by-email/response-blocked-user-success.json'
 import getAllUsersSuccessResponse from './get-all/response-success.json'
 import createUserRoleUserSuccessResponse from './create/response-active-user-success.json'
+import updateUserRoleUserSuccessResponse from './update/response-active-user-success.json'
 
 const responses = {
 	getById: {
@@ -21,6 +22,9 @@ const responses = {
 	},
 	create: {
 		userActiveSuccess: createUserRoleUserSuccessResponse
+	},
+	update: {
+		userActiveSuccess: updateUserRoleUserSuccessResponse
 	}
 }
 

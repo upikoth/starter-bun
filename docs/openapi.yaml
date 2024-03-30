@@ -137,7 +137,7 @@ paths:
       responses:
         200:
           description: Пользователь успешно создан
-          $ref: '#/components/responses/usersCreateUsernSuccessResponse'
+          $ref: '#/components/responses/usersCreateUserSuccessResponse'
         400:
           description: Переданы некорректные данные
           $ref: '#/components/responses/usersCreateUserWrongData'
@@ -164,6 +164,30 @@ paths:
         400:
           description: Ошибки получении информации о пользователе
           $ref: '#/components/responses/sessionDeleteSessionError'
+        401:
+          description: Пользователь не авторизован
+          $ref: '#/components/responses/defaultNotAuthorized'
+        403:
+          description: Недостаточно прав
+          $ref: '#/components/responses/defaultForbidden'
+
+    patch:
+      tags:
+        - users
+      description: Обновление информации о пользователе. Блокировка пользователя
+
+      parameters:
+        - $ref: '#/components/parameters/defaultId'
+      requestBody:
+        $ref: '#/components/requestBodies/usersUpdateUserBodyRequest'
+
+      responses:
+        200:
+          description: Информация о пользователе обновлена
+          $ref: '#/components/responses/usersUpdateUserSuccessResponse'
+        400:
+          description: Переданы некорректные данные
+          $ref: '#/components/responses/usersUpdateUserWrongData'
         401:
           description: Пользователь не авторизован
           $ref: '#/components/responses/defaultNotAuthorized'
@@ -510,7 +534,37 @@ components:
         password:
           type: string
 
-    usersCreateUsernSuccessResponse:
+    usersCreateUserSuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties: 
+        success:
+          type: boolean
+          enum:
+            - true
+        data:
+          type: object
+          required:
+            - user
+          properties:
+            user:
+              $ref: '#/components/schemas/user'
+
+    usersUpdateUserBodyRequest:
+      type: object
+      properties: 
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+          enum:
+            - active
+            - blocked
+
+    usersUpdateUserSuccessResponse:
       type: object
       required:
         - success
@@ -591,6 +645,17 @@ components:
             emailAndPassword:
               summary: Логин и пароль
               externalValue: /api/docs/examples/users/create/request-email-password.json
+
+    usersUpdateUserBodyRequest:
+      description: Информация для обновления пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/usersUpdateUserBodyRequest'
+          examples:
+            allFields:
+              summary: Все возможные поля
+              externalValue: /api/docs/examples/users/update/request-all-fields.json
 
   responses:
     defaultSuccess:
@@ -732,22 +797,44 @@ components:
               summary: Пользователь уже сущуствует
               externalValue: /api/docs/examples/users/create/response-wrong-data-user-exist.json
             wrongEmail:
-              summary: Такой email сущуствует
+              summary: Некорректный email
               externalValue: /api/docs/examples/users/create/response-wrong-email.json
             wrongPassword:
               summary: Некорректный пароль
               externalValue: /api/docs/examples/users/create/response-wrong-password.json
 
-    usersCreateUsernSuccessResponse:
+    usersCreateUserSuccessResponse:
       description: Успешное создание пользователя
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/usersCreateUsernSuccessResponse'
+            $ref: '#/components/schemas/usersCreateUserSuccessResponse'
           examples:
             success:
               summary: Данные о созданном пользователе
               externalValue: /api/docs/examples/users/create/response-success.json
+
+    usersUpdateUserSuccessResponse:
+      description: Успешное обновление пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/usersUpdateUserSuccessResponse'
+          examples:
+            success:
+              summary: Данные о созданном пользователе
+              externalValue: /api/docs/examples/users/update/response-success.json
+
+    usersUpdateUserWrongData:
+      description: Ошибка при создании пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/defaultWrongDataResponse'
+          examples:
+            wrongEmail:
+              summary: Некорректный email
+              externalValue: /api/docs/examples/users/update/response-wrong-email.json
 
   securitySchemes:
     authorization:

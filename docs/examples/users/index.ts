@@ -8,6 +8,8 @@ import createUserWrongEmailResponse from './create/response-wrong-email.json'
 import createUserWrongPasswordResponse from './create/response-wrong-password.json'
 import createUserSuccessResponse from './create/response-success.json'
 import createUserRequest from './create/request-email-password.json'
+import updateUserSuccessResponse from './update/response-success.json'
+import updateUserAllFieldsRequest from './update/request-all-fields.json'
 
 const responses = {
 	getAll: {
@@ -23,6 +25,9 @@ const responses = {
 		wrongEmail: createUserWrongEmailResponse,
 		wrongPassword: createUserWrongPasswordResponse,
 		success: createUserSuccessResponse
+	},
+	update: {
+		success: updateUserSuccessResponse
 	}
 }
 
@@ -32,6 +37,9 @@ const requests = {
 	},
 	create: {
 		valid: createUserRequest
+	},
+	update: {
+		allFields: updateUserAllFieldsRequest
 	}
 }
 
