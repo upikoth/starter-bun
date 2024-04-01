@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import repository from '@/repository'
 
@@ -16,7 +16,7 @@ export default async function deleteById(id: number): Promise<void> {
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -26,7 +26,7 @@ export default async function deleteById(id: number): Promise<void> {
 	if (!session) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Сессия не найдена'
 		} satisfies ICustomError
 	}

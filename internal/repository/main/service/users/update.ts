@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 
 import {
 	ErrorCodeEnum,
-	ErorrStatusEnum
+	ErrorStatusEnum
 } from '@/constants'
 
 import type {
@@ -28,7 +28,7 @@ export default async function update(data: IMainUpdateUserRequest): Promise<IMai
 	if (!user) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Пользователь не найден'
 		} satisfies ICustomError
 	}

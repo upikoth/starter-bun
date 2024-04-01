@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import repository from '@/repository'
 
@@ -19,7 +19,7 @@ export default async function confirm(data: IConfirmRegistrationRequest): Promis
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -29,7 +29,7 @@ export default async function confirm(data: IConfirmRegistrationRequest): Promis
 	if (!registration) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Регистрация не найдена'
 		} satisfies ICustomError
 	}
@@ -39,7 +39,7 @@ export default async function confirm(data: IConfirmRegistrationRequest): Promis
 	if (userWithThisEmail) {
 		throw {
 			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Пользователь с таким email уже существует'
 		} satisfies ICustomError
 	}

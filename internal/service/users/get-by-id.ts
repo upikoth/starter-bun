@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import repository from '@/repository'
 
@@ -17,7 +17,7 @@ export default async function getById(id: number): Promise<IUser> {
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -27,7 +27,7 @@ export default async function getById(id: number): Promise<IUser> {
 	if (!dbUser) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Пользователь не найден'
 		} satisfies ICustomError
 	}

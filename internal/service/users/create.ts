@@ -1,6 +1,6 @@
 import crypto from 'node:crypto'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import repository from '@/repository'
 
@@ -21,7 +21,7 @@ export default async function create(data: ICreateUserRequest): Promise<IUser> {
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -31,7 +31,7 @@ export default async function create(data: ICreateUserRequest): Promise<IUser> {
 	if (userWithThisEmail) {
 		throw {
 			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Пользователь с таким email уже существует'
 		} satisfies ICustomError
 	}

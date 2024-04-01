@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import { getSessionFromRequest } from '@/utils'
 
@@ -22,7 +22,7 @@ export default async function upload(req: Request): Promise<Response> {
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: String(err)
 		} satisfies ICustomError
 	}
@@ -30,7 +30,7 @@ export default async function upload(req: Request): Promise<Response> {
 	if (!(file instanceof File)) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Файл не передан в запросе'
 		} satisfies ICustomError
 	}

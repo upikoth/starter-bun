@@ -1,6 +1,6 @@
 import { expect, test } from 'bun:test'
 
-import { ErorrStatusEnum, ErrorCodeEnum } from '@/constants'
+import { ErrorStatusEnum, ErrorCodeEnum } from '@/constants'
 
 import { checkIsCustomError } from '@/utils'
 
@@ -10,7 +10,7 @@ test('Проверяет что checkIsCustomError возвращает true, е
 	const error: ICustomError = {
 		description: 'test@test.ru',
 		code: ErrorCodeEnum.ValidationError,
-		status: ErorrStatusEnum.BadRequest
+		status: ErrorStatusEnum.BadRequest
 	}
 
 	expect(checkIsCustomError(error)).toBe(true)

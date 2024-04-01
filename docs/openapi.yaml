@@ -659,7 +659,7 @@ components:
 
   responses:
     defaultSuccess:
-      description: Стандартный ответ при успешно выполенном запросе
+      description: Стандартный ответ при успешно выполненном запросе
       content:
         application/json:
           schema:
@@ -794,7 +794,7 @@ components:
             $ref: '#/components/schemas/defaultWrongDataResponse'
           examples:
             emailAlreadyExist:
-              summary: Пользователь уже сущуствует
+              summary: Пользователь уже существует
               externalValue: /api/docs/examples/users/create/response-wrong-data-user-exist.json
             wrongEmail:
               summary: Некорректный email

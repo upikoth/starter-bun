@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import service from '@/service'
 
@@ -20,7 +20,7 @@ export default async function check(sessionValue: string): Promise<{ user: IUser
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -30,7 +30,7 @@ export default async function check(sessionValue: string): Promise<{ user: IUser
 	if (!session) {
 		throw {
 			code: ErrorCodeEnum.Unauthorized,
-			status: ErorrStatusEnum.Unauthorized,
+			status: ErrorStatusEnum.Unauthorized,
 			description: 'Пользователь не авторизован'
 		} satisfies ICustomError
 	}

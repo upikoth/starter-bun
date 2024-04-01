@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 export * from './users'
 export * from './files'
@@ -7,11 +7,11 @@ export * from './registrations'
 
 export interface ICustomError {
 	code: ErrorCodeEnum
-	status: ErorrStatusEnum
+	status: ErrorStatusEnum
 	description: string
 }
 
-export interface IResposeError {
+export interface IResponseError {
 	code: ErrorCodeEnum,
 	description: string
 }

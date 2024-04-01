@@ -2,7 +2,7 @@ import crypto from 'node:crypto'
 
 import environment from '@/environment'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import service from '@/service'
 
@@ -24,7 +24,7 @@ export default async function create(data: ICreateRegistrationRequest): Promise<
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -34,7 +34,7 @@ export default async function create(data: ICreateRegistrationRequest): Promise<
 	if (user) {
 		throw {
 			code: ErrorCodeEnum.UserWithThisEmailAlreadyExist,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Пользователь с таким email уже существует'
 		} satisfies ICustomError
 	}

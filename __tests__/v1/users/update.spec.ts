@@ -3,7 +3,7 @@ import {
 } from 'bun:test'
 import examples from '@docs/examples'
 
-import { AUTHORIZATION_HEADER, ErorrStatusEnum, HttpMethod } from '@/constants'
+import { AUTHORIZATION_HEADER, ErrorStatusEnum, HttpMethod } from '@/constants'
 
 import mainExamples from '@/repository/main/docs/examples'
 
@@ -109,7 +109,7 @@ describe('/api/v1/users/:id - Patch', () => {
 
 		const response = await mainRequestHandler(request)
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 	})
 
 	test(`Если передать токен пользователя с ролью Admin и попытаться обновить информацию
@@ -167,7 +167,7 @@ describe('/api/v1/users/:id - Patch', () => {
 
 		const response = await mainRequestHandler(request)
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 	})
 
 	test(`Если передать токен пользователя с ролью SuperAdmin и попытаться обновить информацию

@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import repository from '@/repository'
 
@@ -22,7 +22,7 @@ export default async function upload(
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -35,7 +35,7 @@ export default async function upload(
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.s3Error,
-			status: ErorrStatusEnum.Success,
+			status: ErrorStatusEnum.Success,
 			description: String(err)
 		} satisfies ICustomError
 	}

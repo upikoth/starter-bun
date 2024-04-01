@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import repository from '@/repository'
 
@@ -18,7 +18,7 @@ export default async function deleteById(
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -28,7 +28,7 @@ export default async function deleteById(
 	if (!file) {
 		throw {
 			code: ErrorCodeEnum.EntityNotFound,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Файл не найден'
 		} satisfies ICustomError
 	}
@@ -38,7 +38,7 @@ export default async function deleteById(
 	} catch (err) {
 		throw {
 			code: ErrorCodeEnum.s3Error,
-			status: ErorrStatusEnum.Success,
+			status: ErrorStatusEnum.Success,
 			description: String(err)
 		} satisfies ICustomError
 	}

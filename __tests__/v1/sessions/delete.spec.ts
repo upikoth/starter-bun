@@ -3,7 +3,7 @@ import {
 } from 'bun:test'
 import examples from '@docs/examples'
 
-import { AUTHORIZATION_HEADER, ErorrStatusEnum, HttpMethod } from '@/constants'
+import { AUTHORIZATION_HEADER, ErrorStatusEnum, HttpMethod } from '@/constants'
 
 import mainExamples from '@/repository/main/docs/examples'
 
@@ -19,7 +19,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.Unauthorized)
+		expect(response.status).toBe(ErrorStatusEnum.Unauthorized)
 		expect(responseJson).toMatchObject(examples.default.responses.notAuthorized)
 	})
 
@@ -49,7 +49,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 		expect(responseJson).toMatchObject(examples.sessions.responses.delete.notFound)
 	})
 
@@ -78,7 +78,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 
 		const response = await mainRequestHandler(request)
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 	})
 
 	test(`Если передать токен пользователя с ролью User и свою сессию,
@@ -109,7 +109,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.Success)
+		expect(response.status).toBe(ErrorStatusEnum.Success)
 		expect(responseJson).toMatchObject(examples.default.responses.success)
 	})
 
@@ -143,7 +143,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.Forbidden)
+		expect(response.status).toBe(ErrorStatusEnum.Forbidden)
 		expect(responseJson).toMatchObject(examples.default.responses.forbidden)
 	})
 
@@ -175,7 +175,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.Success)
+		expect(response.status).toBe(ErrorStatusEnum.Success)
 		expect(responseJson).toMatchObject(examples.default.responses.success)
 	})
 
@@ -210,7 +210,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.Success)
+		expect(response.status).toBe(ErrorStatusEnum.Success)
 		expect(responseJson).toMatchObject(examples.default.responses.success)
 	})
 
@@ -242,7 +242,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.Success)
+		expect(response.status).toBe(ErrorStatusEnum.Success)
 		expect(responseJson).toMatchObject(examples.default.responses.success)
 	})
 
@@ -277,7 +277,7 @@ describe('/api/v1/sessions/{id} - Delete', () => {
 		const response = await mainRequestHandler(request)
 		const responseJson = await response.json()
 
-		expect(response.status).toBe(ErorrStatusEnum.Success)
+		expect(response.status).toBe(ErrorStatusEnum.Success)
 		expect(responseJson).toMatchObject(examples.default.responses.success)
 	})
 })

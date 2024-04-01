@@ -1,4 +1,4 @@
-export enum ErorrStatusEnum {
+export enum ErrorStatusEnum {
 	Success = 200,
 	BadRequest = 400,
 	Unauthorized = 401,

@@ -1,6 +1,6 @@
 import crypto from 'node:crypto'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import repository from '@/repository'
 
@@ -22,7 +22,7 @@ export default async function create(data: ICreateSessionRequest): Promise<{ ses
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -32,7 +32,7 @@ export default async function create(data: ICreateSessionRequest): Promise<{ ses
 	if (!dbUser) {
 		throw {
 			code: ErrorCodeEnum.EmailOrPasswordInvalid,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Email или пароль указаны неверно'
 		} satisfies ICustomError
 	}
@@ -52,7 +52,7 @@ export default async function create(data: ICreateSessionRequest): Promise<{ ses
 	if (passwordHash !== dbUser.passwordHash) {
 		throw {
 			code: ErrorCodeEnum.EmailOrPasswordInvalid,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Email или пароль указаны неверно'
 		} satisfies ICustomError
 	}
@@ -60,7 +60,7 @@ export default async function create(data: ICreateSessionRequest): Promise<{ ses
 	if (user.status !== UserStatusEnum.Active) {
 		throw {
 			code: ErrorCodeEnum.UserBlocked,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Пользователь заблокирован'
 		} satisfies ICustomError
 	}
@@ -72,7 +72,7 @@ export default async function create(data: ICreateSessionRequest): Promise<{ ses
 	if (session) {
 		throw {
 			code: ErrorCodeEnum.SessionAlreadyExist,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: 'Такая сессия уже существует'
 		} satisfies ICustomError
 	}

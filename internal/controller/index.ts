@@ -1,6 +1,6 @@
 import { match } from 'path-to-regexp'
 
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import { checkIsCustomError, getSessionFromRequest } from '@/utils'
 
@@ -32,7 +32,7 @@ async function getRequestHandler(req: Request) {
 	if (!route) {
 		throw {
 			code: ErrorCodeEnum.UrlNotFound,
-			status: ErorrStatusEnum.NotFound,
+			status: ErrorStatusEnum.NotFound,
 			description: 'Метод не найден'
 		} satisfies ICustomError
 	}
@@ -41,7 +41,7 @@ async function getRequestHandler(req: Request) {
 		if (!session) {
 			throw {
 				code: ErrorCodeEnum.Unauthorized,
-				status: ErorrStatusEnum.Unauthorized,
+				status: ErrorStatusEnum.Unauthorized,
 				description: 'Пользователь не авторизован'
 			} satisfies ICustomError
 		}
@@ -52,7 +52,7 @@ async function getRequestHandler(req: Request) {
 		if (!isRightsValid) {
 			throw {
 				code: ErrorCodeEnum.Forbidden,
-				status: ErorrStatusEnum.Forbidden,
+				status: ErrorStatusEnum.Forbidden,
 				description: 'Недостаточно прав'
 			} satisfies ICustomError
 		}
@@ -68,7 +68,7 @@ function getErrorResponseFromError(err: unknown): Response {
 				code: ErrorCodeEnum.Unknown,
 				description: String(err)
 			},
-			ErorrStatusEnum.InternalServerError
+			ErrorStatusEnum.InternalServerError
 		)
 	}
 

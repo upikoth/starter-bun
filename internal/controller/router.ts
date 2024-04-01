@@ -97,12 +97,12 @@ const routes: IRoute[] = [
 			const userToChange = await service.users.getById(userToChangeId)
 
 			if (userToChange.role === UserRoleEnum.User
-				&& checkIsUserHasAccessToAction(user, UserActionEnum.UpdateAnyUserWuthRoleUserInfo)) {
+				&& checkIsUserHasAccessToAction(user, UserActionEnum.UpdateAnyUserWithRoleUserInfo)) {
 				return true
 			}
 
 			if (userToChange.role === UserRoleEnum.Admin
-				&& checkIsUserHasAccessToAction(user, UserActionEnum.UpdateAnyUserWuthRoleAdminInfo)) {
+				&& checkIsUserHasAccessToAction(user, UserActionEnum.UpdateAnyUserWithRoleAdminInfo)) {
 				return true
 			}
 

@@ -1,4 +1,4 @@
-import { ErrorCodeEnum, ErorrStatusEnum } from '@/constants'
+import { ErrorCodeEnum, ErrorStatusEnum } from '@/constants'
 
 import service from '@/service'
 
@@ -21,7 +21,7 @@ export default async function update(data: IUpdateUserRequest): Promise<IUser> {
 	if (validationError) {
 		throw {
 			code: ErrorCodeEnum.ValidationError,
-			status: ErorrStatusEnum.BadRequest,
+			status: ErrorStatusEnum.BadRequest,
 			description: validationError
 		} satisfies ICustomError
 	}
@@ -29,7 +29,7 @@ export default async function update(data: IUpdateUserRequest): Promise<IUser> {
 	if (data.role === UserRoleEnum.SuperAdmin) {
 		throw {
 			code: ErrorCodeEnum.Forbidden,
-			status: ErorrStatusEnum.Forbidden,
+			status: ErrorStatusEnum.Forbidden,
 			description: 'Недостаточно прав'
 		} satisfies ICustomError
 	}

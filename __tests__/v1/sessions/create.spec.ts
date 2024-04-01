@@ -4,7 +4,7 @@ import {
 } from 'bun:test'
 import examples from '@docs/examples'
 
-import { AUTHORIZATION_HEADER, HttpMethod, ErorrStatusEnum } from '@/constants'
+import { AUTHORIZATION_HEADER, HttpMethod, ErrorStatusEnum } from '@/constants'
 
 import { random } from '@/utils'
 
@@ -57,7 +57,7 @@ describe('/api/v1/sessions - Post', () => {
 
 		const response = await mainRequestHandler(request)
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 	})
 
 	test('Если не передать body запроса, вернется ошибка', async () => {
@@ -68,7 +68,7 @@ describe('/api/v1/sessions - Post', () => {
 
 		const response = await mainRequestHandler(request)
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 	})
 
 	test('Если передать не существующий email, вернется ошибка', async () => {
@@ -143,7 +143,7 @@ describe('/api/v1/sessions - Post', () => {
 
 		const response = await mainRequestHandler(request)
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 	})
 
 	test('Если хэш созданной сессии уже существует, вернется ошибка', async () => {
@@ -169,6 +169,6 @@ describe('/api/v1/sessions - Post', () => {
 
 		const response = await mainRequestHandler(request)
 
-		expect(response.status).toBe(ErorrStatusEnum.BadRequest)
+		expect(response.status).toBe(ErrorStatusEnum.BadRequest)
 	})
 })
