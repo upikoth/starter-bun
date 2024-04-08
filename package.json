@@ -21,7 +21,7 @@
     "@typescript-eslint/parser": "^6.13.2",
     "bun-types": "latest",
     "drizzle-kit": "^0.20.14",
-    "eslint": "^8.55.0",
+    "eslint": "^9.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "npm-run-all2": "^5.0.0",
     "openapi-typescript": "next",
