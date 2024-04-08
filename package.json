@@ -35,7 +35,7 @@
     "@sentry/bun": "^7.104.0",
     "cookie": "^0.6.0",
     "drizzle-orm": "^0.29.1",
-    "joi": "^17.11.0",
+    "joi": "^17.12.3",
     "nodemailer": "^6.9.13",
     "path-to-regexp": "^6.2.2",
     "winston": "^3.11.0"
