@@ -38,7 +38,7 @@
     "joi": "^17.12.3",
     "nodemailer": "^6.9.13",
     "path-to-regexp": "^6.2.2",
-    "winston": "^3.11.0"
+    "winston": "^3.13.0"
   },
   "gitHooks": {
     "pre-commit": "run-p lint test"
