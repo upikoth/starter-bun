@@ -28,7 +28,7 @@
     "yorkie": "^2.0.0"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.4.4"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.504.0",
