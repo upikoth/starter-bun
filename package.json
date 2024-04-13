@@ -31,7 +31,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.550.0",
+    "@aws-sdk/client-s3": "^3.554.0",
     "@sentry/bun": "^7.110.0",
     "cookie": "^0.6.0",
     "drizzle-orm": "^0.30.8",
