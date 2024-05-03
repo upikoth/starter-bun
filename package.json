@@ -34,7 +34,7 @@
     "@aws-sdk/client-s3": "^3.554.0",
     "@sentry/bun": "^7.113.0",
     "cookie": "^0.6.0",
-    "drizzle-orm": "^0.30.8",
+    "drizzle-orm": "^0.30.10",
     "joi": "^17.13.1",
     "nodemailer": "^6.9.13",
     "path-to-regexp": "^6.2.2",
