@@ -17,8 +17,8 @@
   "devDependencies": {
     "@types/cookie": "^0.6.0",
     "@types/nodemailer": "^6.4.15",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
-    "@typescript-eslint/parser": "^7.6.0",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
     "bun-types": "latest",
     "drizzle-kit": "^0.20.17",
     "eslint": "^8.57.0",
