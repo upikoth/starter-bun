@@ -1,6 +1,6 @@
 # Stage 1. Build.
 
-FROM oven/bun:1.1.7-alpine as build
+FROM oven/bun:1.1.10-alpine as build
 
 WORKDIR /starter-bun
 
@@ -14,7 +14,7 @@ RUN bun run build
 
 # Stage 2.
 
-FROM oven/bun:1.1.7-alpine
+FROM oven/bun:1.1.10-alpine
 
 COPY --from=build /starter-bun/dist/ ./
 
